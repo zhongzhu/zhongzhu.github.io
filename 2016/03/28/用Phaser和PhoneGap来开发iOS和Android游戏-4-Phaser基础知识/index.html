@@ -1,0 +1,935 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.useso.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Phaser,PhoneGap,Cordova,iOS,Android," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="上一篇博客我们用Tiled这个工具来生成了游戏场景。今天终于要开始写代码了，我们将开始使用Phaser把游戏场景文件（tiles.png, level.json）读出来，显示在手机上。
+下面用到的所有图片和代码都可以在我的GitHub找到。
+目标
+用Phaser把游戏场景显示在手机浏览器上
+
+准备工作在写代码前，需要准备的东西：
+
+Windows PC
+在Windows PC上安装
+Google">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用Phaser和PhoneGap来开发iOS和Android游戏 - 4. Phaser基础知识">
+<meta property="og:url" content="http://zhongzhu.github.io/2016/03/28/用Phaser和PhoneGap来开发iOS和Android游戏-4-Phaser基础知识/index.html">
+<meta property="og:site_name" content="钟柱的博客">
+<meta property="og:description" content="上一篇博客我们用Tiled这个工具来生成了游戏场景。今天终于要开始写代码了，我们将开始使用Phaser把游戏场景文件（tiles.png, level.json）读出来，显示在手机上。
+下面用到的所有图片和代码都可以在我的GitHub找到。
+目标
+用Phaser把游戏场景显示在手机浏览器上
+
+准备工作在写代码前，需要准备的东西：
+
+Windows PC
+在Windows PC上安装
+Google">
+<meta property="og:image" content="http://zhongzhu.github.io/1.png">
+<meta property="og:image" content="http://zhongzhu.github.io/4.png">
+<meta property="og:image" content="http://zhongzhu.github.io/texture-atlas.png">
+<meta property="og:image" content="http://zhongzhu.github.io/5.png">
+<meta property="og:updated_time" content="2016-03-29T15:20:07.373Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="用Phaser和PhoneGap来开发iOS和Android游戏 - 4. Phaser基础知识">
+<meta name="twitter:description" content="上一篇博客我们用Tiled这个工具来生成了游戏场景。今天终于要开始写代码了，我们将开始使用Phaser把游戏场景文件（tiles.png, level.json）读出来，显示在手机上。
+下面用到的所有图片和代码都可以在我的GitHub找到。
+目标
+用Phaser把游戏场景显示在手机浏览器上
+
+准备工作在写代码前，需要准备的东西：
+
+Windows PC
+在Windows PC上安装
+Google">
+<meta name="twitter:image" content="http://zhongzhu.github.io/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 用Phaser和PhoneGap来开发iOS和Android游戏 - 4. Phaser基础知识 | 钟柱的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?304e9364b09111c8802c04fcc574b590";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">钟柱的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">坚持做一些自己觉得好玩的事儿</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                用Phaser和PhoneGap来开发iOS和Android游戏 - 4. Phaser基础知识
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-03-28T14:19:51+08:00" content="2016-03-28">
+              2016-03-28
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/APP开发/" itemprop="url" rel="index">
+                    <span itemprop="name">APP开发</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/APP开发/游戏/" itemprop="url" rel="index">
+                    <span itemprop="name">游戏</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/03/28/用Phaser和PhoneGap来开发iOS和Android游戏-4-Phaser基础知识/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/28/用Phaser和PhoneGap来开发iOS和Android游戏-4-Phaser基础知识/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="http://zhongzhu.github.io/2016/03/25/%E7%94%A8Phaser%E5%92%8CPhoneGap%E6%9D%A5%E5%BC%80%E5%8F%91iOS%E5%92%8CAndroid%E6%B8%B8%E6%88%8F-3-%E7%94%A8Tiled-Map-Editor%E6%9D%A5%E7%94%9F%E6%88%90%E6%B8%B8%E6%88%8F%E5%9C%BA%E6%99%AF/">上一篇博客</a>我们用<a href="http://www.mapeditor.org/" target="_blank" rel="external">Tiled</a>这个工具来生成了游戏场景。今天终于要开始写代码了，我们将开始使用Phaser把游戏场景文件（tiles.png, level.json）读出来，显示在手机上。</p>
+<p>下面用到的所有图片和代码都可以在<a href="https://github.com/zhongzhu/learn_to_build_a_game_with_phaser.git" target="_blank" rel="external">我的GitHub</a>找到。</p>
+<h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><ol>
+<li>用Phaser把游戏场景显示在手机浏览器上</li>
+</ol>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>在写代码前，需要准备的东西：</p>
+<ul>
+<li>Windows PC</li>
+<li>在Windows PC上安装<ul>
+<li><a href="https://www.google.com/chrome/" target="_blank" rel="external">Google Chrome</a>浏览器</li>
+<li><a href="https://www.python.org/downloads/" target="_blank" rel="external">Python 2.7.x for Windows</a></li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+<p>Chrome浏览器用来模拟手机。</p>
+<p>安装Python不是因为要写Python代码。Phaser工程其实就是一个网站，所以在调试程序的时候需要一个HTTP Server才能把Phaser工程跑起来。Python内置的SimpleHTTPServer非常好用，零配置，推荐用它。</p>
+<p>你可以用任何文本编辑器写代码，我用的是<a href="https://www.sublimetext.com/3" target="_blank" rel="external">Sublime Text</a>。</p>
+<h2 id="Phaser工程的目录结构"><a href="#Phaser工程的目录结构" class="headerlink" title="Phaser工程的目录结构"></a>Phaser工程的目录结构</h2><p>请先到<a href="https://github.com/zhongzhu/learn_to_build_a_game_with_phaser.git" target="_blank" rel="external">我的GitHub</a>下载源代码，下面的讲解将基于这个源代码。</p>
+<p>Phaser工程的主目录如下：</p>
+<p><img src="1.png" alt="phaser project folder"></p>
+<ul>
+<li><code>part1.html, part2.html</code> - 游戏的HTML网页。为了简化我把JavaScript代码写在HTML文件里了。每个HTML文件都是本教程的一个阶段性<code>MVP(Minimum Viable Product)</code>，可以用来运行和展示。随着教程的进行，还会增加part3.html、part4.html等等</li>
+<li><code>index.html</code> - 现在还用不到它。等整个教程结束，我会做一次重构，把part1.html/part2.html/…的JavaScript代码提取出来放入<code>js目录</code>，剩下的真正的HTML的内容放入index.html</li>
+<li><code>js目录</code> - 所有的JavaScript文件</li>
+<li><code>assets目录</code> - 图片，tile map文件，声音</li>
+</ul>
+<h2 id="Phaser工程的代码结构"><a href="#Phaser工程的代码结构" class="headerlink" title="Phaser工程的代码结构"></a>Phaser工程的代码结构</h2><p>现在打开文件<code>learn_to_build_a_game_with_phaser/part1.html</code>，我们来看看代码，这是一个很常见的HTML5网页:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>跑完一百米！<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="css"> <span class="selector-tag">body</span> &#123; <span class="attribute">margin</span>: <span class="number">0</span>; &#125;</span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/phaser.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- the game logic 游戏逻辑--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span><br><span class="line">    <span class="keyword">var</span> Play = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line"></span><br><span class="line">    Play.prototype = &#123;</span><br><span class="line">      preload: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;,</span><br><span class="line">      create: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;,</span><br><span class="line">      update: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">    &#125;;</span><br><span class="line">  </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- the main app 主程序--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span><br><span class="line">    <span class="keyword">var</span> targetWidth = <span class="number">840</span>;</span><br><span class="line">    <span class="keyword">var</span> targetHeight = <span class="number">560</span>;</span><br><span class="line">    <span class="keyword">var</span> newWidth = (<span class="built_in">window</span>.innerWidth/<span class="built_in">window</span>.innerHeight) * targetHeight;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> game = <span class="keyword">new</span> Phaser.Game(newWidth, targetHeight, Phaser.AUTO);</span><br><span class="line">    game.state.add(<span class="string">'Play'</span>, Play);</span><br><span class="line">    game.state.start(<span class="string">'Play'</span>);</span><br><span class="line">  </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>第8行引入了Phaser的库文件，就一个文件<code>phaser.min.js</code>，那就是Phaser所有的东西啦，够简单吧？</p>
+<p>和Phaser相关的全部代码都放在<code>&lt;body&gt;&lt;/body&gt;</code>之间。我用两个<code>&lt;script&gt;&lt;/script&gt;</code>来放两段不同功能的JavaScript代码。这样有点啰嗦，不过好处是看起来清晰，而且最后重构的时候代码很容易分模块。</p>
+<h2 id="初始化Phaser的Game对象"><a href="#初始化Phaser的Game对象" class="headerlink" title="初始化Phaser的Game对象"></a>初始化Phaser的Game对象</h2><p>先来看23行-32行。这几行是程序的入口，类似C语言的main函数。</p>
+<p>第29行初始化了Phaser的<code>Game对象</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> game = <span class="keyword">new</span> Phaser.Game(newWidth, targetHeight, Phaser.AUTO);</span><br></pre></td></tr></table></figure>
+<p>Game()函数的第三个参数指定Phaser用什么Web技术来画游戏的界面。Phaser支持HTML <a href="http://www.w3schools.com/html/html5_canvas.asp" target="_blank" rel="external">Canvas</a>或者<a href="https://en.wikipedia.org/wiki/WebGL" target="_blank" rel="external">WebGL</a>两种方式。Canvas几乎所有的手机浏览器都支持；WebGL动画性能更好，不过有些浏览器不支持。AUTO模式让Phaser自己决定用前面两种方式中的一种。</p>
+<p>Game()函数的前两个参数指定游戏界面的宽和高。我们的游戏界面为<code>840X560</code>，由于各种手机的屏幕宽高比不一样，第27行根据手机浏览器实际宽<code>window.innerWidth</code>高<code>window.innerHeight</code>比算出了游戏界面的新的宽<code>newWidth</code>，游戏的高<code>targetHeight</code>保持560px不变。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> targetWidth = <span class="number">840</span>;</span><br><span class="line"><span class="keyword">var</span> targetHeight = <span class="number">560</span>;</span><br><span class="line"><span class="keyword">var</span> newWidth = (<span class="built_in">window</span>.innerWidth/<span class="built_in">window</span>.innerHeight) * targetHeight;</span><br></pre></td></tr></table></figure>
+<p>根据手机实际宽高比重新计算游戏的宽高非常重要，如果不这样做，你的游戏在不同的手机屏幕上显示就会失真（图形拉伸，或者被压缩变形）。</p>
+<p>第30行，用game.state加载了一个叫做<code>Play</code>的<code>State</code>。加载只是把State放入内存中，第31行start()才真正让这个State运行起来。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">game.state.add(<span class="string">'Play'</span>, Play);</span><br><span class="line">game.state.start(<span class="string">'Play'</span>);</span><br></pre></td></tr></table></figure>
+<p>那什么是State呢？下面我们详细讲讲State这个很有用的概念。</p>
+<h2 id="Phaser的State对象"><a href="#Phaser的State对象" class="headerlink" title="Phaser的State对象"></a>Phaser的State对象</h2><p>Phaser的<code>State</code>可以被翻译成状态机里的<code>状态</code>。State是个很有用的概念。</p>
+<p>在写代码的时候，有面向对象编程经验的人都会想到把把代码封装成类（Class）：主菜单界面一个类，游戏实际的运行一个类，游戏结果的显示（You Win! You Loose!）一个类。要让这些类的对象相互访问，而且能访问Phaser的实时信息，你恐怕得多做一些公共代码的工作。而Phaser的State对象帮你把这些都实现了：</p>
+<ul>
+<li>状态的加载<code>game.state.add()</code></li>
+<li>状态的运行/转换<code>game.state.start()</code></li>
+<li>直接在状态对象里用<code>this.xxx</code>的方式访问Phaser的核心对象：<code>game</code>, <code>input</code>, <code>camera</code>, <code>sound</code>, <code>physics</code>, 等等</li>
+</ul>
+<p>如何才能生成一个State对象呢？代码第14-20行定义了一个叫做<code>Play</code>的State对象，及其它的原型框架。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Play = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line"></span><br><span class="line">Play.prototype = &#123;</span><br><span class="line">  preload: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;,</span><br><span class="line">  create: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;,</span><br><span class="line">  update: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>很简单，State就是一个函数对象，它有几个约定的方法可以在State的原型(prototype)里实现:</p>
+<ul>
+<li><code>preload</code> Phaser会在游戏初始化阶段调用它，一般我们用它来加载游戏资源(assets)。如：图片、声音等等</li>
+<li><code>create</code> preload被调用结束后，Phaser会调用create。我们一般在这个方法里把内存里的图片放置到游戏界面里，设置好Player和enemy</li>
+<li><code>update</code> 每秒钟这个update会被Phaser调很多次，所以所有游戏精灵们之间的互动都在这里处理。比如：Player跳跃，Player撞到Enemy，等等</li>
+</ul>
+<p>通常，一个Phaser游戏工程里会写多个State对象，比如：Load state用来把图片、sprite sheet、声音加载到内存，同时显示一个逐渐变长的progress bar。Menu state用来显示游戏的主菜单，让玩家选关或者设置。Play state用来运行游戏逻辑。End state用来显示You Win! You Loose!之类的东西。</p>
+<p>为了简化，我们就一个Play state。</p>
+<h2 id="Play-preload方法"><a href="#Play-preload方法" class="headerlink" title="Play.preload方法"></a>Play.preload方法</h2><p>现在打开文件<code>learn_to_build_a_game_with_phaser/part2.html</code>，我们来看看preload()方法里面写了些什么。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Play = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line"></span><br><span class="line">Play.prototype = &#123;</span><br><span class="line">  preload: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;</span><br><span class="line">    <span class="keyword">this</span>.scale.pageAlignHorizontally = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">this</span>.scale.pageAlignVertically = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.load.tilemap(<span class="string">'tilemap'</span>, <span class="string">'assets/level.json'</span>, <span class="literal">null</span>, Phaser.Tilemap.TILED_JSON);</span><br><span class="line">    <span class="keyword">this</span>.load.image(<span class="string">'tiles'</span>, <span class="string">'assets/tiles.png'</span>);</span><br><span class="line">    <span class="keyword">this</span>.load.atlas(<span class="string">'texture-atlas'</span>, <span class="string">'assets/texture-atlas.png'</span>, <span class="string">'assets/texture-atlas.json'</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">  create: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;,</span><br><span class="line">  update: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>第1行，声明了Play state函数对象。</p>
+<p>第5行，设置了本游戏界面的缩放模式<code>scaleMode</code>为<code>Phaser.ScaleManager.SHOW_ALL</code>。</p>
+<p>第6-7行是让游戏界面居中显示。</p>
+<p>第9-11行，把游戏需要的图片和tile map资源加载到内存。</p>
+<p>短短十来行代码，我花了近10天才搞清楚了要这样写。为什么呢？因为这里牵涉了Phaser游戏开发的三个知识点：</p>
+<ol>
+<li>手机屏幕适配</li>
+<li>Tile Map</li>
+<li>Texture Atlas</li>
+</ol>
+<p>下面详细讲讲这三个知识点。</p>
+<h2 id="手机屏幕适配"><a href="#手机屏幕适配" class="headerlink" title="手机屏幕适配"></a>手机屏幕适配</h2><p>一个游戏当然要在各种手机的屏幕上都显示正常，要不然别人怎么会玩你的游戏？这个要求很正常，不过分吧？</p>
+<p>答案是：太过分了。</p>
+<p>鉴于现在手机厂家多如牛马，每个厂家几个月就出一款长相奇特的新机，要做到一个游戏适配所有手机屏幕基本是没戏。我也是花了差不多一个星期才搞清楚了应该怎么做：太复杂了，别妄想了，干脆就用最简单的方法适配<code>大部分手机</code>就好。</p>
+<p>下图就是本游戏做手机屏幕适配的方法：</p>
+<p><img src="4.png" alt="game scale"></p>
+<p>统共分4步:</p>
+<ol>
+<li>给游戏预设一个界面大小840x560，所以宽高比为3:2</li>
+<li>游戏代码里动态获得手机实际的宽高比（宽：window.innerWidth，高：window.innerHeight）。比如iPhone5，宽高568x320,宽高比16:9</li>
+<li>修正预设的大小，高度不变560，高度按16:9换算成1493。现在我们的游戏有新的界面大小：1493x560，宽高比16:9</li>
+<li>虽然宽高比我们和iPhone5一致了，但1493x560比568x320大很多啊。没有关系，用Phaser的缩放模式<code>this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL</code>把1493x560保持宽高比的缩小，直到能放入iPhone5的屏幕里。</li>
+</ol>
+<p>看似简单的4步，我花了5个晚上的时间google加看帮助才理清了这样是可行的。</p>
+<h2 id="Tile-map"><a href="#Tile-map" class="headerlink" title="Tile map"></a>Tile map</h2><p>Tile map的概念在<a href="http://zhongzhu.github.io/2016/03/25/%E7%94%A8Phaser%E5%92%8CPhoneGap%E6%9D%A5%E5%BC%80%E5%8F%91iOS%E5%92%8CAndroid%E6%B8%B8%E6%88%8F-3-%E7%94%A8Tiled-Map-Editor%E6%9D%A5%E7%94%9F%E6%88%90%E6%B8%B8%E6%88%8F%E5%9C%BA%E6%99%AF/">上一个博客</a>已经讲过了。</p>
+<p>Tile map包括两部分：一个是包含所有小tile图片的大图片tile.png，另一个是描述哪种小tile图片应该放在哪个小格子的描述文件level.json。我们需要用下面的<code>this.load.tilemap()</code>和<code>this.load.image()</code>方法把这两个资源加载到内存。</p>
+<p>这两个函数很类似，第一个参数是给被加载的资源取个名字。以后再访问这个资源用这个名字就好了。第二个参数是资源的文件名。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.load.tilemap(<span class="string">'tilemap'</span>, <span class="string">'assets/level.json'</span>, <span class="literal">null</span>, Phaser.Tilemap.TILED_JSON); </span><br><span class="line"><span class="keyword">this</span>.load.image(<span class="string">'tiles'</span>, <span class="string">'assets/tiles.png'</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="Texture-Atlas"><a href="#Texture-Atlas" class="headerlink" title="Texture Atlas"></a>Texture Atlas</h2><p>Tile Map用的tile.png图片是<code>sprite sheet</code>，它把大小一样的小tile图片全部放入了一个大图片文件tile.png中了。</p>
+<p>能不能把大小不一样的图片也像<code>sprite sheet</code>那样放到一个大图片文件里来提高性能？可以，就是用<code>Texture Atlas</code>方式。</p>
+<p>Texture Atlas类似Tile Map也包括两部分：一个当然是那个大图片文件，在本游戏就是texture-atlas.png；另一个就是用来描述哪个小图片放入了texture-atlas.png的描述文件texture-atlas.json。texture-atlas.json里面包含了每个小图片的名字，我们后面将用这些名字来访问texture-atlas.png里的各个小图片。</p>
+<p>下图就是texture-atlas.png:</p>
+<p><img src="texture-atlas.png" alt="texture-atlas"></p>
+<p>下图是texture-atlas.json的内容，每个<code>filename</code>后面跟着的就是小图片的名字。</p>
+<p><img src="5.png" alt="texture-atlas.json"></p>
+<p>用如下代码就可以把Texture Atlas加载到内存：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.load.atlas(<span class="string">'texture-atlas'</span>, <span class="string">'assets/texture-atlas.png'</span>, <span class="string">'assets/texture-atlas.json'</span></span><br></pre></td></tr></table></figure>
+<p>第一个参数是给Texture Atlas资源取的一个名字。第二个参数是大图片文件名。第三个参数是json文件名。</p>
+<h2 id="休息一下"><a href="#休息一下" class="headerlink" title="休息一下"></a>休息一下</h2><p>这篇博客我们讲了Phaser工程的大概样子，并详细讲了Play.preload()方法及其屏幕适配等，下一个博客我们接着讲Play.create()。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Phaser/" rel="tag">#Phaser</a>
+          
+            <a href="/tags/PhoneGap/" rel="tag">#PhoneGap</a>
+          
+            <a href="/tags/Cordova/" rel="tag">#Cordova</a>
+          
+            <a href="/tags/iOS/" rel="tag">#iOS</a>
+          
+            <a href="/tags/Android/" rel="tag">#Android</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/03/25/用Phaser和PhoneGap来开发iOS和Android游戏-3-用Tiled-Map-Editor来生成游戏场景/" rel="next" title="用Phaser和PhoneGap来开发iOS和Android游戏 - 3. 用Tiled Map Editor来生成游戏场景">
+                <i class="fa fa-chevron-left"></i> 用Phaser和PhoneGap来开发iOS和Android游戏 - 3. 用Tiled Map Editor来生成游戏场景
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/03/28/用Phaser和PhoneGap来开发iOS和Android游戏-4-Phaser基础知识/"
+     data-title="用Phaser和PhoneGap来开发iOS和Android游戏 - 4. Phaser基础知识"
+     data-content=""
+     data-url="http://zhongzhu.github.io/2016/03/28/用Phaser和PhoneGap来开发iOS和Android游戏-4-Phaser基础知识/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/03/28/用Phaser和PhoneGap来开发iOS和Android游戏-4-Phaser基础知识/"
+           data-title="用Phaser和PhoneGap来开发iOS和Android游戏 - 4. Phaser基础知识" data-url="http://zhongzhu.github.io/2016/03/28/用Phaser和PhoneGap来开发iOS和Android游戏-4-Phaser基础知识/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars3.githubusercontent.com/u/2154471?v=3&s=140"
+               alt="钟柱" />
+          <p class="site-author-name" itemprop="name">钟柱</p>
+          <p class="site-description motion-element" itemprop="description">自动化测试, 写代码, 看书, 音乐, 画画</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhongzhu" target="_blank">
+                  
+                    <i class="fa fa-github"></i> GitHub
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhuzhong" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i> Weibo
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#目标"><span class="nav-number">1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#准备工作"><span class="nav-number">2.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Phaser工程的目录结构"><span class="nav-number">3.</span> <span class="nav-text">Phaser工程的目录结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Phaser工程的代码结构"><span class="nav-number">4.</span> <span class="nav-text">Phaser工程的代码结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化Phaser的Game对象"><span class="nav-number">5.</span> <span class="nav-text">初始化Phaser的Game对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Phaser的State对象"><span class="nav-number">6.</span> <span class="nav-text">Phaser的State对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Play-preload方法"><span class="nav-number">7.</span> <span class="nav-text">Play.preload方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#手机屏幕适配"><span class="nav-number">8.</span> <span class="nav-text">手机屏幕适配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tile-map"><span class="nav-number">9.</span> <span class="nav-text">Tile map</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Texture-Atlas"><span class="nav-number">10.</span> <span class="nav-text">Texture Atlas</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#休息一下"><span class="nav-number">11.</span> <span class="nav-text">休息一下</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">钟柱</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=0.5.0"></script>
+
+
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.sidebar.display === 'post' || CONFIG.sidebar.display === 'always') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"zhongzhu"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
