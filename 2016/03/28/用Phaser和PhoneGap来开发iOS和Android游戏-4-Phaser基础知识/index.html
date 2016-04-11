@@ -85,7 +85,7 @@ Google">
 <meta property="og:image" content="http://zhongzhu.github.io/4.png">
 <meta property="og:image" content="http://zhongzhu.github.io/texture-atlas.png">
 <meta property="og:image" content="http://zhongzhu.github.io/5.png">
-<meta property="og:updated_time" content="2016-03-29T15:20:07.373Z">
+<meta property="og:updated_time" content="2016-04-07T13:31:40.303Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="用Phaser和PhoneGap来开发iOS和Android游戏 - 4. Phaser基础知识">
 <meta name="twitter:description" content="上一篇博客我们用Tiled这个工具来生成了游戏场景。今天终于要开始写代码了，我们将开始使用Phaser把游戏场景文件（tiles.png, level.json）读出来，显示在手机上。
@@ -429,7 +429,7 @@ Google">
 <p>下图是texture-atlas.json的内容，每个<code>filename</code>后面跟着的就是小图片的名字。</p>
 <p><img src="5.png" alt="texture-atlas.json"></p>
 <p>用如下代码就可以把Texture Atlas加载到内存：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.load.atlas(<span class="string">'texture-atlas'</span>, <span class="string">'assets/texture-atlas.png'</span>, <span class="string">'assets/texture-atlas.json'</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.load.atlas(<span class="string">'texture-atlas'</span>, <span class="string">'assets/texture-atlas.png'</span>, <span class="string">'assets/texture-atlas.json'</span>)</span><br></pre></td></tr></table></figure>
 <p>第一个参数是给Texture Atlas资源取的一个名字。第二个参数是大图片文件名。第三个参数是json文件名。</p>
 <h2 id="休息一下"><a href="#休息一下" class="headerlink" title="休息一下"></a>休息一下</h2><p>这篇博客我们讲了Phaser工程的大概样子，并详细讲了Play.preload()方法及其屏幕适配等，下一个博客我们接着讲Play.create()。</p>
 
@@ -470,6 +470,10 @@ Google">
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/05/压缩游戏里的PNG图片/" rel="prev" title="压缩游戏里的PNG图片">
+                压缩游戏里的PNG图片 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -560,7 +564,7 @@ Google">
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-count">11</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -568,7 +572,7 @@ Google">
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -577,7 +581,7 @@ Google">
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
