@@ -55,32 +55,20 @@
 
 
 
-<meta name="description" content="用可视化的方式来展示网络关系图是一件挺有趣的事情，在选定用cytoscape.js来显示neo4j图形数据库的数据后我做了一个原型，并用下面三篇博客来记录了做原型的过程。
-
-用cytoscape.js展示neo4j网络关系图 - 1. Flask
-用cytoscape.js展示neo4j网络关系图 - 2. py2neo（这篇博客）
-用cytoscape.js展示neo4j网络关系图 - 3. c">
+<meta name="description" content="用可视化的方式来展示网络关系图是一件挺有趣的事情，在选定用cytoscape.js来显示neo4j图形数据库的数据后我做了一个原型，并用下面三篇博客来记录了做原型的过程。  用cytoscape.js展示neo4j网络关系图 - 1. Flask 用cytoscape.js展示neo4j网络关系图 - 2. py2neo（这篇博客） 用cytoscape.js展示neo4j网络关系图 - 3. c">
 <meta property="og:type" content="article">
 <meta property="og:title" content="用cytoscape.js展示neo4j网络关系图 - 2. py2neo">
-<meta property="og:url" content="http://zhongzhu.github.io/2016/03/11/用cytoscape-js展示neo4j网络关系图-2-py2neo/index.html">
+<meta property="og:url" content="http://zhongzhu.github.io/2016/03/11/%E7%94%A8cytoscape-js%E5%B1%95%E7%A4%BAneo4j%E7%BD%91%E7%BB%9C%E5%85%B3%E7%B3%BB%E5%9B%BE-2-py2neo/index.html">
 <meta property="og:site_name" content="钟柱的博客">
-<meta property="og:description" content="用可视化的方式来展示网络关系图是一件挺有趣的事情，在选定用cytoscape.js来显示neo4j图形数据库的数据后我做了一个原型，并用下面三篇博客来记录了做原型的过程。
-
-用cytoscape.js展示neo4j网络关系图 - 1. Flask
-用cytoscape.js展示neo4j网络关系图 - 2. py2neo（这篇博客）
-用cytoscape.js展示neo4j网络关系图 - 3. c">
-<meta property="og:image" content="http://zhongzhu.github.io/1.png">
-<meta property="og:image" content="http://zhongzhu.github.io/2.png">
-<meta property="og:image" content="http://zhongzhu.github.io/3.png">
-<meta property="og:updated_time" content="2016-03-25T12:40:11.454Z">
+<meta property="og:description" content="用可视化的方式来展示网络关系图是一件挺有趣的事情，在选定用cytoscape.js来显示neo4j图形数据库的数据后我做了一个原型，并用下面三篇博客来记录了做原型的过程。  用cytoscape.js展示neo4j网络关系图 - 1. Flask 用cytoscape.js展示neo4j网络关系图 - 2. py2neo（这篇博客） 用cytoscape.js展示neo4j网络关系图 - 3. c">
+<meta property="og:image" content="http://zhongzhu.github.io/2016/03/11/%E7%94%A8cytoscape-js%E5%B1%95%E7%A4%BAneo4j%E7%BD%91%E7%BB%9C%E5%85%B3%E7%B3%BB%E5%9B%BE-2-py2neo/1.png">
+<meta property="og:image" content="http://zhongzhu.github.io/2016/03/11/%E7%94%A8cytoscape-js%E5%B1%95%E7%A4%BAneo4j%E7%BD%91%E7%BB%9C%E5%85%B3%E7%B3%BB%E5%9B%BE-2-py2neo/2.png">
+<meta property="og:image" content="http://zhongzhu.github.io/2016/03/11/%E7%94%A8cytoscape-js%E5%B1%95%E7%A4%BAneo4j%E7%BD%91%E7%BB%9C%E5%85%B3%E7%B3%BB%E5%9B%BE-2-py2neo/3.png">
+<meta property="article:published_time" content="2016-03-11T06:29:49.000Z">
+<meta property="article:modified_time" content="2016-03-25T12:40:12.000Z">
+<meta property="article:author" content="钟柱">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="用cytoscape.js展示neo4j网络关系图 - 2. py2neo">
-<meta name="twitter:description" content="用可视化的方式来展示网络关系图是一件挺有趣的事情，在选定用cytoscape.js来显示neo4j图形数据库的数据后我做了一个原型，并用下面三篇博客来记录了做原型的过程。
-
-用cytoscape.js展示neo4j网络关系图 - 1. Flask
-用cytoscape.js展示neo4j网络关系图 - 2. py2neo（这篇博客）
-用cytoscape.js展示neo4j网络关系图 - 3. c">
-<meta name="twitter:image" content="http://zhongzhu.github.io/1.png">
+<meta name="twitter:image" content="http://zhongzhu.github.io/2016/03/11/%E7%94%A8cytoscape-js%E5%B1%95%E7%A4%BAneo4j%E7%BD%91%E7%BB%9C%E5%85%B3%E7%B3%BB%E5%9B%BE-2-py2neo/1.png">
 
 
 
@@ -99,7 +87,7 @@
 </script>
 
   <title> 用cytoscape.js展示neo4j网络关系图 - 2. py2neo | 钟柱的博客 </title>
-</head>
+<meta name="generator" content="Hexo 4.2.0"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -280,7 +268,7 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/03/11/用cytoscape-js展示neo4j网络关系图-2-py2neo/#comments" itemprop="discussionUrl">
+                <a href="/2016/03/11/%E7%94%A8cytoscape-js%E5%B1%95%E7%A4%BAneo4j%E7%BD%91%E7%BB%9C%E5%85%B3%E7%B3%BB%E5%9B%BE-2-py2neo/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/11/用cytoscape-js展示neo4j网络关系图-2-py2neo/" itemprop="commentsCount"></span>
                 </a>
               </span>
@@ -315,8 +303,10 @@
 <li><a href="2016/03/11/用cytoscape-js展示neo4j网络关系图-2-py2neo/">用py2neo来获取neo4j的节点及关系</a></li>
 <li><a href="2016/03/11/用cytoscape-js展示neo4j网络关系图-3-cytoscape-js/">用cytoscape.js来显示网络关系图</a></li>
 </ol>
-<p><a href="2016/03/10/用cytoscape-js展示neo4j网络关系图-1-Flask/">上一篇博客</a>介绍了如何<code>搭建基于Flask的简单网站</code>，现在我们要用py2neo来从neo4j server里取出Movie数据库的所有节点(Node)和节点之间的关系(Relationship)。<br><a id="more"></a></p>
-<p>Neo4j支持一种叫做<a href="http://neo4j.com/guides/basic-cypher/" target="_blank" rel="external">Cypher</a>的查询语言。如果把Neo4j看作MySQL的话，Cypher相当于SQL语言，而且它和SQL语言很类似。</p>
+<p><a href="2016/03/10/用cytoscape-js展示neo4j网络关系图-1-Flask/">上一篇博客</a>介绍了如何<code>搭建基于Flask的简单网站</code>，现在我们要用py2neo来从neo4j server里取出Movie数据库的所有节点(Node)和节点之间的关系(Relationship)。</p>
+<a id="more"></a>
+
+<p>Neo4j支持一种叫做<a href="http://neo4j.com/guides/basic-cypher/" target="_blank" rel="noopener">Cypher</a>的查询语言。如果把Neo4j看作MySQL的话，Cypher相当于SQL语言，而且它和SQL语言很类似。</p>
 <h2 id="图-Graph-节点-Node-和关系-Relationship"><a href="#图-Graph-节点-Node-和关系-Relationship" class="headerlink" title="图(Graph),节点(Node)和关系(Relationship)"></a>图(Graph),节点(Node)和关系(Relationship)</h2><p><img src="1.png" alt="这里写图片描述"></p>
 <p>这就是一个简单的图(Graph)，包含两个节点和一个关系。节点可以是任何事物（比如说：人，电影，设备等等），它有一些属性（properties，上图圆圈里的东西，如：Name: Tom Cruise）和标签(Label，上图圆圈顶上的东西，如：Person)。</p>
 <p>两个节点间的线就是关系(Relationship)，“Acted_In”是关系类型(Relationship Type)。关系也可以有属性（properties），这里我们没有给关系加任何属性。</p>
@@ -324,9 +314,10 @@
 <p>这种关系图要表达的信息看起来是相当直观的。上图的意思就是：一个生于1962年叫Tom Cruise的人，参演了影片《Top Gun》，影片在1986年上映。</p>
 <h2 id="Cypher"><a href="#Cypher" class="headerlink" title="Cypher"></a>Cypher</h2><p>Cypher是noe4j数据库的查询语言。你可以用它来增删改查noe4j的节点和关系。目前我们只需要用它来查询。</p>
 <p>Cypher语言非常形象。比如要查询上面的两个节点，语句是这样的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">match (p:Person &#123;name: &apos;Tom Cruise&apos;&#125;)-[:ACTED_IN]-&gt;(m:Movie &#123;title: &apos;Top Gun&apos;&#125;)</span><br><span class="line">return p,m</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">match (p:Person &#123;name: &#39;Tom Cruise&#39;&#125;)-[:ACTED_IN]-&gt;(m:Movie &#123;title: &#39;Top Gun&#39;&#125;)</span><br><span class="line">return p,m</span><br></pre></td></tr></table></figure>
 <p><code>match</code>和<code>return</code>是关键字，<code>p</code>和<code>m</code>可以看作变量，<code>p:</code>后面是p节点的<code>Label</code>（Person）及其<code>properties</code>（name: ‘Tom Cruise’）。</p>
-<p>如果要查询Tom Cruise参演的所有影片节点，语句是这样的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">match (:Person &#123;name: &apos;Tom Cruise&apos;&#125;)-[:ACTED_IN]-&gt;(m)</span><br><span class="line">return m</span><br></pre></td></tr></table></figure></p>
+<p>如果要查询Tom Cruise参演的所有影片节点，语句是这样的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">match (:Person &#123;name: &#39;Tom Cruise&#39;&#125;)-[:ACTED_IN]-&gt;(m)</span><br><span class="line">return m</span><br></pre></td></tr></table></figure>
 <p>我们的目的是显示Movie数据库所有节点和关系，所以会用到下面的查询语句。</p>
 <ul>
 <li>选择所有节点：<code>MATCH (n) RETURN n</code></li>
@@ -356,7 +347,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/03/10/用cytoscape-js展示neo4j网络关系图-1-Flask/" rel="next" title="用cytoscape.js展示neo4j网络关系图 - 1. Flask">
+              <a href="/2016/03/10/%E7%94%A8cytoscape-js%E5%B1%95%E7%A4%BAneo4j%E7%BD%91%E7%BB%9C%E5%85%B3%E7%B3%BB%E5%9B%BE-1-Flask/" rel="next" title="用cytoscape.js展示neo4j网络关系图 - 1. Flask">
                 <i class="fa fa-chevron-left"></i> 用cytoscape.js展示neo4j网络关系图 - 1. Flask
               </a>
             
@@ -364,7 +355,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/03/11/用cytoscape-js展示neo4j网络关系图-3-cytoscape-js/" rel="prev" title="用cytoscape.js展示neo4j网络关系图 - 3. cytoscape.js">
+              <a href="/2016/03/11/%E7%94%A8cytoscape-js%E5%B1%95%E7%A4%BAneo4j%E7%BD%91%E7%BB%9C%E5%85%B3%E7%B3%BB%E5%9B%BE-3-cytoscape-js/" rel="prev" title="用cytoscape.js展示neo4j网络关系图 - 3. cytoscape.js">
                 用cytoscape.js展示neo4j网络关系图 - 3. cytoscape.js <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -384,7 +375,7 @@
         <div class="ds-share flat" data-thread-key="2016/03/11/用cytoscape-js展示neo4j网络关系图-2-py2neo/"
      data-title="用cytoscape.js展示neo4j网络关系图 - 2. py2neo"
      data-content=""
-     data-url="http://zhongzhu.github.io/2016/03/11/用cytoscape-js展示neo4j网络关系图-2-py2neo/">
+     data-url="http://zhongzhu.github.io/2016/03/11/%E7%94%A8cytoscape-js%E5%B1%95%E7%A4%BAneo4j%E7%BD%91%E7%BB%9C%E5%85%B3%E7%B3%BB%E5%9B%BE-2-py2neo/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -412,7 +403,7 @@
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="2016/03/11/用cytoscape-js展示neo4j网络关系图-2-py2neo/"
-           data-title="用cytoscape.js展示neo4j网络关系图 - 2. py2neo" data-url="http://zhongzhu.github.io/2016/03/11/用cytoscape-js展示neo4j网络关系图-2-py2neo/">
+           data-title="用cytoscape.js展示neo4j网络关系图 - 2. py2neo" data-url="http://zhongzhu.github.io/2016/03/11/%E7%94%A8cytoscape-js%E5%B1%95%E7%A4%BAneo4j%E7%BD%91%E7%BB%9C%E5%85%B3%E7%B3%BB%E5%9B%BE-2-py2neo/">
       </div>
     
   </div>
@@ -457,7 +448,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-count">12</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -547,8 +538,8 @@
       <div class="footer-inner">
         <div class="copyright" >
   
-  &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -556,12 +547,12 @@
 </div>
 
 <div class="powered-by">
-  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+  由 <a class="theme-link" href="http://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
 </div>
 
 <div class="theme-info">
   主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
     NexT.Pisces
   </a>
 </div>

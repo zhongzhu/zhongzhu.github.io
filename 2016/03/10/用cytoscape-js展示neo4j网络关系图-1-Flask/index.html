@@ -55,38 +55,26 @@
 
 
 
-<meta name="description" content="用可视化的方式来展示网络关系图是一件挺有趣的事情，在选定用cytoscape.js来显示neo4j图形数据库的数据后我做了一个原型，并用下面三篇博客来记录了做原型的过程。
-
-用cytoscape.js展示neo4j网络关系图 - 1. Flask
-用cytoscape.js展示neo4j网络关系图 - 2. py2neo（这篇博客）
-用cytoscape.js展示neo4j网络关系图 - 3. c">
+<meta name="description" content="用可视化的方式来展示网络关系图是一件挺有趣的事情，在选定用cytoscape.js来显示neo4j图形数据库的数据后我做了一个原型，并用下面三篇博客来记录了做原型的过程。  用cytoscape.js展示neo4j网络关系图 - 1. Flask 用cytoscape.js展示neo4j网络关系图 - 2. py2neo（这篇博客） 用cytoscape.js展示neo4j网络关系图 - 3. c">
 <meta property="og:type" content="article">
 <meta property="og:title" content="用cytoscape.js展示neo4j网络关系图 - 1. Flask">
-<meta property="og:url" content="http://zhongzhu.github.io/2016/03/10/用cytoscape-js展示neo4j网络关系图-1-Flask/index.html">
+<meta property="og:url" content="http://zhongzhu.github.io/2016/03/10/%E7%94%A8cytoscape-js%E5%B1%95%E7%A4%BAneo4j%E7%BD%91%E7%BB%9C%E5%85%B3%E7%B3%BB%E5%9B%BE-1-Flask/index.html">
 <meta property="og:site_name" content="钟柱的博客">
-<meta property="og:description" content="用可视化的方式来展示网络关系图是一件挺有趣的事情，在选定用cytoscape.js来显示neo4j图形数据库的数据后我做了一个原型，并用下面三篇博客来记录了做原型的过程。
-
-用cytoscape.js展示neo4j网络关系图 - 1. Flask
-用cytoscape.js展示neo4j网络关系图 - 2. py2neo（这篇博客）
-用cytoscape.js展示neo4j网络关系图 - 3. c">
-<meta property="og:image" content="http://zhongzhu.github.io/1.png">
-<meta property="og:image" content="http://zhongzhu.github.io/2.png">
-<meta property="og:image" content="http://zhongzhu.github.io/3.png">
-<meta property="og:image" content="http://zhongzhu.github.io/4.png">
-<meta property="og:image" content="http://zhongzhu.github.io/5.png">
-<meta property="og:image" content="http://zhongzhu.github.io/6.png">
-<meta property="og:image" content="http://zhongzhu.github.io/7.png">
-<meta property="og:image" content="http://zhongzhu.github.io/8.png">
-<meta property="og:image" content="http://zhongzhu.github.io/9.png">
-<meta property="og:updated_time" content="2016-03-25T12:40:11.392Z">
+<meta property="og:description" content="用可视化的方式来展示网络关系图是一件挺有趣的事情，在选定用cytoscape.js来显示neo4j图形数据库的数据后我做了一个原型，并用下面三篇博客来记录了做原型的过程。  用cytoscape.js展示neo4j网络关系图 - 1. Flask 用cytoscape.js展示neo4j网络关系图 - 2. py2neo（这篇博客） 用cytoscape.js展示neo4j网络关系图 - 3. c">
+<meta property="og:image" content="http://zhongzhu.github.io/2016/03/10/%E7%94%A8cytoscape-js%E5%B1%95%E7%A4%BAneo4j%E7%BD%91%E7%BB%9C%E5%85%B3%E7%B3%BB%E5%9B%BE-1-Flask/1.png">
+<meta property="og:image" content="http://zhongzhu.github.io/2016/03/10/%E7%94%A8cytoscape-js%E5%B1%95%E7%A4%BAneo4j%E7%BD%91%E7%BB%9C%E5%85%B3%E7%B3%BB%E5%9B%BE-1-Flask/2.png">
+<meta property="og:image" content="http://zhongzhu.github.io/2016/03/10/%E7%94%A8cytoscape-js%E5%B1%95%E7%A4%BAneo4j%E7%BD%91%E7%BB%9C%E5%85%B3%E7%B3%BB%E5%9B%BE-1-Flask/3.png">
+<meta property="og:image" content="http://zhongzhu.github.io/2016/03/10/%E7%94%A8cytoscape-js%E5%B1%95%E7%A4%BAneo4j%E7%BD%91%E7%BB%9C%E5%85%B3%E7%B3%BB%E5%9B%BE-1-Flask/4.png">
+<meta property="og:image" content="http://zhongzhu.github.io/2016/03/10/%E7%94%A8cytoscape-js%E5%B1%95%E7%A4%BAneo4j%E7%BD%91%E7%BB%9C%E5%85%B3%E7%B3%BB%E5%9B%BE-1-Flask/5.png">
+<meta property="og:image" content="http://zhongzhu.github.io/2016/03/10/%E7%94%A8cytoscape-js%E5%B1%95%E7%A4%BAneo4j%E7%BD%91%E7%BB%9C%E5%85%B3%E7%B3%BB%E5%9B%BE-1-Flask/6.png">
+<meta property="og:image" content="http://zhongzhu.github.io/2016/03/10/%E7%94%A8cytoscape-js%E5%B1%95%E7%A4%BAneo4j%E7%BD%91%E7%BB%9C%E5%85%B3%E7%B3%BB%E5%9B%BE-1-Flask/7.png">
+<meta property="og:image" content="http://zhongzhu.github.io/2016/03/10/%E7%94%A8cytoscape-js%E5%B1%95%E7%A4%BAneo4j%E7%BD%91%E7%BB%9C%E5%85%B3%E7%B3%BB%E5%9B%BE-1-Flask/8.png">
+<meta property="og:image" content="http://zhongzhu.github.io/2016/03/10/%E7%94%A8cytoscape-js%E5%B1%95%E7%A4%BAneo4j%E7%BD%91%E7%BB%9C%E5%85%B3%E7%B3%BB%E5%9B%BE-1-Flask/9.png">
+<meta property="article:published_time" content="2016-03-10T08:03:23.000Z">
+<meta property="article:modified_time" content="2016-03-25T12:40:12.000Z">
+<meta property="article:author" content="钟柱">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="用cytoscape.js展示neo4j网络关系图 - 1. Flask">
-<meta name="twitter:description" content="用可视化的方式来展示网络关系图是一件挺有趣的事情，在选定用cytoscape.js来显示neo4j图形数据库的数据后我做了一个原型，并用下面三篇博客来记录了做原型的过程。
-
-用cytoscape.js展示neo4j网络关系图 - 1. Flask
-用cytoscape.js展示neo4j网络关系图 - 2. py2neo（这篇博客）
-用cytoscape.js展示neo4j网络关系图 - 3. c">
-<meta name="twitter:image" content="http://zhongzhu.github.io/1.png">
+<meta name="twitter:image" content="http://zhongzhu.github.io/2016/03/10/%E7%94%A8cytoscape-js%E5%B1%95%E7%A4%BAneo4j%E7%BD%91%E7%BB%9C%E5%85%B3%E7%B3%BB%E5%9B%BE-1-Flask/1.png">
 
 
 
@@ -105,7 +93,7 @@
 </script>
 
   <title> 用cytoscape.js展示neo4j网络关系图 - 1. Flask | 钟柱的博客 </title>
-</head>
+<meta name="generator" content="Hexo 4.2.0"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -286,7 +274,7 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/03/10/用cytoscape-js展示neo4j网络关系图-1-Flask/#comments" itemprop="discussionUrl">
+                <a href="/2016/03/10/%E7%94%A8cytoscape-js%E5%B1%95%E7%A4%BAneo4j%E7%BD%91%E7%BB%9C%E5%85%B3%E7%B3%BB%E5%9B%BE-1-Flask/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/10/用cytoscape-js展示neo4j网络关系图-1-Flask/" itemprop="commentsCount"></span>
                 </a>
               </span>
@@ -318,25 +306,26 @@
 <h2 id="要解决的问题"><a href="#要解决的问题" class="headerlink" title="要解决的问题"></a>要解决的问题</h2><p>最近在找一种可视化方案来显示IT网络中的节点（PC，服务器，路由器，人）之间的关系。经过一系列的调研，初步选定如下方案。</p>
 <h2 id="使用的方案"><a href="#使用的方案" class="headerlink" title="使用的方案"></a>使用的方案</h2><ul>
 <li><strong>后端</strong><ul>
-<li><a href="http://neo4j.com/" target="_blank" rel="external">neo4j</a>， 图形数据库用来存储网络节点及节点间的关系</li>
-<li>Web框架<a href="http://flask.pocoo.org/" target="_blank" rel="external">Flask</a>，一个基于Python的Web微框架</li>
-<li><a href="http://py2neo.org/" target="_blank" rel="external">py2neo</a>，neo4j的Python API包</li>
+<li><a href="http://neo4j.com/" target="_blank" rel="noopener">neo4j</a>， 图形数据库用来存储网络节点及节点间的关系</li>
+<li>Web框架<a href="http://flask.pocoo.org/" target="_blank" rel="noopener">Flask</a>，一个基于Python的Web微框架</li>
+<li><a href="http://py2neo.org/" target="_blank" rel="noopener">py2neo</a>，neo4j的Python API包</li>
 </ul>
 </li>
 <li><strong>前端</strong><ul>
 <li><a href="js.cytoscape.org">cytoscape.js</a>，显示节点及节点间的关系</li>
-<li><a href="https://jquery.com/" target="_blank" rel="external">jQuery.js</a>, AJAX必须用的库 </li>
+<li><a href="https://jquery.com/" target="_blank" rel="noopener">jQuery.js</a>, AJAX必须用的库 </li>
 </ul>
 </li>
 <li><strong>开发平台</strong><ul>
 <li>Windows 7, 64-bit<a id="more"></a>
+
 </li>
 </ul>
 </li>
 </ul>
 <p>整体的架构如下：</p>
 <p><img src="1.png" alt="整体的架构"></p>
-<h2 id="开发环境搭建"><a href="#开发环境搭建" class="headerlink" title="开发环境搭建"></a>开发环境搭建</h2><h3 id="neo4j"><a href="#neo4j" class="headerlink" title="neo4j"></a>neo4j</h3><p>首先要去<a href="http://neo4j.com/download/" target="_blank" rel="external">neo4j</a>下载community免费版， 我用的是neo4j-community_windows-x64_2_2_1.exe 。</p>
+<h2 id="开发环境搭建"><a href="#开发环境搭建" class="headerlink" title="开发环境搭建"></a>开发环境搭建</h2><h3 id="neo4j"><a href="#neo4j" class="headerlink" title="neo4j"></a>neo4j</h3><p>首先要去<a href="http://neo4j.com/download/" target="_blank" rel="noopener">neo4j</a>下载community免费版， 我用的是neo4j-community_windows-x64_2_2_1.exe 。</p>
 <p>安装后，为了简化开发，我们先把neo4j的用户鉴权关掉。这需要修改<code>C:\neo4j-community-2.2.1\conf\neo4j-server.properties</code>，把<code>dbms.security.auth_enabled=true</code>改成<code>dbms.security.auth_enabled=false</code>。修改后双击<code>C:\neo4j-community-2.2.1\bin\Neo4j.bat</code>启动neo4j server。</p>
 <p>在浏览器里访问<code>http://localhost:7474/</code>，如果看到下图就证明neo4j安装成功了。</p>
 <p><img src="2.png" alt="neo4j brower page"></p>
@@ -349,10 +338,11 @@
 <li><p>按照指示做完第一步，你应该能看到网络图显示出来了<br><img src="5.png" alt="这里写图片描述"><br><img src="6.png" alt="这里写图片描述"></p>
 </li>
 </ol>
-<h3 id="Flask-py2neo"><a href="#Flask-py2neo" class="headerlink" title="Flask, py2neo"></a>Flask, py2neo</h3><p>首先确认你已经安装了Python 2.7.x。然后还需安装Flask和py2neo。这两个Python包的安装可以用<a href="https://github.com/zhongzhu/cytoscape_neo4j/blob/master/requirements.txt" target="_blank" rel="external">requirements.txt</a>文件的方式安装。你可以写一个如下的文件</p>
+<h3 id="Flask-py2neo"><a href="#Flask-py2neo" class="headerlink" title="Flask, py2neo"></a>Flask, py2neo</h3><p>首先确认你已经安装了Python 2.7.x。然后还需安装Flask和py2neo。这两个Python包的安装可以用<a href="https://github.com/zhongzhu/cytoscape_neo4j/blob/master/requirements.txt" target="_blank" rel="noopener">requirements.txt</a>文件的方式安装。你可以写一个如下的文件</p>
 <p><img src="7.png" alt="这里写图片描述"></p>
 <p>然后用pip命令来安装requirements.txt里面列出的python包。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt;pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+
 <h3 id="前端的cytoscape-js和jQuery-js"><a href="#前端的cytoscape-js和jQuery-js" class="headerlink" title="前端的cytoscape.js和jQuery.js"></a>前端的cytoscape.js和jQuery.js</h3><p>它们只是些javascript文件，后面会讲到如何下载及把它们放到什么地方。</p>
 <h2 id="要完成的功能"><a href="#要完成的功能" class="headerlink" title="要完成的功能"></a>要完成的功能</h2><p>要把neo4j数据库里面的Movie数据正确的显示到前端，我们需要完成如下的任务。</p>
 <ol>
@@ -360,36 +350,45 @@
 <li>用py2neo来获取neo4j的节点及关系</li>
 <li>用cytoscape.js来显示网络关系图</li>
 </ol>
-<h2 id="开始写代码"><a href="#开始写代码" class="headerlink" title="开始写代码"></a>开始写代码</h2><p>以上我们完成了开发环境安装及其功能设计，可以开始最开心的coding阶段啦。大家可以在<a href="https://github.com/zhongzhu/cytoscape_neo4j.git" target="_blank" rel="external">我的Github</a>上找到下面讲到的所有源代码。</p>
+<h2 id="开始写代码"><a href="#开始写代码" class="headerlink" title="开始写代码"></a>开始写代码</h2><p>以上我们完成了开发环境安装及其功能设计，可以开始最开心的coding阶段啦。大家可以在<a href="https://github.com/zhongzhu/cytoscape_neo4j.git" target="_blank" rel="noopener">我的Github</a>上找到下面讲到的所有源代码。</p>
 <h2 id="搭建基于Flask的简单网站"><a href="#搭建基于Flask的简单网站" class="headerlink" title="搭建基于Flask的简单网站"></a>搭建基于Flask的简单网站</h2><p>让我们来搭建一个基于Flask的简单网站。首先创建如下目录：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt;mkdir cytoscape_neo4j</span><br><span class="line">C:\&gt;mkdir cytoscape_neo4j\templates</span><br><span class="line">C:\&gt;mkdir cytoscape_neo4j\static</span><br><span class="line">C:\&gt;mkdir cytoscape_neo4j\static\js</span><br><span class="line">C:\&gt;mkdir cytoscape_neo4j\static\css</span><br></pre></td></tr></table></figure>
+
 <p>完成后的目录结构如下</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">C:\cytoscape_neo4j</span><br><span class="line">+---static</span><br><span class="line">|   +---css</span><br><span class="line">|   \---js</span><br><span class="line">\---templates</span><br></pre></td></tr></table></figure>
+
 <p><code>cytoscape_neo4j</code>目录用来放后台Python代码（整个项目就一个python文件，app.py）。<code>static</code>目录用来放网站的静态文件，如javascript/css文件。<code>templates</code>目录用来存放网页（整个项目只有一个网页，index.html）。</p>
-<p>现在来写Flask应用程序<code>app.py</code>(源代码： <a href="https://github.com/zhongzhu/cytoscape_neo4j/blob/master/app.py" target="_blank" rel="external">cytoscape_neo4j/app.py</a>).</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route('/')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'Hello, World!'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    app.run(debug = <span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<p>现在来写Flask应用程序<code>app.py</code>(源代码： <a href="https://github.com/zhongzhu/cytoscape_neo4j/blob/master/app.py" target="_blank" rel="noopener">cytoscape_neo4j/app.py</a>).</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route('/')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'Hello, World!'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    app.run(debug = <span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
 <p>6到8行代码的意思是：如果用浏览器访问根目录”/“，app.py就会发送”Hello, World!”到浏览器。让我们来启动我们的Flask应用。在Windows命令行下输入如下命令。如果看到<code>Running on http://127.0.0.1:5000/</code>的提示就表示Flask网站运行起来了。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt;cd cytoscape_neo4j</span><br><span class="line"></span><br><span class="line">C:\cytoscape_neo4j&gt;python app.py</span><br><span class="line"> * Running on http://127.0.0.1:5000/</span><br><span class="line"> * Restarting with reloader</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt;cd cytoscape_neo4j</span><br><span class="line"></span><br><span class="line">C:\cytoscape_neo4j&gt;python app.py</span><br><span class="line"> * Running on http:&#x2F;&#x2F;127.0.0.1:5000&#x2F;</span><br><span class="line"> * Restarting with reloader</span><br></pre></td></tr></table></figure>
+
 <p>可以在浏览器里访问<code>http://localhost:5000</code>，就能看到”Hello, World!”正常显示出来了。</p>
 <p><img src="8.png" alt="这里写图片描述"></p>
 <p>Hello World正常运转后，我们来把它完善一下，做成一个真正满足我们功能要求的网站（也就是添加需要的html/Javascript/css文件了）。网站最后的目录结构是这样的。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">C:\cytoscape_neo4j</span><br><span class="line">|   app.py</span><br><span class="line">|</span><br><span class="line">+---static</span><br><span class="line">|   +---css</span><br><span class="line">|   |       style.css</span><br><span class="line">|   |</span><br><span class="line">|   \---js</span><br><span class="line">|           code.js</span><br><span class="line">|           cytoscape.min.js</span><br><span class="line">|           jquery-1.11.2.min.js</span><br><span class="line">|</span><br><span class="line">\---templates</span><br><span class="line">        index.html</span><br></pre></td></tr></table></figure>
+
 <p><code>index.html</code>是我们唯一的网页。<code>cytoscape.min.js</code>是cytoscape必须的Javascript库。AJAX当然少不了<code>jquery-1.11.2.min.js</code>。<code>code.js</code>是我们的前台程序，它调用cytoscape.min.js在前台生成网络关系图。<code>style.css</code>是我们自定义的样式表，cytoscape.min.js会读它来初始化网络关系图的样式（比如：画布的宽度，高度）。<code>app.py</code>前面见过了，是Flask应用程序。</p>
-<p>你可以在<a href="http://jquery.com/download/" target="_blank" rel="external">JQuery的官网下载</a>下载jquery-1.11.2.min.js。</p>
-<p><a href="http://js.cytoscape.org/" target="_blank" rel="external">cytoscape的官网</a>可以下载cytoscape.js-2.4.0.zip，解压后我们只需要cytoscape.min.js就好。</p>
-<p>现在我们来看看<code>index.html</code> (源代码： <a href="https://github.com/zhongzhu/cytoscape_neo4j/blob/master/templates/index.html" target="_blank" rel="external">cytoscape_neo4j/templates/index.html</a>)</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>学习Cytoscape.js和neo4j<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">"/static/css/style.css"</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"/static/js/jquery-1.11.2.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"/static/js/cytoscape.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"/static/js/code.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Movie网络图<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"cy"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>你可以在<a href="http://jquery.com/download/" target="_blank" rel="noopener">JQuery的官网下载</a>下载jquery-1.11.2.min.js。</p>
+<p><a href="http://js.cytoscape.org/" target="_blank" rel="noopener">cytoscape的官网</a>可以下载cytoscape.js-2.4.0.zip，解压后我们只需要cytoscape.min.js就好。</p>
+<p>现在我们来看看<code>index.html</code> (源代码： <a href="https://github.com/zhongzhu/cytoscape_neo4j/blob/master/templates/index.html" target="_blank" rel="noopener">cytoscape_neo4j/templates/index.html</a>)</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>学习Cytoscape.js和neo4j<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">"/static/css/style.css"</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"/static/js/jquery-1.11.2.min.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"/static/js/cytoscape.min.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"/static/js/code.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Movie网络图<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"cy"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
 <p>代码第5行引入了我们自定义的style.css样式表。第6，7行引入了刚下载的jquery和cytoscape库。第8行引入我们的前台程序code.js.</p>
 <p>在11行我们准备在页面上显示“Movie网络图”。比较特殊的是第12行，这个<code>id=&quot;cy&quot;</code>的div将会被cytoscape用做画布来绘制网络关系图。</p>
-<p><code>app.py</code>也需要做一些修改。（源代码： <a href="https://github.com/zhongzhu/cytoscape_neo4j/blob/master/app.py" target="_blank" rel="external">cytoscape_neo4j/app.py</a>）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># coding=utf-8</span><br><span class="line">from flask import Flask, jsonify, render_template</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line">@app.route(&apos;/&apos;)</span><br><span class="line">def index():</span><br><span class="line">    return render_template(&apos;index.html&apos;)</span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    app.run(debug = True)</span><br></pre></td></tr></table></figure>
+<p><code>app.py</code>也需要做一些修改。（源代码： <a href="https://github.com/zhongzhu/cytoscape_neo4j/blob/master/app.py" target="_blank" rel="noopener">cytoscape_neo4j/app.py</a>）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># coding&#x3D;utf-8</span><br><span class="line">from flask import Flask, jsonify, render_template</span><br><span class="line"></span><br><span class="line">app &#x3D; Flask(__name__)</span><br><span class="line"></span><br><span class="line">@app.route(&#39;&#x2F;&#39;)</span><br><span class="line">def index():</span><br><span class="line">    return render_template(&#39;index.html&#39;)</span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">    app.run(debug &#x3D; True)</span><br></pre></td></tr></table></figure>
+
 <p>代码6-8行的意思是，如果访问网站的根目录”/“，Flask会返网页cytoscape_neo4j/templates/index.html。</p>
-<p><code>style.css</code>我们将定义画布的大小和背景色。（源代码：<a href="https://github.com/zhongzhu/cytoscape_neo4j/blob/master/static/css/style.css" target="_blank" rel="external">cytoscape_neo4j/static/css/style.css</a>）</p>
+<p><code>style.css</code>我们将定义画布的大小和背景色。（源代码：<a href="https://github.com/zhongzhu/cytoscape_neo4j/blob/master/static/css/style.css" target="_blank" rel="noopener">cytoscape_neo4j/static/css/style.css</a>）</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* cytoscape graph */</span></span><br><span class="line"><span class="selector-id">#cy</span> &#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">400px</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">500px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#f9f9f9</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><code>index.html</code>里面定了<code>&lt;div id=&quot;cy&quot;&gt;&lt;/div&gt;</code>，所以css里用<code>#cy</code>来做选择器。<code>style.css</code>里我们定义画布的宽度500px，高度400px，颜色是灰色。</p>
 <p><code>code.js</code>目前用不上，建一个空文件就行。</p>
 <p>现在可以看看我们修改的效果了。按如下步骤启动<code>app.py</code>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt;cd cytoscape_neo4j</span><br><span class="line"></span><br><span class="line">C:\cytoscape_neo4j&gt;python app.py</span><br><span class="line"> * Running on http://127.0.0.1:5000/</span><br><span class="line"> * Restarting with reloader</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt;cd cytoscape_neo4j</span><br><span class="line"></span><br><span class="line">C:\cytoscape_neo4j&gt;python app.py</span><br><span class="line"> * Running on http:&#x2F;&#x2F;127.0.0.1:5000&#x2F;</span><br><span class="line"> * Restarting with reloader</span><br></pre></td></tr></table></figure>
+
 <p>在浏览器里访问<code>http://localhost:5000</code>应该可以看到下图，一行标题<code>Movie网络图</code>，加下面一个500x400的灰色画布。</p>
 <p><img src="9.png" alt="这里写图片描述"></p>
 <p>到此，我们的基本工作都完成了。下一个博客会讲到如何用py2neo来查询neo4j获取需要的节点和节点之间的关系。</p>
@@ -418,7 +417,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/03/11/用cytoscape-js展示neo4j网络关系图-2-py2neo/" rel="prev" title="用cytoscape.js展示neo4j网络关系图 - 2. py2neo">
+              <a href="/2016/03/11/%E7%94%A8cytoscape-js%E5%B1%95%E7%A4%BAneo4j%E7%BD%91%E7%BB%9C%E5%85%B3%E7%B3%BB%E5%9B%BE-2-py2neo/" rel="prev" title="用cytoscape.js展示neo4j网络关系图 - 2. py2neo">
                 用cytoscape.js展示neo4j网络关系图 - 2. py2neo <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -438,7 +437,7 @@
         <div class="ds-share flat" data-thread-key="2016/03/10/用cytoscape-js展示neo4j网络关系图-1-Flask/"
      data-title="用cytoscape.js展示neo4j网络关系图 - 1. Flask"
      data-content=""
-     data-url="http://zhongzhu.github.io/2016/03/10/用cytoscape-js展示neo4j网络关系图-1-Flask/">
+     data-url="http://zhongzhu.github.io/2016/03/10/%E7%94%A8cytoscape-js%E5%B1%95%E7%A4%BAneo4j%E7%BD%91%E7%BB%9C%E5%85%B3%E7%B3%BB%E5%9B%BE-1-Flask/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -466,7 +465,7 @@
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="2016/03/10/用cytoscape-js展示neo4j网络关系图-1-Flask/"
-           data-title="用cytoscape.js展示neo4j网络关系图 - 1. Flask" data-url="http://zhongzhu.github.io/2016/03/10/用cytoscape-js展示neo4j网络关系图-1-Flask/">
+           data-title="用cytoscape.js展示neo4j网络关系图 - 1. Flask" data-url="http://zhongzhu.github.io/2016/03/10/%E7%94%A8cytoscape-js%E5%B1%95%E7%A4%BAneo4j%E7%BD%91%E7%BB%9C%E5%85%B3%E7%B3%BB%E5%9B%BE-1-Flask/">
       </div>
     
   </div>
@@ -511,7 +510,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-count">12</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -601,8 +600,8 @@
       <div class="footer-inner">
         <div class="copyright" >
   
-  &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -610,12 +609,12 @@
 </div>
 
 <div class="powered-by">
-  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+  由 <a class="theme-link" href="http://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
 </div>
 
 <div class="theme-info">
   主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
     NexT.Pisces
   </a>
 </div>
