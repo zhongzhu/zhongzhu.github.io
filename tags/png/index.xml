@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>PNG on 钟柱的博客</title>
+    <link>https://zhongzhu.github.io/tags/png/</link>
+    <description>Recent content in PNG on 钟柱的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 05 Apr 2016 17:07:35 +0800</lastBuildDate>
+    
+	<atom:link href="https://zhongzhu.github.io/tags/png/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>压缩游戏里的PNG图片</title>
+      <link>https://zhongzhu.github.io/post/%E5%8E%8B%E7%BC%A9%E6%B8%B8%E6%88%8F%E9%87%8C%E7%9A%84png%E5%9B%BE%E7%89%87/</link>
+      <pubDate>Tue, 05 Apr 2016 17:07:35 +0800</pubDate>
+      
+      <guid>https://zhongzhu.github.io/post/%E5%8E%8B%E7%BC%A9%E6%B8%B8%E6%88%8F%E9%87%8C%E7%9A%84png%E5%9B%BE%E7%89%87/</guid>
+      <description>游戏里面肯定会有很多的图片，图片的大小会对游戏的性能产生影响。所以，在不影响美术效果的情况下尽量要用分辨率低的图片。 今天发现了一个挺好的网页</description>
+    </item>
+    
+  </channel>
+</rss>
