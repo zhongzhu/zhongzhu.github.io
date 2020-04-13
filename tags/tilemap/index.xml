@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>tilemap on 钟柱的博客</title>
+    <link>https://zhongzhu.github.io/tags/tilemap/</link>
+    <description>Recent content in tilemap on 钟柱的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 25 Mar 2016 10:53:56 +0800</lastBuildDate>
+    
+	<atom:link href="https://zhongzhu.github.io/tags/tilemap/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>用Phaser和PhoneGap来开发iOS和Android游戏 - 3. 用Tiled Map Editor来生成游戏场景</title>
+      <link>https://zhongzhu.github.io/post/%E7%94%A8phaser%E5%92%8Cphonegap%E6%9D%A5%E5%BC%80%E5%8F%91ios%E5%92%8Candroid%E6%B8%B8%E6%88%8F-3-%E7%94%A8tiled-map-editor%E6%9D%A5%E7%94%9F%E6%88%90%E6%B8%B8%E6%88%8F%E5%9C%BA%E6%99%AF/</link>
+      <pubDate>Fri, 25 Mar 2016 10:53:56 +0800</pubDate>
+      
+      <guid>https://zhongzhu.github.io/post/%E7%94%A8phaser%E5%92%8Cphonegap%E6%9D%A5%E5%BC%80%E5%8F%91ios%E5%92%8Candroid%E6%B8%B8%E6%88%8F-3-%E7%94%A8tiled-map-editor%E6%9D%A5%E7%94%9F%E6%88%90%E6%B8%B8%E6%88%8F%E5%9C%BA%E6%99%AF/</guid>
+      <description>上一篇博客讲到了游戏的策划，既然策划清楚了那剩下的就是美工和写代码了。这篇博客距上篇已经10天，为什么会隔这么长时间呢？除了时间限制（我在业</description>
+    </item>
+    
+  </channel>
+</rss>

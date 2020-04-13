@@ -1,0 +1,409 @@
+<search>
+    
+     <entry>
+        <title>重新开始写Blog吧</title>
+        <url>https://zhongzhu.github.io/post/%E9%87%8D%E6%96%B0%E5%BC%80%E5%A7%8B%E5%86%99blog%E5%90%A7/</url>
+        <categories>
+          <category>感想</category>
+        </categories>
+        <tags>
+          
+        </tags>
+        <content type="html"> 最近想试试Hugo写文档才想起来以前用Hexo写的博客，居然最后一篇博客是4年前写的。真的是越来越懒了。2020年计划：
+ 把博客从Hexo转到Hugo 坚持写一些好玩的东西  加油！
+</content>
+    </entry>
+    
+     <entry>
+        <title>用Phaser和PhoneGap来开发iOS和Android游戏 - 5. 显示游戏场景</title>
+        <url>https://zhongzhu.github.io/post/%E7%94%A8phaser%E5%92%8Cphonegap%E6%9D%A5%E5%BC%80%E5%8F%91ios%E5%92%8Candroid%E6%B8%B8%E6%88%8F-5-%E6%98%BE%E7%A4%BA%E6%B8%B8%E6%88%8F%E5%9C%BA%E6%99%AF/</url>
+        <categories>
+          <category>技术</category>
+        </categories>
+        <tags>
+          <tag>Phaser</tag><tag>PhoneGap</tag><tag>Cordova</tag><tag>iOS</tag><tag>Android</tag>
+        </tags>
+        <content type="html"> 上一篇博客讲在Play.preload()中把游戏需要的资源（图片，tile map文件等等）加载到内存中，今天我们将把内存中的资源显示到手机浏览器屏幕上。也就是说，今天我们终于可以看到我们的游戏界面了。
+下面用到的所有图片和代码都可以在我的GitHub找到。
+目标  用Phaser把游戏场景显示在手机浏览器上  用Chrome来模拟手机浏览器 为了测试方便，我们在PC上用Chrome浏览器来模拟手机浏览器。
+打开Chrome之后，按上图的步骤就可以模拟手机浏览器。
+ 按f12打开开发者工具 点击图标转换成Device Mode 选择手机类型。比如iPhone 5/iPhone 6，不同手机类型的分辨率/宽高比不一样，正好可以用来测试上篇博客我们的屏幕适配是不是有效 默认情况显示的手机屏幕是竖屏的，我们的游戏是横屏，所以需要点击Rotate图标把屏幕改成横屏 这里的区域就是手机屏幕啦  现在我们试试看能不能把上一个博客写的代码learn_to_build_a_game_with_phaser/part2.html在Chrome里面显示出来。要显示网页，我们还需要一个HTTP Server。
+用Python来做HTTP Server 假设大家已经安装好Python了。我们试试看能不能显示上次的网页part2.html。操作如下：
+  把代码从GitHub clone到本地
+C:\&amp;gt; git clone https://github.com/zhongzhu/learn_to_build_a_game_with_phaser.git`
+  执行如下两行命令
+cd .\learn_to_build_a_game_with_phaserpython -m SimpleHTTPServer`
+如果看到如下提示，就表示HTTP Server起来了，在监听8000端口。
+ Serving HTTP on 0.0.0.0 port 8000 &amp;hellip;
+   转到Chrome浏览器，输入http://localhost:8000/part2.html应该可以看到如下界面
+  为什么是一片黑色？上一篇博客我们只讲到了如何把游戏资源加载到内存还没把它们显示出来，所以屏幕上什么都没有。下面就开始讲代码，看如何显示。
+代码框架 这次的代码在learn_to_build_a_game_with_phaser/part3.html文件里。代码的框架如下
+&amp;lt;!-- the game logic 游戏逻辑--&amp;gt;&amp;lt;script&amp;gt;var Play = function () {};Play.prototype = {preload: function () {// ... },create: function() {// 设置游戏背景颜色 // 显示Tile Map // 显示Enemy // 显示Player },update: function() {}};&amp;lt;/script&amp;gt; 显示的工作都放入了Play.create()，总共有四个任务：
+ 设置游戏背景颜色 显示Tile Map 显示Enemy 显示Player  设置游戏背景颜色 很简单，就是把舞台stage的backgroundColor属性设为颜色的16进制值就好。
+// 设置游戏背景颜色this.stage.backgroundColor = &amp;#39;#A6E5F5&amp;#39;;这里多说两句Phaser的舞台stage和世界world的关系和区别。
+Phaser的world指的是整个游戏世界，而玩家能看到的部分都在舞台stage里面。你可以想象stage是一个空相框，而world是一张很大的地图，玩家用相框放在大地图上，自己能看到的部分（显示在手机上的部分）就是stage的内容，只要玩家在地图上移动相框，就能慢慢看到所有的地图内容。
+当然，有的游戏（比如：2048，珠宝消除）整个游戏世界都显示在手机屏幕上，这种情况下Phaser的stage和world的物理大小是一样的。
+显示Tile Map 如下，显示Tile Map总共就6行代码。
+第31行，利用add.tilemap()方法生成了tilemap对象this.map。函数参数tilemap就是代码第22行的tilemap，那个JSON文件。
+this.map = this.add.tilemap(&amp;#39;tilemap&amp;#39;);第32行，把tilemap需要的图片资源加载进来。函数有两个参数，第二个是代码第23行的图片资源tiles，第一个是我们在用Tiled Map Editor编辑游戏场景时给tileset取的名字，如下：
+第34,35行，this.map.createLayer()方法创建了BackgroundLayer和GroundLayer，并把这两个Tile Map Layer创建并显示在了手机屏幕上。
+这两个Layer的名字是我们在Tiled Map Editor里面设置的，如下：
+第36行，setCollisionBetween()设置我们的Player会和GroundLayer的哪些tile图片碰撞。
+this.map.setCollisionBetween(1, 35, true, &amp;#39;GroundLayer&amp;#39;);这个碰撞是个很重要的概念，如果不setCollisionBetween()，那Player在重力的作用下就会像特异功能一样穿过我们的GroundLayer(那些草地啊，桥啊，反正Player用来走的)，直接掉下屏幕最下方消失不见。
+setCollisionBetween()的头两个参数是tile小图片的下标index。下面的图就是我们所有的tile小图片了，下标从1开始，从上到下从左到右累加。比如：那个笑脸的绿色不明生物的下标就是4。
+setCollisionBetween()的第三个参数表示我们要碰撞，第四个参数表示这个函数只对GroundLayer起作用。BackgroundLayer是用来做背景的，所以不需要和Player有什么碰撞了。
+第38行，我们按GroundLayer的实际大小重置了world的大小。
+this.groundLayer.resizeWorld();前面已经讲过stage和world的概念。最开始我们生成Game对象的时候，设置的大小是840x560，所以当时stage和world的大小一样都是840x560。
+var game = new Phaser.Game(840, 560, Phaser.AUTO);不过，我们用Tiled Map Editor编辑的游戏场景可比这个大多了，有2310x560这么大。调用resizeWorld()后，stage也就是我们看世界的窗口依然是840x560，但是我们的世界world已经变成2310x560了。
+显示Enemy 游戏里的敌人Enemy只有一种：很凶的绿色的盒子。下面的代码介绍了如何生成敌人。
+this.enemyGroup = this.game.add.group();this.enemyGroup.enableBody = true;this.map.createFromObjects(&amp;#39;ObjectLayer&amp;#39;, &amp;#39;box&amp;#39;, &amp;#39;texture-atlas&amp;#39;, &amp;#39;blockerMad&amp;#39;,true, false, this.enemyGroup);第1行，利用add.group()生成了一个this.enemyGroup组Group。如下图所示，游戏里有很多的Enemy，如果要一个一个去生成，那太麻烦了。而且，每个Enemy和Player之间的关系都一样（Player撞到Enemy就重头来过），所以把所有的Enemy放在一个组里统一对待是个很好的选择。
+第2行，Group的enableBody设为true。这是给Group里的所有Enemy都加上可以物理碰撞身体（physics body）。正如前面GroundLayer加上Collision一样，给Enemy加上Body才会让Phaser知道Player和Enemy可以碰撞并通知游戏程序来处理。假如没有Body，Player就会径直穿过Enemy的身体，看起来就像科幻动画了。
+第3-6行，用Tilemap.createFromObjects()方法创建所有的Enemy对象并显示在手机屏幕上。这个方法有7个参数，我们一个一个来讲讲。
+&#39;ObjectLayer&#39;, &#39;box&#39;：看上图，ObjectLayer是前面用Tiled Map Editor创建的放各种精灵的层，ObjectLayer里的所有Enemy都给取名叫box。
+&#39;texture-atlas&#39;, &#39;blockerMad&#39;： texture-atlas是Play.preload()里加载到内存的texture-atlas.png的名字。blockerMad是Enemy小图片在texture-atlas.json里的名字。
+这4个参数的意思就是：把tile map里ObjectLayer上叫做box的对象全部用texture-atlas.png里叫blockerMad的小图片来绘制到屏幕上。
+this.enemyGroup：把创建出来的对象都加到enemyGroup组里。
+显示Player this.player = this.add.sprite(60, 150, &amp;#39;texture-atlas&amp;#39;, &amp;#39;alienBlue_walk2&amp;#39;);this.player.anchor.setTo(0.5, 0.5);this.player.animations.add(&amp;#39;walking&amp;#39;, [&amp;#39;alienBlue_walk1&amp;#39;, &amp;#39;alienBlue_walk2&amp;#39;], 5, true);this.physics.arcade.enable(this.player);this.player.body.gravity.y = 1000;this.camera.follow(this.player);第1行，把精灵(sprite)显示在坐标X轴：60, Y轴：150。我们在texture-atlas.png里保存了好几帧和Player相关的图片。初始化用的是如下的alienBlue_walk2。
+第2行，anchor是sprite图片的基准点，如果把anchor设为(0,0)表示用图片的左上角做基准点把图片放到stage上。设为(0.5,0.5)表示用图片的中心作为基准点。下面的图展示了不同anchor值，sprite在stage上摆放位置的不同。
+第3行，player.animations.add()给Player增加动画效果。动画取名叫walking，利用了alienBlue_walk1和alienBlue_walk2两帧图片循环播放。播放速度5帧/秒。这里add()只是生成了动画，还没有正式开始播放。需要后面player.animations.play()动画才真正能动起来。
+第5行，给Player加上物理特性。这样它就会有Body及其各种重力、碰撞、速度等等。
+第6行，Player的Y轴重力加速度为1000。这样Player就会像真实的世界一样，从屏幕的(60,150)坐标往下落。当然，他不会落到底，他会和GroundLayer碰撞，然后站在GroundLayer上。
+第7行，让游戏的镜头(camera)跟随Player。前面讲到world很大，stage只是玩家能看到的一个小相框里的东西，Player在游戏里奔跑时我们就得横着移动小相框让玩家能看到Player当前所在地点的地图。在Phaser里，没有移动相框的函数，而是移动镜头，让镜头跟随Player。
+试试我们的代码 现在打开Chrome浏览器，输入http://localhost:8000/part3.html应该可以看到如下界面：
+等等，为什么Player还是穿过GroundLayer掉到屏幕下方去了？其实我们还少写列两行代码。
+最后的两行代码 现在让我们来加入最后的两行代码。
+第26行，让游戏用Arcade物理系统。Phaser支持好几种物理系统，比如Arcade、P2和Ninja。其中以Arcade最简单，它只能判断方形物体的碰撞。如果要做愤怒小鸟之类的游戏，就牵涉多边形/圆形/物体旋转时的碰撞，那就得需要更高级的P2或者Ninja物理系统才行了。我们的碰撞都是方形的，用Arcade简单实用。
+第59-61行，我们实现了一个新的方法Play.update()。一般讲游戏的性能都说FPS(Frame Per Second)，每秒多少帧。如果游戏FPS=30，那Phaser每秒钟就会调用Play.update()30次。我们一般会在update()里加入各种碰撞测试和碰撞成功后的回调函数。
+第60行，physics.arcade.collide()检测Player和GroundLayer之间的碰撞。如果检测到了碰撞，Player就会站立在GroundLayer上，而不是掉到屏幕下方去。
+再试试我们的代码 现在打开Chrome浏览器，输入http://localhost:8000/part3.html应该可以看到如下界面：
+看来我们已经成功了，不是吗？Player稳稳地站在了草地上，耶！
+今天就到这里了 这篇博客我们讲了如何把游戏场景显示在手机浏览器上，下次我们讲如何让Player跑和跳。
+</content>
+    </entry>
+    
+     <entry>
+        <title>压缩游戏里的PNG图片</title>
+        <url>https://zhongzhu.github.io/post/%E5%8E%8B%E7%BC%A9%E6%B8%B8%E6%88%8F%E9%87%8C%E7%9A%84png%E5%9B%BE%E7%89%87/</url>
+        <categories>
+          <category>技术</category>
+        </categories>
+        <tags>
+          <tag>PNG</tag><tag>tinypng</tag>
+        </tags>
+        <content type="html"> 游戏里面肯定会有很多的图片，图片的大小会对游戏的性能产生影响。所以，在不影响美术效果的情况下尽量要用分辨率低的图片。
+今天发现了一个挺好的网页工具tinypng，可以把PNG图片在“不太”影响图片效果的情况下压缩图片。
+工具的使用方法很简单：点击这里访问网站，然后如下图步骤就可以了。
+ 把要处理的PNG文件（支持一次处理多个文件）用鼠标拽到这里。 处理成功后点击download把生成的新PNG文件下载下来就好了  从上图可以看出，我上传的两个PNG文件一个大小减少了73%，另一个减少了68%，相当棒，对吧？
+我们再看看图片texture-atlas.png转换前后的美术效果对比。
+转换前：
+转换后：
+直接看基本分辨不出来，可是大小可变小了很多。真是一个很handy的好工具！
+</content>
+    </entry>
+    
+     <entry>
+        <title>用Phaser和PhoneGap来开发iOS和Android游戏 - 4. Phaser基础知识</title>
+        <url>https://zhongzhu.github.io/post/%E7%94%A8phaser%E5%92%8Cphonegap%E6%9D%A5%E5%BC%80%E5%8F%91ios%E5%92%8Candroid%E6%B8%B8%E6%88%8F-4-phaser%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
+        <categories>
+          <category>技术</category>
+        </categories>
+        <tags>
+          <tag>Phaser</tag><tag>PhoneGap</tag><tag>Cordova</tag><tag>iOS</tag><tag>Android</tag>
+        </tags>
+        <content type="html"> 上一篇博客我们用Tiled这个工具来生成了游戏场景。今天终于要开始写代码了，我们将开始使用Phaser把游戏场景文件（tiles.png, level.json）读出来，显示在手机上。
+下面用到的所有图片和代码都可以在我的GitHub找到。
+目标  用Phaser把游戏场景显示在手机浏览器上  准备工作 在写代码前，需要准备的东西：
+ Windows PC 在Windows PC上安装  Google Chrome浏览器 Python 2.7.x for Windows    Chrome浏览器用来模拟手机。
+安装Python不是因为要写Python代码。Phaser工程其实就是一个网站，所以在调试程序的时候需要一个HTTP Server才能把Phaser工程跑起来。Python内置的SimpleHTTPServer非常好用，零配置，推荐用它。
+你可以用任何文本编辑器写代码，我用的是Sublime Text。
+Phaser工程的目录结构 请先到我的GitHub下载源代码，下面的讲解将基于这个源代码。
+Phaser工程的主目录如下：
+ part1.html, part2.html - 游戏的HTML网页。为了简化我把JavaScript代码写在HTML文件里了。每个HTML文件都是本教程的一个阶段性MVP(Minimum Viable Product)，可以用来运行和展示。随着教程的进行，还会增加part3.html、part4.html等等 index.html - 现在还用不到它。等整个教程结束，我会做一次重构，把part1.html/part2.html/&amp;hellip;的JavaScript代码提取出来放入js目录，剩下的真正的HTML的内容放入index.html js目录 - 所有的JavaScript文件 assets目录 - 图片，tile map文件，声音  Phaser工程的代码结构 现在打开文件learn_to_build_a_game_with_phaser/part1.html，我们来看看代码，这是一个很常见的HTML5网页:
+&amp;lt;!DOCTYPE html&amp;gt;&amp;lt;html lang=&amp;#34;en&amp;#34;&amp;gt;&amp;lt;head&amp;gt;&amp;lt;meta charset=&amp;#34;utf-8&amp;#34; /&amp;gt;&amp;lt;meta name=&amp;#34;viewport&amp;#34; content=&amp;#34;user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height&amp;#34; /&amp;gt;&amp;lt;title&amp;gt;跑完一百米！&amp;lt;/title&amp;gt;&amp;lt;style type=&amp;#34;text/css&amp;#34;&amp;gt; body { margin: 0; }&amp;lt;/style&amp;gt;&amp;lt;script src=&amp;#34;js/phaser.min.js&amp;#34;&amp;gt;&amp;lt;/script&amp;gt;&amp;lt;/head&amp;gt;&amp;lt;body&amp;gt;&amp;lt;!-- the game logic 游戏逻辑--&amp;gt;&amp;lt;script&amp;gt;var Play = function () {};Play.prototype = {preload: function () {},create: function() {},update: function() {}};&amp;lt;/script&amp;gt;&amp;lt;!-- the main app 主程序--&amp;gt;&amp;lt;script&amp;gt;var targetWidth = 840;var targetHeight = 560;var newWidth = (window.innerWidth/window.innerHeight) * targetHeight;var game = new Phaser.Game(newWidth, targetHeight, Phaser.AUTO);game.state.add(&amp;#39;Play&amp;#39;, Play);game.state.start(&amp;#39;Play&amp;#39;);&amp;lt;/script&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;第8行引入了Phaser的库文件，就一个文件phaser.min.js，那就是Phaser所有的东西啦，够简单吧？
+和Phaser相关的全部代码都放在&amp;lt;body&amp;gt;&amp;lt;/body&amp;gt;之间。我用两个&amp;lt;script&amp;gt;&amp;lt;/script&amp;gt;来放两段不同功能的JavaScript代码。这样有点啰嗦，不过好处是看起来清晰，而且最后重构的时候代码很容易分模块。
+初始化Phaser的Game对象 先来看23行-32行。这几行是程序的入口，类似C语言的main函数。
+第29行初始化了Phaser的Game对象。
+var game = new Phaser.Game(newWidth, targetHeight, Phaser.AUTO);Game()函数的第三个参数指定Phaser用什么Web技术来画游戏的界面。Phaser支持HTML Canvas或者WebGL两种方式。Canvas几乎所有的手机浏览器都支持；WebGL动画性能更好，不过有些浏览器不支持。AUTO模式让Phaser自己决定用前面两种方式中的一种。
+Game()函数的前两个参数指定游戏界面的宽和高。我们的游戏界面为840X560，由于各种手机的屏幕宽高比不一样，第27行根据手机浏览器实际宽window.innerWidth高window.innerHeight比算出了游戏界面的新的宽newWidth，游戏的高targetHeight保持560px不变。
+var targetWidth = 840;var targetHeight = 560;var newWidth = (window.innerWidth/window.innerHeight) * targetHeight;根据手机实际宽高比重新计算游戏的宽高非常重要，如果不这样做，你的游戏在不同的手机屏幕上显示就会失真（图形拉伸，或者被压缩变形）。
+第30行，用game.state加载了一个叫做Play的State。加载只是把State放入内存中，第31行start()才真正让这个State运行起来。
+game.state.add(&amp;#39;Play&amp;#39;, Play);game.state.start(&amp;#39;Play&amp;#39;);那什么是State呢？下面我们详细讲讲State这个很有用的概念。
+Phaser的State对象 Phaser的State可以被翻译成状态机里的状态。State是个很有用的概念。
+在写代码的时候，有面向对象编程经验的人都会想到把把代码封装成类（Class）：主菜单界面一个类，游戏实际的运行一个类，游戏结果的显示（You Win! You Loose!）一个类。要让这些类的对象相互访问，而且能访问Phaser的实时信息，你恐怕得多做一些公共代码的工作。而Phaser的State对象帮你把这些都实现了：
+ 状态的加载game.state.add() 状态的运行/转换game.state.start() 直接在状态对象里用this.xxx的方式访问Phaser的核心对象：game, input, camera, sound, physics, 等等  如何才能生成一个State对象呢？代码第14-20行定义了一个叫做Play的State对象，及其它的原型框架。
+var Play = function () {};Play.prototype = {preload: function () {},create: function() {},update: function() {}};很简单，State就是一个函数对象，它有几个约定的方法可以在State的原型(prototype)里实现:
+ preload Phaser会在游戏初始化阶段调用它，一般我们用它来加载游戏资源(assets)。如：图片、声音等等 create preload被调用结束后，Phaser会调用create。我们一般在这个方法里把内存里的图片放置到游戏界面里，设置好Player和enemy update 每秒钟这个update会被Phaser调很多次，所以所有游戏精灵们之间的互动都在这里处理。比如：Player跳跃，Player撞到Enemy，等等  通常，一个Phaser游戏工程里会写多个State对象，比如：Load state用来把图片、sprite sheet、声音加载到内存，同时显示一个逐渐变长的progress bar。Menu state用来显示游戏的主菜单，让玩家选关或者设置。Play state用来运行游戏逻辑。End state用来显示You Win! You Loose!之类的东西。
+为了简化，我们就一个Play state。
+Play.preload方法 现在打开文件learn_to_build_a_game_with_phaser/part2.html，我们来看看preload()方法里面写了些什么。
+var Play = function () {};Play.prototype = {preload: function () {this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;this.scale.pageAlignHorizontally = true;this.scale.pageAlignVertically = true;this.load.tilemap(&amp;#39;tilemap&amp;#39;, &amp;#39;assets/level.json&amp;#39;, null, Phaser.Tilemap.TILED_JSON);this.load.image(&amp;#39;tiles&amp;#39;, &amp;#39;assets/tiles.png&amp;#39;);this.load.atlas(&amp;#39;texture-atlas&amp;#39;, &amp;#39;assets/texture-atlas.png&amp;#39;, &amp;#39;assets/texture-atlas.json&amp;#39;);},create: function() {},update: function() {}};第1行，声明了Play state函数对象。
+第5行，设置了本游戏界面的缩放模式scaleMode为Phaser.ScaleManager.SHOW_ALL。
+第6-7行是让游戏界面居中显示。
+第9-11行，把游戏需要的图片和tile map资源加载到内存。
+短短十来行代码，我花了近10天才搞清楚了要这样写。为什么呢？因为这里牵涉了Phaser游戏开发的三个知识点：
+ 手机屏幕适配 Tile Map Texture Atlas  下面详细讲讲这三个知识点。
+手机屏幕适配 一个游戏当然要在各种手机的屏幕上都显示正常，要不然别人怎么会玩你的游戏？这个要求很正常，不过分吧？
+答案是：太过分了。
+鉴于现在手机厂家多如牛马，每个厂家几个月就出一款长相奇特的新机，要做到一个游戏适配所有手机屏幕基本是没戏。我也是花了差不多一个星期才搞清楚了应该怎么做：太复杂了，别妄想了，干脆就用最简单的方法适配大部分手机就好。
+下图就是本游戏做手机屏幕适配的方法：
+统共分4步:
+ 给游戏预设一个界面大小840x560，所以宽高比为3:2 游戏代码里动态获得手机实际的宽高比（宽：window.innerWidth，高：window.innerHeight）。比如iPhone5，宽高568x320,宽高比16:9 修正预设的大小，高度不变560，高度按16:9换算成1493。现在我们的游戏有新的界面大小：1493x560，宽高比16:9 虽然宽高比我们和iPhone5一致了，但1493x560比568x320大很多啊。没有关系，用Phaser的缩放模式this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL把1493x560保持宽高比的缩小，直到能放入iPhone5的屏幕里。  看似简单的4步，我花了5个晚上的时间google加看帮助才理清了这样是可行的。
+Tile map Tile map的概念在上一个博客已经讲过了。
+Tile map包括两部分：一个是包含所有小tile图片的大图片tile.png，另一个是描述哪种小tile图片应该放在哪个小格子的描述文件level.json。我们需要用下面的this.load.tilemap()和this.load.image()方法把这两个资源加载到内存。
+这两个函数很类似，第一个参数是给被加载的资源取个名字。以后再访问这个资源用这个名字就好了。第二个参数是资源的文件名。
+this.load.tilemap(&amp;#39;tilemap&amp;#39;, &amp;#39;assets/level.json&amp;#39;, null, Phaser.Tilemap.TILED_JSON); this.load.image(&amp;#39;tiles&amp;#39;, &amp;#39;assets/tiles.png&amp;#39;); Texture Atlas Tile Map用的tile.png图片是sprite sheet，它把大小一样的小tile图片全部放入了一个大图片文件tile.png中了。
+能不能把大小不一样的图片也像sprite sheet那样放到一个大图片文件里来提高性能？可以，就是用Texture Atlas方式。
+Texture Atlas类似Tile Map也包括两部分：一个当然是那个大图片文件，在本游戏就是texture-atlas.png；另一个就是用来描述哪个小图片放入了texture-atlas.png的描述文件texture-atlas.json。texture-atlas.json里面包含了每个小图片的名字，我们后面将用这些名字来访问texture-atlas.png里的各个小图片。
+下图就是texture-atlas.png:
+下图是texture-atlas.json的内容，每个filename后面跟着的就是小图片的名字。
+用如下代码就可以把Texture Atlas加载到内存：
+this.load.atlas(&amp;#39;texture-atlas&amp;#39;, &amp;#39;assets/texture-atlas.png&amp;#39;, &amp;#39;assets/texture-atlas.json&amp;#39;)第一个参数是给Texture Atlas资源取的一个名字。第二个参数是大图片文件名。第三个参数是json文件名。
+休息一下 这篇博客我们讲了Phaser工程的大概样子，并详细讲了Play.preload()方法及其屏幕适配等，下一个博客我们接着讲Play.create()。
+</content>
+    </entry>
+    
+     <entry>
+        <title>用Phaser和PhoneGap来开发iOS和Android游戏 - 3. 用Tiled Map Editor来生成游戏场景</title>
+        <url>https://zhongzhu.github.io/post/%E7%94%A8phaser%E5%92%8Cphonegap%E6%9D%A5%E5%BC%80%E5%8F%91ios%E5%92%8Candroid%E6%B8%B8%E6%88%8F-3-%E7%94%A8tiled-map-editor%E6%9D%A5%E7%94%9F%E6%88%90%E6%B8%B8%E6%88%8F%E5%9C%BA%E6%99%AF/</url>
+        <categories>
+          <category>技术</category>
+        </categories>
+        <tags>
+          <tag>Phaser</tag><tag>PhoneGap</tag><tag>Cordova</tag><tag>iOS</tag><tag>Android</tag><tag>tilemap</tag><tag>tiled</tag><tag>sprite-sheet</tag><tag>texture-atlas</tag>
+        </tags>
+        <content type="html"> 上一篇博客讲到了游戏的策划，既然策划清楚了那剩下的就是美工和写代码了。这篇博客距上篇已经10天，为什么会隔这么长时间呢？除了时间限制（我在业余时间开发）外，主要还是在开发过程中遇到了各种困难。好在，目前这些困难都被一一攻破啦。
+下面用到的所有图片和代码都可以在我的GitHub找到。
+目标 我们今天的目标是：
+ 生成游戏场景  游戏图片 说到美工，其实就是游戏图片和游戏场景。
+游戏图片包括游戏里能看得见的所有图，比如我们小时候玩的超级玛丽，就包括很多图：
+ 呆帽子的Mario Mario用头去顶的带问号的箱子 Mario喜欢钻的水管 各种背景图片：云、山、树丛 等等  游戏场景也就是你在手机屏幕上看到的游戏的整个样子。把所有的图片摆放到计划的地方就组成了场景，然后让我们的Player在场景里尽情的打怪和收金币。
+游戏图片从哪里来呢？如果你是美术科班出身，当然可以自己画游戏图片。对我们非科班人来说，有两个办法：买有版权的图片，或者用免费图片。估计我会把这个游戏做成免费版，那还是用免费图片吧。
+本游戏的图片都是从Open Game Art网站获取的，感谢图片作者Kenney的无私奉献。在Open Game Art获取图片的时候要注意检查图片的License, 是如下的CC0才能免费使用。
+游戏场景 下图是我们最终要完成的场景。本游戏是水平方向不停奔跑类型的，所以这里只能展现场景的开头部分，剩下的部分在Player不停奔跑过程中就会逐渐展现出来。
+如上图所示，可以把场景里的图片分成三类：
+ 平台（platform）。如上图的有草地的路和桥。Player将在平台上奔跑跳跃。Phaser里面的平台是有意义的，如果不是平台，Player站在草地上会往下“滑”，“穿越”草地最后掉入屏幕最下端消失掉。 背景(background)。如上图的路牌、草和栏杆。它们纯粹是用来做装饰的背景图，Player穿过它们没有任何影响。 精灵(sprite)。如上图戴头盔的Player，很凶的Enemy绿色石头。Phaser里它们被称为sprite（精灵）。正由于有精灵们的存在，游戏才变得生动活泼了。精灵们各司其职：Player要跳过Enemy尽早到达终点，Enemy想方设法绊倒Player让他重跑。  生成游戏场景，就是要把platform, background和精灵图片放到指定的地方。那么多的图片，怎么才能按我们的要求放在指定的位置呢？Tiled Map Editor这个免费工具就是答案。
+Tiled Map Editor 大家可以点击这里下载和安装Tiled的Windows版本。
+回到前面的问题，如何才能把图片放到指定的位置？游戏精英们在几十年前就找到了方案。如下图所示，把游戏场景划成一个个大小一样的小格子不就行了吗。所有图片的尺寸都和小格子一样大小，就像铺瓷砖一样把图片铺到划好的格子里，我们的游戏场景就出来了。
+游戏界把这种图叫做瓦片地图（tile map）。Tile map的生成和使用步骤如下。
+ 把所有图片tiles.png加载到Tiled,然后在Tiled里面把各图片放在指定的格子里，完成tile map。 把完成的tile map存成JSON格式的文件level.json。这个文件描述了哪个图片放在哪个格子里。 Phaser读取level.json和tiles.png图片到缓存中。 Phaser把图片根据level.json里面规定的地方摆放到屏幕上，完成游戏场景的显示。  看到步骤1你可能就有疑问了，为什么是一个图片文件tiles.png,而不是每个图一个png文件？
+其实多个图片文件或者一个图片文件都可以。游戏界要这么做是有道理的：一切都是为了性能。一个一个图片去读取肯定Disk I/O会花很长时间，于是他们想到了把大小相同图片们摆放到一个大图片里，在游戏程序里按偏移量就可以把想要的各个小图片读出来了。为此游戏界还给这种大图片取了个名字：sprite sheet。
+设置Tile Map 现在让我们打开Tiled Map Editor。点击File-&amp;gt;New&amp;hellip; 就会出现如下的对话框。
+我们需要关心的是红框里的Map size(Tile Map图大小)和Tile size(每个瓦片的大小，也就是每个小图片的大小)。
+我们的小图片都是70x70的。让我们把游戏设为宽22个瓦片，高9个瓦片。点击确认后，在编辑器的中间就会显示空的小格子，一共22x9=198个格子。
+你可以在这里下载tiles.png。现在让我们把图片文件tiles.png加载到Tiled。
+如下所示，点击那个带黄色星星的图标，在弹出的对话框里选择tiles.png，并确认Tile width/Tile height都是70 px，按Ok就会看见所有的tile图片都Tilesets里面了。
+好了，到目前为止tile map已经设置完毕。先ctrl&#43;s把Tiled项目保存为level.tmx，然后我们可以开始摆放图片了。
+Tile Map的Layer 不是说放图片吗，怎么又来了什么Layer？Layer是什么?
+Layer就是图层，会PS(PhotoShop)的同学应该很了解这个概念。在Tiled里，你可以创建多个图层。每个图层是独立的，你可以在各图层上摆放不同的图片。当然，在手机屏幕上你看到的是所有图层的图片叠加到一起的效果。
+Tiled支持三种Layer
+ Tile Layer Object Layer Image Layer  Image Layer通常用来放一张和大的背景图片。为了简化，这次我们直接用颜色做背景，就用不上Image Layer。
+Tile Layer可以用来放tile图片。我们将用它来放平台（platform）的tile图片（有草地的路和桥），和一些简单的背景(background)图片（路牌、草、河水和栏杆）。
+Object Layer用来放精灵(sprite)，也就是戴头盔的Player，很凶的Enemy绿色石头。
+Tile Layer　### 现在点击Add Tile Layer，创建一个Tile Layer, 命名为BackgroundLayer。再次创建一个Tile Layer, 命名为GroundLayer。点击Add Object Layer， 创建ObjectLayer。最后结果如下：
+然后选中GroundLayer，在Tilesets里面任选tile图片来摆放在空的格子里。我做完的GroundLayer是这个样子的。Player在游戏里会在GroundLayer的路面上奔跑。
+然后选中BackgroundLayer，把路牌、草、河水和栏杆随意放上去。
+Object Layer ObjectLayer是个很特殊的图层，放置的都是sprite。这里我们将会放入两种sprite:
+ 很凶的Enemy绿色石头和 一面用来标识终点的旗帜。  Player也可以放在ObjectLayer里，不过这次我准备在代码里直接生成Player。
+绿色石头和旗帜的图片不在tiles.png图片里，我们得单独处理一下。为什么不在tiles.png里面？因为tile.png小图片都是一样大小的(70x70)，而sprite则是各不相同。石头是51x51，旗帜是70x70,player是70x86。
+能不能把大小不一样的图片也像sprite sheet那样放到一个大图片文件里来提高性能？答案是：可以。游戏界称这种大图为texture atlas。不过，今天我们还用不到texture atlas。我们直接用单个的图片文件，原因是：在Object Layer里面摆放的图片只是个占位符，用来标识sprite要摆放的地方（XY坐标值）。真正生成图形并显示出来需要我们写代码实现。
+现在来把石头和旗帜的图片加载到Tiled里面。点击Map-&amp;gt;New Tileset&amp;hellip;,在弹出的对话框里设置name为enemies，Type选择Collection of Images。
+确认后，按加号把图片\assets\texture-atlas\blockerMad.png和assets\texture-atlas\flagYellow.png加入。
+现在开始把石头和旗帜放入Obejct Layer。比较复杂，前4步是这样的：
+ 在Layers里选中ObjectLayer 在工具栏选择Insert Tile 选择石头或者旗帜 把石头或者旗帜放入图层里  完成的结果如下。
+还没有完， 我们还需要给所有的object(sprite)取名字。这个名字在游戏代码里会用到。 总共有4个步骤要做：
+ 选择Objects。你会看到ObjectLayer下面有很多空的选择框 在工具栏选择Select Objects 选择一个sprite 双击给sprite一个名字。我们所有的石头都叫blockerMad，旗帜叫flag  完成的结果如下。
+到此游戏场景已经画完。ctrl&#43;s保存一下项目，然后我们准备来生成level.json文件。
+level.json 点击File-&amp;gt;Export As&amp;hellip;,把文件命名为level.json就大功告成啦！
+有了大图片文件tile.png加tile map文件level.json，我们就可以把漂亮的游戏场景搬上手机屏幕啦。已经很晚了，今天就到这里，下个博客介绍如何用Phaser来显示我们的游戏场景。
+</content>
+    </entry>
+    
+     <entry>
+        <title>用Phaser和PhoneGap来开发iOS和Android游戏 - 2. 游戏策划</title>
+        <url>https://zhongzhu.github.io/post/%E7%94%A8phaser%E5%92%8Cphonegap%E6%9D%A5%E5%BC%80%E5%8F%91ios%E5%92%8Candroid%E6%B8%B8%E6%88%8F-2-%E6%B8%B8%E6%88%8F%E7%AD%96%E5%88%92/</url>
+        <categories>
+          <category>技术</category>
+        </categories>
+        <tags>
+          <tag>Phaser</tag><tag>PhoneGap</tag><tag>Cordova</tag><tag>iOS</tag><tag>Android</tag>
+        </tags>
+        <content type="html"> 上一篇博客讲到最难的是策划，那是真的，因为想了好多天都没有完全决定要做一个什么样的游戏。下面是我这几天想到的一些问题。
+开发3D还是2D游戏？## 比较好决定，不会做3D，只能选2D游戏来做。
+什么类型的游戏？ 这个太难决定了，游戏的种类太多：棋牌，跑跳，射击，赛车，角色扮演，动作游戏，宝石消除，策略，数独，智力问答，等等。
+当时首选做跑跳类的，然后有想做宝石消除，然后又想做数字类的智力游戏（类似数独），然后又想做简单的赛车游戏，后来又想做一个汉诺塔。反反复复的怎么都定不下来，于是干脆看了本书《iPhone Game Blueprints》
+看书对选择根本没有帮助。最后（其实就是今天），还是想先做个跑跳类的吧，大部分人应该还是喜欢这种有动感也有点点压力的游戏。
+跑完一百米！ 只要定下来做什么类型的游戏，接下来就好办多了。下图就是游戏《跑完一百米》的游戏策划。
+游戏情节 任何游戏都需要一个情节，这样会让你的游戏更有灵魂。我们的情节是：主人公参加百米赛跑，要克服重重障碍，以最短时间跑完。
+得分 一个游戏总要有玩家能得到的东西。麻将游戏是玩家胡了，射击游戏是玩家消灭掉了所有的坏人，我们的游戏呢？既然大家都是跑一百米，那得分就是玩家以更短的时间跑完一百米。所以我们在游戏里要显示计时，玩家要想办法用越短的时间越好。
+敌人 一个好的情节当然少不了反派。玩家要得分，那反派就要想办法让你不得分或者少得分。有了冲突，游戏才更有压力和刺激。
+目前准备在跑道上设置一些栏杆、石头和水塘。玩家一碰到这些敌人就会发生影响玩家得分的事情。具体在我们的游戏里应该设计成什么事情呢？一般的游戏是损失一条命或者失血。由于本游戏的得分在于时间，那最好能想出一个让玩家损失时间的惩罚。
+我们可以这样设计：把一百米分成十段，每段十米。如果在哪个段内撞到敌人跌倒,那玩家就得从该段的起点处重新开始跑。为什么不从百米的零米起点处重新开始？考虑到这是一个休闲小游戏，如果每次失败都从游戏最开始的地方重新开始，那一些初级用户会很快对游戏失掉兴趣，也就体会不到后面几十米的漂亮跑道了。
+压力 等等，前面对敌人的设计貌似给了玩家无敌模式，如果玩家怎么都跑不完一百米，那么游戏永远不会结束了？玩家就会在某个十米段里面不停的循环？
+你的考虑是对的，我们需要给游戏加一个停止条件：玩家需要在20秒内跑完一百米。这样既可以停止游戏，又可以在游戏里给玩家一些压力。
+炫耀 游戏玩得好肯定值得在朋友间炫耀炫耀的。玩家跑完百米出现You Win界面时，我们可以支持转发微信朋友圈，炫耀内容自动生成“我用3秒跑完了一百米，敢来挑战我吗？”当朋友点击链接后，显示炫耀图片（用时，跌倒次数等等），并显示链接到AppStore/Google Play去下载“跑完一百米”来迎接朋友的挑战。
+关卡设计 如图所言，实在想做个小游戏，就不要关卡了，统共就一关。
+今天的结束语 终于完成了策划，值得庆贺！下一个博客就要讲到最激动人心的部分：搭环境coding啦！
+</content>
+    </entry>
+    
+     <entry>
+        <title>用Phaser和PhoneGap来开发iOS和Android游戏 - 1. 为什么写这篇博客</title>
+        <url>https://zhongzhu.github.io/post/%E7%94%A8phaser%E5%92%8Cphonegap%E6%9D%A5%E5%BC%80%E5%8F%91ios%E5%92%8Candroid%E6%B8%B8%E6%88%8F-1-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%86%99%E8%BF%99%E7%AF%87%E5%8D%9A%E5%AE%A2/</url>
+        <categories>
+          <category>技术</category>
+        </categories>
+        <tags>
+          <tag>Phaser</tag><tag>PhoneGap</tag><tag>Cordova</tag><tag>iOS</tag><tag>Android</tag>
+        </tags>
+        <content type="html"> 两个月前看到Phaser这个很简洁漂亮的HTML5 Javascript游戏框架后便有了在业余时间做一个手游玩玩的念头。一个月前也开始陆陆续续的照着Phaser官网的教程学习Phaser。
+为什么要写这篇博客呢？主要是为了治愈目前的拖延，督促自己完成目标。而且：从头到尾设计一个游戏，进行编码并最终在AppStore上线是一件很好玩的事情。不是嚒？“从AppStore下载自己写的游戏来玩”，想想就觉得很酷 :-)
+当然，如果你能从中受益，开发出属于你自己的游戏，那就更好了！
+目标  用Phaser开发一个网页游戏 用PhoneGap把游戏打包成Android APP Android APP在Google Play上线 用PhoneGap把游戏打包成iOS APP iOS APP在AppStore上线  Phaser和PhoneGap简介 先讲讲我们要用到的两个重要工具：Phaser和PhoneGap。
+Phaser是一个游戏框架，可以用来开发桌面或者手机HTML5网页游戏，开发语言支持JavaScript/TypeScript。这里我们用JavaScript，这个Internet时代最流行的语言（我不会TypeScript）。
+用Phaser开发出来的其实是一个HTML5网页游戏或者叫做Web APP，要在AppStore或者Google Play上线必须用原生APP的方式。如果要用Objective-C/Swift来写一个iOS APP，然后再用Java写一个Android APP才能上线我们的游戏，那成本太高了，维护两套不同的代码也是很头痛的。于是，我们需要PhoneGap。
+PhoneGap其实就是一个打包软件，它可以把你用HTML/CSS/JavaScript写的网页应用（Web APP）直接打包成iPhone/Android/WindowsPhone原生APP。一套代码，直接生成多种平台的原生APP，相当的厉害！
+准备工作 APP开发当然用MacBook最好，因为iOS游戏APP必须在苹果电脑上打包，此外MacBook也可以打包Android APP。如果没有MacBook也无所谓，准备一台能上网的Windows PC就可以了。用Windows PC我们至少可以做到开发Android APP并上线（目标的第3步）。
+你需要准备
+ Windows PC 在Windows PC上安装Python 2.7.x for Windows （用来做HTTP server）  要把游戏开发出来，统共分几步？ 其实我也不知道总共分几步。
+我可以说是个游戏开发门外汉，多年一直开发测试工具，对游戏这行还真是不了解。门外汉也有门外汉的优势：有自知之明，所以肯定会做一个简单得不能再简单的游戏。“简单”有一个致命的优势：也许你真的能把它做出来！
+好吧，回到原来的话题：统共分几步？我觉得分三步：
+ 策划：这是个什么类型的游戏？游戏的故事是什么？ 图片，音效：没有图形和声音就不是游戏了 写代码  到这里可能有人会说了：“少了一步吧？没有测试！”。作为系统测试部门专门开发测试工具的资深员工怎么会忘记测试？测试包括在“3. 写代码”里面了，写了代码要测试是对程序员的基本要求，DoD(Definition of Done)，不是嚒？:-)
+这三步，我觉得最难的是策划。估计策划要花掉30%到50%的开发时间。好了，今天就写到这里，下一篇博客写游戏的策划。
+</content>
+    </entry>
+    
+     <entry>
+        <title>用cytoscape.js展示neo4j网络关系图 - 3. cytoscape.js</title>
+        <url>https://zhongzhu.github.io/post/%E7%94%A8cytoscape-js%E5%B1%95%E7%A4%BAneo4j%E7%BD%91%E7%BB%9C%E5%85%B3%E7%B3%BB%E5%9B%BE-3-cytoscape-js/</url>
+        <categories>
+          <category>技术</category>
+        </categories>
+        <tags>
+          <tag>neo4j</tag>
+        </tags>
+        <content type="html"> 用可视化的方式来展示网络关系图是一件挺有趣的事情，在选定用cytoscape.js来显示neo4j图形数据库的数据后我做了一个原型，并用下面三篇博客来记录了做原型的过程。
+ 用cytoscape.js展示neo4j网络关系图 - 1. Flask 用cytoscape.js展示neo4j网络关系图 - 2. py2neo 用cytoscape.js展示neo4j网络关系图 - 3. cytoscape.js（这篇博客）  要完成的功能 要把neo4j数据库里面的Movie数据正确的显示到前端，我们需要完成如下的功能。
+ 搭建基于Flask的简单网站 用py2neo来获取neo4j的节点及关系 用cytoscape.js来显示网络关系图  上一篇博客介绍了如何用py2neo来获取neo4j的节点及关系，现在我们要用cytoscape.js来把用neo4j取得的节点和关系显示到网页上。
+先看看cytoscape.js是什么 cytoscape是一个网络图的可视化工具，大量的生物分子/基因领域的公司用它来做可视化分析。由于它的通用性，慢慢的也被其他领域的人用来做网络的可视化和分析。cytoscape分为两种，一种叫做cytoscape desktop，是一个桌面软件，可以把数据导入然后生成可视化的网络图进行分析；另一种叫做cytoscape.js，是一个javascript库，主要给开发人员使用，来在网页上生成可视化的网络图。我们要用的是后者。
+neo4j有三个概念：图(Graph)，节点(Node)和关系(Relationship)。cytoscape.js也有三个对应的概念：图（用方法cytoscape()来生成），节点(Node)和边(Edge)。
+下面是用cytoscape.js画图的典型方法。
+var cy = cytoscape({container: document.getElementById(&amp;#39;cy&amp;#39;), elements: {nodes: [/* ... */ ],edges: [/* ... */ ]},style: [ /* ... */ ],layout: { name: &amp;#39;cose&amp;#39; }});主要是用cytoscape()函数生成cy，并填充其各种属性（如：container, elements, style, layout等等）。让我们来写个简单的网页来生成下面的图。所有的代码都在一个html文件中，你可以把它存成index.html，然后用浏览器直接打开看效果。
+&amp;lt;!DOCTYPE html&amp;gt;&amp;lt;html&amp;gt;&amp;lt;head&amp;gt;&amp;lt;title&amp;gt;Learning Cytoscape.js&amp;lt;/title&amp;gt;&amp;lt;style type=&amp;#34;text/css&amp;#34;&amp;gt;/* cytoscape graph */#cy {height: 300px;width: 400px;background-color: #f9f9f9;}&amp;lt;/style&amp;gt;&amp;lt;script src=&amp;#34;http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js&amp;#34;&amp;gt;&amp;lt;/script&amp;gt;&amp;lt;script src=&amp;#34;http://cdn.bootcss.com/cytoscape/2.3.16/cytoscape.min.js&amp;#34;&amp;gt;&amp;lt;/script&amp;gt;&amp;lt;script&amp;gt;$(function(){cytoscape({container: document.getElementById(&amp;#39;cy&amp;#39;),style: [{ selector: &amp;#39;node[label = &amp;#34;Person&amp;#34;]&amp;#39;, css: {&amp;#39;background-color&amp;#39;: &amp;#39;#6FB1FC&amp;#39;, &amp;#39;content&amp;#39;: &amp;#39;data(name)&amp;#39;}},{ selector: &amp;#39;node[label = &amp;#34;Movie&amp;#34;]&amp;#39;, css: {&amp;#39;background-color&amp;#39;: &amp;#39;#F5A45D&amp;#39;, &amp;#39;content&amp;#39;: &amp;#39;data(title)&amp;#39;}},{ selector: &amp;#39;edge&amp;#39;, css: {&amp;#39;content&amp;#39;: &amp;#39;data(relationship)&amp;#39;, &amp;#39;target-arrow-shape&amp;#39;: &amp;#39;triangle&amp;#39;}} ],elements: {nodes: [{data: {id: &amp;#39;172&amp;#39;, name: &amp;#39;Tom Cruise&amp;#39;, label: &amp;#39;Person&amp;#39;}},{data: {id: &amp;#39;183&amp;#39;, title: &amp;#39;Top Gun&amp;#39;, label: &amp;#39;Movie&amp;#39;}}],edges: [{data: {source: &amp;#39;172&amp;#39;, target: &amp;#39;183&amp;#39;, relationship: &amp;#39;Acted_In&amp;#39;}}]},layout: { name: &amp;#39;grid&amp;#39;} });});&amp;lt;/script&amp;gt;&amp;lt;/head&amp;gt;&amp;lt;body&amp;gt;&amp;lt;div id=&amp;#34;cy&amp;#34;&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;代码5-12行设置图的属性，这是一个长400px宽300px底色灰色的图。代码15-40行我们调用cytoscape()函数并初始化它来完成关系图的绘制。
+代码18行，container属性被设置为用&amp;lt;div id=&amp;quot;cy&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;这个div来绘制图。
+代码30-36行，elements属性包含的是图里的节点和边。
+节点包括多个属性值，如：{data: {id: &#39;172&#39;, name: &#39;Tom Cruise&#39;, label: &#39;Person&#39;}}。其中只有id是保留属性必须填，其它如name还有label都是我们自定义的属性，你可以自定义任意多的属性。
+边和节点的属性值很类似，如：{data: {source: &#39;172&#39;, target: &#39;183&#39;, relationship: &#39;Acted_In&#39;}}。边也有id是保留属性但不是必须的，source/target都是保留属性，source表示开始节点（start node）的id值，target是结束节点（end node）的id值，relationship是我们自定义的属性。
+有了节点和边的数据，那它们显示出来是什么样子的则是由代码19-29行的style属性决定的。style由多个如下的（selector &#43; css）样式组成。
+{ selector: &amp;#39;node[label = &amp;#34;Person&amp;#34;]&amp;#39;, css: {&amp;#39;background-color&amp;#39;: &amp;#39;#6FB1FC&amp;#39;,&amp;#39;content&amp;#39;: &amp;#39;data(name)}}selector属性选择要修改样式的元素，上面我们选择了label = &amp;quot;Person&amp;quot;的节点。css设置样式。这里我们设置Person节点的背景颜色为&amp;rsquo;#6FB1FC&amp;rsquo;。content属性决定节点上显示的文字是什么，我们用了一个data()函数来从节点数据里取出自定义节点（{data: {id: &#39;172&#39;, name: &#39;Tom Cruise&#39;, label: &#39;Person&#39;}}）里name值，也就是&amp;rsquo;Tom Cruise&amp;rsquo;。
+{ selector: &amp;#39;edge&amp;#39;, css: {&amp;#39;content&amp;#39;: &amp;#39;data(relationship)&amp;#39;, &amp;#39;target-arrow-shape&amp;#39;: &amp;#39;triangle&amp;#39;}} 边（edge）的style和节点有点不一样。我们选择显示的文字是relationship的值。而且我们需要把边的三角形箭头显示出来（&#39;target-arrow-shape&#39;: &#39;triangle&#39;）。
+代码37行，layout属性。layout布局网络图里的节点显示的位置。你可以选择不同类型的layout把整个网络显示成树形，圆形，网格，力导向图等等。我们随便选了一个&amp;rsquo;grid&#39;网格布局。
+开始写代码 我们再回过头来看看前面我们建好的Flask网站的目录结构。下面所有的源代码都可以从我的github项目cytoscape_neo4j clone。
+C:\cytoscape_neo4j| app.py|&#43;---static| &#43;---css| | style.css| || \---js| code.js| cytoscape.min.js| jquery-1.11.2.min.js|\---templatesindex.html我们需要修改app.py和code.js。先看看code.js，它从app.py获取JSON数据，然后调用cytoscape()函数显示网络图。
+用cytoscape.js来显示Movie网络关系图 下面是code.js的代码。（源代码：cytoscape_neo4j/static/js/code.js）
+$(function(){$.get(&amp;#39;/graph&amp;#39;, function(result) {var style = [{ selector: &amp;#39;node[label = &amp;#34;Person&amp;#34;]&amp;#39;, css: {&amp;#39;background-color&amp;#39;: &amp;#39;#6FB1FC&amp;#39;}},{ selector: &amp;#39;node[label = &amp;#34;Movie&amp;#34;]&amp;#39;, css: {&amp;#39;background-color&amp;#39;: &amp;#39;#F5A45D&amp;#39;}}];var cy = cytoscape({container: document.getElementById(&amp;#39;cy&amp;#39;),style: style,layout: { name: &amp;#39;cose&amp;#39;, fit: false }, elements: result.elements});}, &amp;#39;json&amp;#39;); });和前面讲的代码大同小异。代码第2行，用jQuery的$.get(&#39;/graph&#39;, function(result) {}, &#39;json&#39;)方法从网站后端的&amp;rsquo;/graph&#39;路径获得JSON数据存在result中。JSON数据的内容如下：
+{&amp;#34;elements&amp;#34;: {&amp;#34;edges&amp;#34;: [{&amp;#34;data&amp;#34;: {&amp;#34;relationship&amp;#34;: &amp;#34;ACTED_IN&amp;#34;, &amp;#34;source&amp;#34;: &amp;#34;174&amp;#34;, &amp;#34;target&amp;#34;: &amp;#34;327&amp;#34;}},{&amp;#34;data&amp;#34;: {&amp;#34;relationship&amp;#34;: &amp;#34;ACTED_IN&amp;#34;, &amp;#34;source&amp;#34;: &amp;#34;174&amp;#34;, &amp;#34;target&amp;#34;: &amp;#34;273&amp;#34;}},/* ... */],&amp;#34;nodes&amp;#34;: [{&amp;#34;data&amp;#34;: {&amp;#34;id&amp;#34;: &amp;#34;173&amp;#34;, &amp;#34;label&amp;#34;: &amp;#34;Movie&amp;#34;, &amp;#34;released&amp;#34;: 1999, &amp;#34;tagline&amp;#34;: &amp;#34;Welcome to the Real World&amp;#34;, &amp;#34;title&amp;#34;: &amp;#34;The Matrix&amp;#34;}},{&amp;#34;data&amp;#34;: {&amp;#34;born&amp;#34;: 1962, &amp;#34;id&amp;#34;: &amp;#34;189&amp;#34;, &amp;#34;label&amp;#34;: &amp;#34;Person&amp;#34;, &amp;#34;name&amp;#34;: &amp;#34;Tom Cruise&amp;#34;}},/* .. */]}} 我们只需要在代码第12行，elements: result.elements把result里的elements复给elements属性就好。
+代码3-6行，style和前面讲到的差不多，这次我们并没有设content属性，所以显示的节点上不会有文字。
+下面我们看看app.py是如何把neo4j的数据转成符合cytoscape要求的JSON的。
+把neo4j的数据转成cytoscape需要的JSON数据 下面是app.py的代码。（源代码：cytoscape_neo4j/app.py)
+# coding=utf-8 from flask import Flask, jsonify, render_templatefrom py2neo import Graphapp = Flask(__name__)graph = Graph()def buildNodes(nodeRecord):data = {&amp;#34;id&amp;#34;: str(nodeRecord.n._id), &amp;#34;label&amp;#34;: next(iter(nodeRecord.n.labels))}data.update(nodeRecord.n.properties)return {&amp;#34;data&amp;#34;: data}def buildEdges(relationRecord):data = {&amp;#34;source&amp;#34;: str(relationRecord.r.start_node._id), &amp;#34;target&amp;#34;: str(relationRecord.r.end_node._id),&amp;#34;relationship&amp;#34;: relationRecord.r.rel.type}return {&amp;#34;data&amp;#34;: data}@app.route(&amp;#39;/&amp;#39;)def index():return render_template(&amp;#39;index.html&amp;#39;)@app.route(&amp;#39;/graph&amp;#39;)def get_graph():nodes = map(buildNodes, graph.cypher.execute(&amp;#39;MATCH (n) RETURN n&amp;#39;))edges = map(buildEdges, graph.cypher.execute(&amp;#39;MATCH ()-[r]-&amp;gt;() RETURN r&amp;#39;)) return jsonify(elements = {&amp;#34;nodes&amp;#34;: nodes, &amp;#34;edges&amp;#34;: edges}) if __name__ == &amp;#39;__main__&amp;#39;:app.run(debug = True) 这段代码用到了很多py2neo的函数，如果不熟悉的可以回到前一个博客看看它们的用法。
+code.js中的$.get(&#39;/graph&#39;, function(result) {}, &#39;json&#39;)会调用到代码中的25-30行。
+代码27行，nodes = map(buildNodes, graph.cypher.execute(&#39;MATCH (n) RETURN n&#39;))。 graph.cypher.execute(&#39;MATCH (n) RETURN n&#39;)获取了Movie库的所有节点。map()对每个节点调用buildNodes(nodeRecord)函数，生成数组nodes （例如[{&amp;quot;data&amp;quot;: {&amp;quot;born&amp;quot;: 1962, &amp;quot;id&amp;quot;: &amp;quot;189&amp;quot;, &amp;quot;label&amp;quot;: &amp;quot;Person&amp;quot;, &amp;quot;name&amp;quot;: &amp;quot;Tom Cruise&amp;quot;}}, /* node2*/, /* node3 */, ...])。
+代码28行，edges = map(buildEdges, graph.cypher.execute(&#39;MATCH ()-[r]-&amp;gt;() RETURN r&#39;))生成了所有的边。
+代码30行，用Flask的jsonify函数把elements转成JSON格式返回给前端。
+运行我们的代码吧！ 写完了所有的代码，是时候来看看我们的劳动成果了。让我们来启动我们的网站，看看Movie库的网络关系图显示出来的效果吧。你需要：
+ 启动neo4j server 启动Flask网站 用浏览器浏览网页http://127.0.0.1:5000/  双击C:\neo4j-community-2.2.1\bin\Neo4j.bat启动neo4j server。
+运行如下命令启动Flask网站。
+用浏览器浏览网页http://127.0.0.1:5000/，你就可以看到画出来的网络关系图了。
+这里看到的关系图只是关系图的一小部分，你可以用鼠标滚轮来缩小放大来看到全貌。
+到此，大家应该通过这三篇博客了解到如何利用neo4j, Flask, py2neo, cytoscape.js来显示neo4j的网络关系图了。
+</content>
+    </entry>
+    
+     <entry>
+        <title>用cytoscape.js展示neo4j网络关系图 - 2. py2neo</title>
+        <url>https://zhongzhu.github.io/post/%E7%94%A8cytoscape-js%E5%B1%95%E7%A4%BAneo4j%E7%BD%91%E7%BB%9C%E5%85%B3%E7%B3%BB%E5%9B%BE-2-py2neo/</url>
+        <categories>
+          <category>技术</category>
+        </categories>
+        <tags>
+          <tag>neo4j</tag>
+        </tags>
+        <content type="html"> 用可视化的方式来展示网络关系图是一件挺有趣的事情，在选定用cytoscape.js来显示neo4j图形数据库的数据后我做了一个原型，并用下面三篇博客来记录了做原型的过程。
+ 用cytoscape.js展示neo4j网络关系图 - 1. Flask 用cytoscape.js展示neo4j网络关系图 - 2. py2neo（这篇博客） 用cytoscape.js展示neo4j网络关系图 - 3. cytoscape.js  要完成的功能 要把neo4j数据库里面的Movie数据正确的显示到前端，我们需要完成如下的功能。
+ 搭建基于Flask的简单网站 用py2neo来获取neo4j的节点及关系 用cytoscape.js来显示网络关系图  上一篇博客介绍了如何搭建基于Flask的简单网站，现在我们要用py2neo来从neo4j server里取出Movie数据库的所有节点(Node)和节点之间的关系(Relationship)。
+Neo4j支持一种叫做Cypher的查询语言。如果把Neo4j看作MySQL的话，Cypher相当于SQL语言，而且它和SQL语言很类似。
+图(Graph),节点(Node)和关系(Relationship) 这就是一个简单的图(Graph)，包含两个节点和一个关系。节点可以是任何事物（比如说：人，电影，设备等等），它有一些属性（properties，上图圆圈里的东西，如：Name: Tom Cruise）和标签(Label，上图圆圈顶上的东西，如：Person)。
+两个节点间的线就是关系(Relationship)，“Acted_In”是关系类型(Relationship Type)。关系也可以有属性（properties），这里我们没有给关系加任何属性。
+关系有自己的开始节点（start node）和结束节点（end node）。这里，开始节点就是Person(Tom Cruise)，结束节点就是Movie(Top Gun)。
+这种关系图要表达的信息看起来是相当直观的。上图的意思就是：一个生于1962年叫Tom Cruise的人，参演了影片《Top Gun》，影片在1986年上映。
+Cypher Cypher是noe4j数据库的查询语言。你可以用它来增删改查noe4j的节点和关系。目前我们只需要用它来查询。
+Cypher语言非常形象。比如要查询上面的两个节点，语句是这样的：
+match (p:Person {name: &amp;#39;Tom Cruise&amp;#39;})-[:ACTED_IN]-&amp;gt;(m:Movie {title: &amp;#39;Top Gun&amp;#39;})return p,mmatch和return是关键字，p和m可以看作变量，p:后面是p节点的Label（Person）及其properties（name: &amp;lsquo;Tom Cruise&amp;rsquo;）。
+如果要查询Tom Cruise参演的所有影片节点，语句是这样的：
+match (:Person {name: &amp;#39;Tom Cruise&amp;#39;})-[:ACTED_IN]-&amp;gt;(m)return m我们的目的是显示Movie数据库所有节点和关系，所以会用到下面的查询语句。
+ 选择所有节点：MATCH (n) RETURN n 选择所有关系：MATCH ()-[r]-&amp;gt;() RETURN r  py2neo 上一篇博客我们已经安装好py2neo，现在可以试试用它来执行Cypher查询。注意一定要照着上一篇博客先把neo4j server启动。我们用python shell来运行三个命令。
+首先import了py2neo。然后初始化代码graph = Graph()会直接去连本机的neo4j server 默认的URI http://localhost:7474/db/data/。最后我们执行了Cypher语句MATCH (n) RETURN n。返回的结果包括两种节点（Movie, Person）。
+下面我们来看看如何从结果中取值。
+例子里cypher的结果存到result中，并取出第一个结果放入record。然后取得了节点的id，属性（properties），标签（Label）。
+下一篇博客将会讲如何把我们用py2neo获得的节点及关系用cytoscape.js来显示到网页上。
+</content>
+    </entry>
+    
+     <entry>
+        <title>用cytoscape.js展示neo4j网络关系图 - 1. Flask</title>
+        <url>https://zhongzhu.github.io/post/%E7%94%A8cytoscape-js%E5%B1%95%E7%A4%BAneo4j%E7%BD%91%E7%BB%9C%E5%85%B3%E7%B3%BB%E5%9B%BE-1-flask/</url>
+        <categories>
+          <category>技术</category>
+        </categories>
+        <tags>
+          <tag>neo4j</tag>
+        </tags>
+        <content type="html"> 用可视化的方式来展示网络关系图是一件挺有趣的事情，在选定用cytoscape.js来显示neo4j图形数据库的数据后我做了一个原型，并用下面三篇博客来记录了做原型的过程。
+ 用cytoscape.js展示neo4j网络关系图 - 1. Flask 用cytoscape.js展示neo4j网络关系图 - 2. py2neo（这篇博客） 用cytoscape.js展示neo4j网络关系图 - 3. cytoscape.js  要解决的问题 最近在找一种可视化方案来显示IT网络中的节点（PC，服务器，路由器，人）之间的关系。经过一系列的调研，初步选定如下方案。
+使用的方案  后端  neo4j， 图形数据库用来存储网络节点及节点间的关系 Web框架Flask，一个基于Python的Web微框架 py2neo，neo4j的Python API包   前端  cytoscape.js，显示节点及节点间的关系 jQuery.js, AJAX必须用的库   开发平台  Windows 7, 64-bit    整体的架构如下：
+开发环境搭建 neo4j 首先要去neo4j下载community免费版， 我用的是neo4j-community_windows-x64_2_2_1.exe 。
+安装后，为了简化开发，我们先把neo4j的用户鉴权关掉。这需要修改C:\neo4j-community-2.2.1\conf\neo4j-server.properties，把dbms.security.auth_enabled=true改成dbms.security.auth_enabled=false。修改后双击C:\neo4j-community-2.2.1\bin\Neo4j.bat启动neo4j server。
+在浏览器里访问http://localhost:7474/，如果看到下图就证明neo4j安装成功了。
+鉴于我们只是做一个prototyping，就不用真实的IT节点数据，直接用neo4j自带的Movie数据来做原型。照着下面的步骤做完，把Movie数据插入到neo4j库。
+  点击“Write Code”   点击“Create a graph”   按照指示做完第一步，你应该能看到网络图显示出来了   Flask, py2neo 首先确认你已经安装了Python 2.7.x。然后还需安装Flask和py2neo。这两个Python包的安装可以用requirements.txt文件的方式安装。你可以写一个如下的文件
+然后用pip命令来安装requirements.txt里面列出的python包。
+C:\&amp;gt;pip install -r requirements.txt前端的cytoscape.js和jQuery.js 它们只是些javascript文件，后面会讲到如何下载及把它们放到什么地方。
+要完成的功能 要把neo4j数据库里面的Movie数据正确的显示到前端，我们需要完成如下的任务。
+ 搭建基于Flask的简单网站 (这篇博客) 用py2neo来获取neo4j的节点及关系 用cytoscape.js来显示网络关系图  开始写代码 以上我们完成了开发环境安装及其功能设计，可以开始最开心的coding阶段啦。大家可以在我的Github上找到下面讲到的所有源代码。
+搭建基于Flask的简单网站 让我们来搭建一个基于Flask的简单网站。首先创建如下目录：
+C:\&amp;gt;mkdir cytoscape_neo4jC:\&amp;gt;mkdir cytoscape_neo4j\templatesC:\&amp;gt;mkdir cytoscape_neo4j\staticC:\&amp;gt;mkdir cytoscape_neo4j\static\jsC:\&amp;gt;mkdir cytoscape_neo4j\static\css完成后的目录结构如下
+C:\cytoscape_neo4j&#43;---static| &#43;---css| \---js\---templatescytoscape_neo4j目录用来放后台Python代码（整个项目就一个python文件，app.py）。static目录用来放网站的静态文件，如javascript/css文件。templates目录用来存放网页（整个项目只有一个网页，index.html）。
+现在来写Flask应用程序app.py(源代码： cytoscape_neo4j/app.py).
+# coding=utf-8 from flask import Flaskapp = Flask(__name__)@app.route(&amp;#39;/&amp;#39;)def index():return &amp;#39;Hello, World!&amp;#39;if __name__ == &amp;#39;__main__&amp;#39;:app.run(debug = True) 6到8行代码的意思是：如果用浏览器访问根目录&amp;rdquo;/&amp;quot;，app.py就会发送&amp;quot;Hello, World!&amp;ldquo;到浏览器。让我们来启动我们的Flask应用。在Windows命令行下输入如下命令。如果看到Running on http://127.0.0.1:5000/的提示就表示Flask网站运行起来了。
+C:\&amp;gt;cd cytoscape_neo4jC:\cytoscape_neo4j&amp;gt;python app.py* Running on http://127.0.0.1:5000/* Restarting with reloader可以在浏览器里访问http://localhost:5000，就能看到&amp;quot;Hello, World!&amp;ldquo;正常显示出来了。
+Hello World正常运转后，我们来把它完善一下，做成一个真正满足我们功能要求的网站（也就是添加需要的html/Javascript/css文件了）。网站最后的目录结构是这样的。
+C:\cytoscape_neo4j| app.py|&#43;---static| &#43;---css| | style.css| || \---js| code.js| cytoscape.min.js| jquery-1.11.2.min.js|\---templatesindex.htmlindex.html是我们唯一的网页。cytoscape.min.js是cytoscape必须的Javascript库。AJAX当然少不了jquery-1.11.2.min.js。code.js是我们的前台程序，它调用cytoscape.min.js在前台生成网络关系图。style.css是我们自定义的样式表，cytoscape.min.js会读它来初始化网络关系图的样式（比如：画布的宽度，高度）。app.py前面见过了，是Flask应用程序。
+你可以在JQuery的官网下载下载jquery-1.11.2.min.js。
+cytoscape的官网可以下载cytoscape.js-2.4.0.zip，解压后我们只需要cytoscape.min.js就好。
+现在我们来看看index.html (源代码： cytoscape_neo4j/templates/index.html)
+&amp;lt;!DOCTYPE html&amp;gt;&amp;lt;html&amp;gt;&amp;lt;head&amp;gt;&amp;lt;title&amp;gt;学习Cytoscape.js和neo4j&amp;lt;/title&amp;gt;&amp;lt;link href=&amp;#34;/static/css/style.css&amp;#34; rel=&amp;#34;stylesheet&amp;#34; /&amp;gt;&amp;lt;script src=&amp;#34;/static/js/jquery-1.11.2.min.js&amp;#34;&amp;gt;&amp;lt;/script&amp;gt;&amp;lt;script src=&amp;#34;/static/js/cytoscape.min.js&amp;#34;&amp;gt;&amp;lt;/script&amp;gt;&amp;lt;script src=&amp;#34;/static/js/code.js&amp;#34;&amp;gt;&amp;lt;/script&amp;gt;&amp;lt;/head&amp;gt;&amp;lt;body&amp;gt;&amp;lt;h1&amp;gt;Movie网络图&amp;lt;/h1&amp;gt;&amp;lt;div id=&amp;#34;cy&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;代码第5行引入了我们自定义的style.css样式表。第6，7行引入了刚下载的jquery和cytoscape库。第8行引入我们的前台程序code.js.
+在11行我们准备在页面上显示“Movie网络图”。比较特殊的是第12行，这个id=&amp;quot;cy&amp;quot;的div将会被cytoscape用做画布来绘制网络关系图。
+app.py也需要做一些修改。（源代码： cytoscape_neo4j/app.py）
+# coding=utf-8from flask import Flask, jsonify, render_templateapp = Flask(__name__)@app.route(&amp;#39;/&amp;#39;)def index():return render_template(&amp;#39;index.html&amp;#39;)if __name__ == &amp;#39;__main__&amp;#39;:app.run(debug = True)代码6-8行的意思是，如果访问网站的根目录&amp;rdquo;/&amp;quot;，Flask会返网页cytoscape_neo4j/templates/index.html。
+style.css我们将定义画布的大小和背景色。（源代码：cytoscape_neo4j/static/css/style.css）
+/* cytoscape graph */#cy {height: 400px;width: 500px;background-color: #f9f9f9;}index.html里面定了&amp;lt;div id=&amp;quot;cy&amp;quot;&amp;gt;&amp;lt;/div&amp;gt; ，所以css里用#cy来做选择器。style.css里我们定义画布的宽度500px，高度400px，颜色是灰色。
+code.js目前用不上，建一个空文件就行。
+现在可以看看我们修改的效果了。按如下步骤启动app.py。
+C:\&amp;gt;cd cytoscape_neo4jC:\cytoscape_neo4j&amp;gt;python app.py* Running on http://127.0.0.1:5000/* Restarting with reloader在浏览器里访问http://localhost:5000应该可以看到下图，一行标题Movie网络图，加下面一个500x400的灰色画布。
+到此，我们的基本工作都完成了。下一个博客会讲到如何用py2neo来查询neo4j获取需要的节点和节点之间的关系。
+</content>
+    </entry>
+    
+     <entry>
+        <title>经常用到的一些工具软件</title>
+        <url>https://zhongzhu.github.io/post/useful-tools-on-windows/</url>
+        <categories>
+          <category>技术</category>
+        </categories>
+        <tags>
+          
+        </tags>
+        <content type="html"> 下面是一些我在Windows环境中经常用到的免费工具软件，欢迎大家也来分享自己常用的工具软件：
+ Sublime text 写代码 MarkdownPad 编辑markdown(.md)文件 Everything 搜索硬盘里的任意文件 XMind 画思维导图 WinMerge 代码diff和merge 印象笔记 laptop/mobile同步的笔记软件 Skitch 在图片上圈点 join.me 在Internet上开视频会议分享桌面 LICEcap 用来录tutorials成GIF动画文件，别人用IE就可以看啦 StarUML 画UML，十来年都用它 FileZilla FTP客户端  </content>
+    </entry>
+    
+</search>

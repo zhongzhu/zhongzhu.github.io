@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on 钟柱的博客</title>
+    <link>https://zhongzhu.github.io/tags/</link>
+    <description>Recent content in Tags on 钟柱的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sun, 10 Apr 2016 19:48:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://zhongzhu.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Android</title>
+      <link>https://zhongzhu.github.io/tags/android/</link>
+      <pubDate>Sun, 10 Apr 2016 19:48:31 +0800</pubDate>
+      
+      <guid>https://zhongzhu.github.io/tags/android/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Cordova</title>
+      <link>https://zhongzhu.github.io/tags/cordova/</link>
+      <pubDate>Sun, 10 Apr 2016 19:48:31 +0800</pubDate>
+      
+      <guid>https://zhongzhu.github.io/tags/cordova/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>iOS</title>
+      <link>https://zhongzhu.github.io/tags/ios/</link>
+      <pubDate>Sun, 10 Apr 2016 19:48:31 +0800</pubDate>
+      
+      <guid>https://zhongzhu.github.io/tags/ios/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Phaser</title>
+      <link>https://zhongzhu.github.io/tags/phaser/</link>
+      <pubDate>Sun, 10 Apr 2016 19:48:31 +0800</pubDate>
+      
+      <guid>https://zhongzhu.github.io/tags/phaser/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>PhoneGap</title>
+      <link>https://zhongzhu.github.io/tags/phonegap/</link>
+      <pubDate>Sun, 10 Apr 2016 19:48:31 +0800</pubDate>
+      
+      <guid>https://zhongzhu.github.io/tags/phonegap/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>PNG</title>
+      <link>https://zhongzhu.github.io/tags/png/</link>
+      <pubDate>Tue, 05 Apr 2016 17:07:35 +0800</pubDate>
+      
+      <guid>https://zhongzhu.github.io/tags/png/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tinypng</title>
+      <link>https://zhongzhu.github.io/tags/tinypng/</link>
+      <pubDate>Tue, 05 Apr 2016 17:07:35 +0800</pubDate>
+      
+      <guid>https://zhongzhu.github.io/tags/tinypng/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>sprite-sheet</title>
+      <link>https://zhongzhu.github.io/tags/sprite-sheet/</link>
+      <pubDate>Fri, 25 Mar 2016 10:53:56 +0800</pubDate>
+      
+      <guid>https://zhongzhu.github.io/tags/sprite-sheet/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>texture-atlas</title>
+      <link>https://zhongzhu.github.io/tags/texture-atlas/</link>
+      <pubDate>Fri, 25 Mar 2016 10:53:56 +0800</pubDate>
+      
+      <guid>https://zhongzhu.github.io/tags/texture-atlas/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tiled</title>
+      <link>https://zhongzhu.github.io/tags/tiled/</link>
+      <pubDate>Fri, 25 Mar 2016 10:53:56 +0800</pubDate>
+      
+      <guid>https://zhongzhu.github.io/tags/tiled/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tilemap</title>
+      <link>https://zhongzhu.github.io/tags/tilemap/</link>
+      <pubDate>Fri, 25 Mar 2016 10:53:56 +0800</pubDate>
+      
+      <guid>https://zhongzhu.github.io/tags/tilemap/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>neo4j</title>
+      <link>https://zhongzhu.github.io/tags/neo4j/</link>
+      <pubDate>Fri, 11 Mar 2016 14:42:01 +0800</pubDate>
+      
+      <guid>https://zhongzhu.github.io/tags/neo4j/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

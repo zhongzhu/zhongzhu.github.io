@@ -1,0 +1,382 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /> 
+    <title>用Phaser和PhoneGap来开发iOS和Android游戏 - 2. 游戏策划 - 钟柱的博客</title>
+    <meta name="keywords" content="程序员,架构师,个人,思考,读书,笔记,技术,分享,自动化测试,看书,音乐,画画">
+    
+    <meta property="og:title" content="用Phaser和PhoneGap来开发iOS和Android游戏 - 2. 游戏策划">
+    <meta property="og:site_name" content="钟柱的博客">
+    <meta property="og:image" content="/img/author.jpg"> 
+    <meta name="title" content="用Phaser和PhoneGap来开发iOS和Android游戏 - 2. 游戏策划 - 钟柱的博客" />
+    <meta name="description" content="软件 | 架构 | 测试 | 看书 | 音乐 | 画画"> 
+    <link rel="shortcut icon" href="https://zhongzhu.github.io/img/favicon.ico" />
+    <link rel="apple-touch-icon" href="https://zhongzhu.github.io/img/apple-touch-icon.png" />
+    <link rel="apple-touch-icon-precomposed" href="https://zhongzhu.github.io/img/apple-touch-icon.png" />
+    <link href="https://zhongzhu.github.io/js/vendor/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+    <link href="https://zhongzhu.github.io/js/vendor/fancybox/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+    <link href="https://zhongzhu.github.io/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="https://zhongzhu.github.io/css/syntax.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+     fancybox: true, 
+    motion: true
+  };
+</script>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<div class="container one-collumn sidebar-position-left page-home  ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-meta  custom-logo ">
+
+  <div class="custom-logo-site-title">
+    <a href="https://zhongzhu.github.io/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">钟柱的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">坚持做一些自己觉得好玩的事儿</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+    <ul id="menu" class="menu">
+      
+      
+        <li class="menu-item ">
+          <a href="https://zhongzhu.github.io/" rel="section">
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页
+          </a>
+        </li>
+      
+        <li class="menu-item ">
+          <a href="https://zhongzhu.github.io/categories/%E6%8A%80%E6%9C%AF/" rel="section">
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br />技术
+          </a>
+        </li>
+      
+        <li class="menu-item ">
+          <a href="https://zhongzhu.github.io/categories/%E6%84%9F%E6%83%B3/" rel="section">
+              <i class="menu-item-icon fa fa-fw fa-thoughts"></i> <br />感想
+          </a>
+        </li>
+      
+        <li class="menu-item ">
+          <a href="https://zhongzhu.github.io/categories/%E9%97%B2%E6%9A%87/" rel="section">
+              <i class="menu-item-icon fa fa-fw fa-life"></i> <br />闲暇
+          </a>
+        </li>
+      
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger"> <i class="menu-item-icon fa fa-search fa-fw"></i> <br /> 搜索</a>
+      </li>
+    </ul>
+    <div class="site-search">
+      <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+    </div>
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+<section id="posts" class="posts-expand">
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link" href="https://zhongzhu.github.io/post/%E7%94%A8phaser%E5%92%8Cphonegap%E6%9D%A5%E5%BC%80%E5%8F%91ios%E5%92%8Candroid%E6%B8%B8%E6%88%8F-2-%E6%B8%B8%E6%88%8F%E7%AD%96%E5%88%92/" itemprop="url">
+        用Phaser和PhoneGap来开发iOS和Android游戏 - 2. 游戏策划
+        </a>
+      </h1>
+      <div class="post-meta">
+      <span class="post-time">
+<span class="post-meta-item-icon">
+    <i class="fa fa-calendar-o"></i>
+</span>
+<span class="post-meta-item-text">时间：</span>
+<time itemprop="dateCreated" datetime="2016-03-22T13:04:35+08:00" content="2016-03-15">
+    2016-03-15
+</time>
+</span> 
+      
+
+  <span class="post-category" >
+  &nbsp; | &nbsp;
+  <span class="post-meta-item-icon">
+    <i class="fa fa-folder-o"></i>
+  </span>
+  <span class="post-meta-item-text">分类：</span>
+  
+    <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+      <a href="https://zhongzhu.github.io/categories/%E6%8A%80%E6%9C%AF" itemprop="url" rel="index">
+        <span itemprop="name">技术</span>
+      </a>
+      &nbsp; 
+    </span>
+  
+</span>
+
+
+       <span>
+&nbsp; | &nbsp;
+<span class="post-meta-item-icon">
+    <i class="fa fa-eye"></i>
+</span>
+<span class="post-meta-item-text">阅读：</span>
+<span class="leancloud-visitors-count">1218 字 ~3分钟</span>
+</span>
+      </div>
+    </header>
+    <div class="post-body" itemprop="articleBody">
+    <p><a href="http://zhongzhu.github.io/2016/03/11/%E7%94%A8Phaser%E5%92%8CPhoneGap%E6%9D%A5%E5%BC%80%E5%8F%91iOS%E5%92%8CAndroid%E6%B8%B8%E6%88%8F-1-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%86%99%E8%BF%99%E7%AF%87%E5%8D%9A%E5%AE%A2/">上一篇博客</a>讲到最难的是策划，那是真的，因为想了好多天都没有完全决定要做一个什么样的游戏。下面是我这几天想到的一些问题。</p>
+<h2 id="开发3d还是2d游戏">开发3D还是2D游戏？##</h2>
+<p>比较好决定，不会做3D，只能选2D游戏来做。</p>
+<h2 id="什么类型的游戏-">什么类型的游戏？</h2>
+<p>这个太难决定了，游戏的种类太多：棋牌，跑跳，射击，赛车，角色扮演，动作游戏，宝石消除，策略，数独，智力问答，等等。</p>
+<!-- raw HTML omitted -->
+<p>当时首选做跑跳类的，然后有想做宝石消除，然后又想做数字类的智力游戏（类似数独），然后又想做简单的赛车游戏，后来又想做一个汉诺塔。反反复复的怎么都定不下来，于是干脆看了本书《<a href="https://book.douban.com/subject/26747160/">iPhone Game Blueprints</a>》</p>
+<p><img src="https://zhongzhu.github.io/images/phaser/2/1.jpg" alt="book"></p>
+<p>看书对选择根本没有帮助。最后（其实就是今天），还是想先做个跑跳类的吧，大部分人应该还是喜欢这种有动感也有点点压力的游戏。</p>
+<h2 id="跑完一百米-">跑完一百米！</h2>
+<p>只要定下来做什么类型的游戏，接下来就好办多了。下图就是游戏《跑完一百米》的游戏策划。</p>
+<p><img src="https://zhongzhu.github.io/images/phaser/2/2.PNG" alt="plot"></p>
+<h3 id="游戏情节-">游戏情节</h3>
+<p>任何游戏都需要一个情节，这样会让你的游戏更有灵魂。我们的情节是：主人公参加百米赛跑，要克服重重障碍，以最短时间跑完。</p>
+<h3 id="得分-">得分</h3>
+<p>一个游戏总要有玩家能得到的东西。麻将游戏是玩家胡了，射击游戏是玩家消灭掉了所有的坏人，我们的游戏呢？既然大家都是跑一百米，那<code>得分</code>就是玩家以更短的时间跑完一百米。所以我们在游戏里要显示计时，玩家要想办法用越短的时间越好。</p>
+<h3 id="敌人-">敌人</h3>
+<p>一个好的情节当然少不了反派。玩家要<code>得分</code>，那反派就要想办法让你<code>不得分</code>或者<code>少得分</code>。有了冲突，游戏才更有压力和刺激。</p>
+<p>目前准备在跑道上设置一些栏杆、石头和水塘。玩家一碰到这些<code>敌人</code>就会<code>发生影响玩家得分的事情</code>。具体在我们的游戏里应该设计成什么事情呢？一般的游戏是损失一条命或者失血。由于本游戏的得分在于时间，那最好能想出一个让玩家损失时间的惩罚。</p>
+<p>我们可以这样设计：把一百米分成十段，每段十米。如果在哪个段内撞到<code>敌人</code>跌倒,那玩家就得从该段的起点处重新开始跑。为什么不从百米的零米起点处重新开始？考虑到这是一个休闲小游戏，如果每次失败都从游戏最开始的地方重新开始，那一些初级用户会很快对游戏失掉兴趣，也就体会不到后面几十米的漂亮跑道了。</p>
+<h3 id="压力-">压力</h3>
+<p>等等，前面对<code>敌人</code>的设计貌似给了玩家<code>无敌模式</code>，如果玩家怎么都跑不完一百米，那么游戏永远不会结束了？玩家就会在某个十米段里面不停的循环？</p>
+<p>你的考虑是对的，我们需要给游戏加一个<code>停止条件</code>：玩家需要在<code>20秒内</code>跑完一百米。这样既可以停止游戏，又可以在游戏里给玩家一些压力。</p>
+<h3 id="炫耀-">炫耀</h3>
+<p>游戏玩得好肯定值得在朋友间炫耀炫耀的。玩家跑完百米出现You Win界面时，我们可以支持转发微信朋友圈，炫耀内容自动生成“我用3秒跑完了一百米，敢来挑战我吗？”当朋友点击链接后，显示炫耀图片（用时，跌倒次数等等），并显示链接到AppStore/Google Play去下载“跑完一百米”来迎接朋友的挑战。</p>
+<h3 id="关卡设计-">关卡设计</h3>
+<p>如图所言，实在想做个小游戏，就不要关卡了，统共就一关。</p>
+<h2 id="今天的结束语-">今天的结束语</h2>
+<p>终于完成了策划，值得庆贺！下一个博客就要讲到最激动人心的部分：搭环境coding啦！</p>
+
+    </div>
+    <footer class="post-footer">
+     
+ 
+<div class="post-tags">     
+     
+    <a href="https://zhongzhu.github.io/tags/phaser" rel="tag" title="Phaser">#Phaser#</a>
+    
+    <a href="https://zhongzhu.github.io/tags/phonegap" rel="tag" title="PhoneGap">#PhoneGap#</a>
+    
+    <a href="https://zhongzhu.github.io/tags/cordova" rel="tag" title="Cordova">#Cordova#</a>
+    
+    <a href="https://zhongzhu.github.io/tags/ios" rel="tag" title="iOS">#iOS#</a>
+    
+    <a href="https://zhongzhu.github.io/tags/android" rel="tag" title="Android">#Android#</a>
+    
+</div>
+
+
+
+     <div class="post-nav">
+    <div class="post-nav-next post-nav-item">
+    
+        <a href="https://zhongzhu.github.io/post/%E7%94%A8phaser%E5%92%8Cphonegap%E6%9D%A5%E5%BC%80%E5%8F%91ios%E5%92%8Candroid%E6%B8%B8%E6%88%8F-3-%E7%94%A8tiled-map-editor%E6%9D%A5%E7%94%9F%E6%88%90%E6%B8%B8%E6%88%8F%E5%9C%BA%E6%99%AF/" rel="next" title="用Phaser和PhoneGap来开发iOS和Android游戏 - 3. 用Tiled Map Editor来生成游戏场景">
+        <i class="fa fa-chevron-left"></i> 用Phaser和PhoneGap来开发iOS和Android游戏 - 3. 用Tiled Map Editor来生成游戏场景
+        </a>
+    
+    </div>
+
+    <div class="post-nav-prev post-nav-item">
+    
+        <a href="https://zhongzhu.github.io/post/%E7%94%A8phaser%E5%92%8Cphonegap%E6%9D%A5%E5%BC%80%E5%8F%91ios%E5%92%8Candroid%E6%B8%B8%E6%88%8F-1-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%86%99%E8%BF%99%E7%AF%87%E5%8D%9A%E5%AE%A2/" rel="prev" title="用Phaser和PhoneGap来开发iOS和Android游戏 - 1. 为什么写这篇博客">
+        用Phaser和PhoneGap来开发iOS和Android游戏 - 1. 为什么写这篇博客 <i class="fa fa-chevron-right"></i>
+        </a>
+    
+    </div>
+</div>
+      
+     
+     
+     
+
+
+
+
+    </footer>
+  </article>
+</section>
+
+          </div>
+        </div>
+        <div class="sidebar-toggle">
+  <div class="sidebar-toggle-line-wrap">
+    <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+  </div>
+</div>
+<aside id="sidebar" class="sidebar">
+  <div class="sidebar-inner">
+
+    <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+        src="https://zhongzhu.github.io/images/author.jpg"
+        alt="钟柱" />
+    <p class="site-author-name" itemprop="name">钟柱</p>
+    <p class="site-description motion-element" itemprop="description"> 
+        架构, 写代码, 自动化测试, 看书, 音乐, 画画</p>
+</div>
+      <nav class="site-state motion-element">
+    <div class="site-state-item site-state-posts">
+      <a href="https://zhongzhu.github.io/post/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">日志</span>
+      </a>
+    </div>
+    <div class="site-state-item site-state-categories">    
+        <a href="https://zhongzhu.github.io/categories/">      
+         
+        <span class="site-state-item-count">2</span>
+        
+        <span class="site-state-item-name">分类</span>
+        
+        </a>
+    </div>
+
+    <div class="site-state-item site-state-tags">
+        <a href="https://zhongzhu.github.io/tags/">
+         
+        <span class="site-state-item-count">12</span>
+        
+        <span class="site-state-item-name">标签</span>
+        </a>
+    </div>
+</nav>
+      
+      
+<div class="links-of-author motion-element">
+    
+        <span class="links-of-author-item">
+        <a href="https://github.com/zhongzhu" target="_blank" title="GitHub">
+            <i class="fa fa-fw fa-github"></i>
+            GitHub
+        </a>
+        </span>
+    
+        <span class="links-of-author-item">
+        <a href="https://weibo.com/zhuzhong" target="_blank" title="微博">
+            <i class="fa fa-fw fa-weibo"></i>
+            微博
+        </a>
+        </span>
+    
+</div>
+
+
+      
+
+      
+    </section>
+    
+  </div>
+</aside>
+
+      </div>
+    </main>
+   
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  <span itemprop="copyrightYear">  &copy; 
+  2009 - 2020</span>
+  <span class="with-love"><i class="fa fa-heart"></i></span>
+  <span class="author" itemprop="copyrightHolder">钟柱的博客</span>
+</div>
+<div class="powered-by">
+  Powered by - <a class="theme-link" href="http://gohugo.io" target="_blank" title="hugo" >Hugo v0.69.0</a>
+</div>
+<div class="theme-info">
+  Theme by - <a class="theme-link" href="https://github.com/xtfly/hugo-theme-next" target="_blank"> NexT
+  </a>
+</div>
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      <span id="scrollpercent"><span>0</span>%</span>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+<script type="text/javascript" src="https://zhongzhu.github.io/js/vendor/jquery/index.js?v=2.1.3"></script>
+<script type="text/javascript" src="https://zhongzhu.github.io/js/vendor/fastclick/lib/fastclick.min.js?v=1.0.6"></script> 
+<script type="text/javascript" src="https://zhongzhu.github.io/js/vendor/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+<script type="text/javascript" src="https://zhongzhu.github.io/js/vendor/velocity/velocity.min.js?v=1.2.1"></script>
+<script type="text/javascript" src="https://zhongzhu.github.io/js/vendor/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="https://zhongzhu.github.io/js/vendor/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+
+<script src="https://zhongzhu.github.io/js/vendor/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+<script type="text/javascript" src="https://zhongzhu.github.io/js/utils.js"></script>
+<script type="text/javascript" src="https://zhongzhu.github.io/js/motion.js"></script>
+<script type="text/javascript" src="https://zhongzhu.github.io/js/affix.js"></script>
+<script type="text/javascript" src="https://zhongzhu.github.io/js/schemes/pisces.js"></script>
+
+<script type="text/javascript" src="https://zhongzhu.github.io/js/scrollspy.js"></script>
+<script type="text/javascript" src="https://zhongzhu.github.io/js/post-details.js"></script>
+<script type="text/javascript" src="https://zhongzhu.github.io/js/toc.js"></script>
+
+<script type="text/javascript" src="https://zhongzhu.github.io/js/bootstrap.js"></script>
+
+<script type="text/javascript" src="https://zhongzhu.github.io/js/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'] ],
+      displayMath: [ ['$$','$$'] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { fonts: ["TeX"] }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML' async></script>
+</body>
+</html>
