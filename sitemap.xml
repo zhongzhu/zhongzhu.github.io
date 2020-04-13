@@ -21,7 +21,7 @@
           <category>技术</category>
         </categories>
         <tags>
-          <tag>Phaser</tag><tag>PhoneGap</tag><tag>Cordova</tag><tag>iOS</tag><tag>Android</tag>
+          <tag>Phaser</tag><tag>PhoneGap</tag><tag>Cordova</tag><tag>iOS</tag><tag>android</tag>
         </tags>
         <content type="html"> 上一篇博客讲在Play.preload()中把游戏需要的资源（图片，tile map文件等等）加载到内存中，今天我们将把内存中的资源显示到手机浏览器屏幕上。也就是说，今天我们终于可以看到我们的游戏界面了。
 下面用到的所有图片和代码都可以在我的GitHub找到。
@@ -108,7 +108,7 @@ this.enemyGroup：把创建出来的对象都加到enemyGroup组里。
           <category>技术</category>
         </categories>
         <tags>
-          <tag>Phaser</tag><tag>PhoneGap</tag><tag>Cordova</tag><tag>iOS</tag><tag>Android</tag>
+          <tag>Phaser</tag><tag>PhoneGap</tag><tag>Cordova</tag><tag>iOS</tag><tag>android</tag>
         </tags>
         <content type="html"> 上一篇博客我们用Tiled这个工具来生成了游戏场景。今天终于要开始写代码了，我们将开始使用Phaser把游戏场景文件（tiles.png, level.json）读出来，显示在手机上。
 下面用到的所有图片和代码都可以在我的GitHub找到。
@@ -168,7 +168,7 @@ this.load.atlas(&amp;#39;texture-atlas&amp;#39;, &amp;#39;assets/texture-atlas.p
           <category>技术</category>
         </categories>
         <tags>
-          <tag>Phaser</tag><tag>PhoneGap</tag><tag>Cordova</tag><tag>iOS</tag><tag>Android</tag><tag>tilemap</tag><tag>tiled</tag><tag>sprite-sheet</tag><tag>texture-atlas</tag>
+          <tag>Phaser</tag><tag>PhoneGap</tag><tag>Cordova</tag><tag>iOS</tag><tag>android</tag><tag>tilemap</tag><tag>tiled</tag><tag>sprite-sheet</tag><tag>texture-atlas</tag>
         </tags>
         <content type="html"> 上一篇博客讲到了游戏的策划，既然策划清楚了那剩下的就是美工和写代码了。这篇博客距上篇已经10天，为什么会隔这么长时间呢？除了时间限制（我在业余时间开发）外，主要还是在开发过程中遇到了各种困难。好在，目前这些困难都被一一攻破啦。
 下面用到的所有图片和代码都可以在我的GitHub找到。
@@ -224,7 +224,7 @@ level.json 点击File-&amp;gt;Export As&amp;hellip;,把文件命名为level.json
           <category>技术</category>
         </categories>
         <tags>
-          <tag>Phaser</tag><tag>PhoneGap</tag><tag>Cordova</tag><tag>iOS</tag><tag>Android</tag>
+          <tag>Phaser</tag><tag>PhoneGap</tag><tag>Cordova</tag><tag>iOS</tag><tag>android</tag>
         </tags>
         <content type="html"> 上一篇博客讲到最难的是策划，那是真的，因为想了好多天都没有完全决定要做一个什么样的游戏。下面是我这几天想到的一些问题。
 开发3D还是2D游戏？## 比较好决定，不会做3D，只能选2D游戏来做。
@@ -252,7 +252,7 @@ level.json 点击File-&amp;gt;Export As&amp;hellip;,把文件命名为level.json
           <category>技术</category>
         </categories>
         <tags>
-          <tag>Phaser</tag><tag>PhoneGap</tag><tag>Cordova</tag><tag>iOS</tag><tag>Android</tag>
+          <tag>Phaser</tag><tag>PhoneGap</tag><tag>Cordova</tag><tag>iOS</tag><tag>android</tag>
         </tags>
         <content type="html"> 两个月前看到Phaser这个很简洁漂亮的HTML5 Javascript游戏框架后便有了在业余时间做一个手游玩玩的念头。一个月前也开始陆陆续续的照着Phaser官网的教程学习Phaser。
 为什么要写这篇博客呢？主要是为了治愈目前的拖延，督促自己完成目标。而且：从头到尾设计一个游戏，进行编码并最终在AppStore上线是一件很好玩的事情。不是嚒？“从AppStore下载自己写的游戏来玩”，想想就觉得很酷 :-)
