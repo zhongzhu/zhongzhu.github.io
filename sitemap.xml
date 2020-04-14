@@ -1,6 +1,19 @@
 <search>
     
      <entry>
+        <title>把博客从Hexo转到了Hugo</title>
+        <url>https://zhongzhu.github.io/post/%E6%8A%8A%E5%8D%9A%E5%AE%A2%E4%BB%8Ehexo%E8%BD%AC%E5%88%B0%E4%BA%86hugo/</url>
+        <categories>
+          
+        </categories>
+        <tags>
+          
+        </tags>
+        <content type="html"> 从前天开始了把博客从Hexo转到Hugo的旅程。统共分四步：
+ GitHub上建一个新的Repo来host博客的源文件 把Hexo的博客源文件转成Hugo能认识的文件 配置Hugo的theme 把Hugo生成的静态网站推送到你的Github Pages Repo  </content>
+    </entry>
+    
+     <entry>
         <title>重新开始写Blog吧</title>
         <url>https://zhongzhu.github.io/post/%E9%87%8D%E6%96%B0%E5%BC%80%E5%A7%8B%E5%86%99blog%E5%90%A7/</url>
         <categories>
