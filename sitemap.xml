@@ -9,7 +9,7 @@
         <tags>
           <tag>hugo</tag>
         </tags>
-        <content type="html"> 从前天开始了把博客从Hexo转到Hugo的旅程。统共分四步：
+        <content type="html"> 从前天开始了个人博客从Hexo迁移到Hugo的旅程。统共分四步：
  建新的GitHub Repo来host博客的源文件 把Hexo的博客源文件转成Hugo能认识的文件 配置Hugo的theme 推送静态网站到Github  建新的GitHub Repo来host博客的源文件 这一步没有任何难度，就不多说了。唯一的惊喜是发现GitHub free账号现在可以建无限量的private Repo，感谢Microsoft! 果断建了一个private Repo来host博客的源文件，毕竟你也不想别人随意来修改你的博客，对吧？
 把Hexo的博客源文件转成Hugo能认识的文件 这么多年我就写了10篇博客，所以这一步对我来说比较简单：纯手工把所有的Markdown文件改改就可以了。要改3个地方
  md文件名  Hexo的文件名
@@ -22,7 +22,7 @@
 在本地看看网站的显示效果  运行如下命令启动Hugo本地服务器，它会把你的Markdown源文件编译成静态网站，并且启动一个web服务器。
 $ cd &amp;lt;my_hugo_blog&amp;gt; $ hugo server -D 在浏览器里访问http://localhost:1313/就可以看到你的博客网站啦。
 推送静态网站到GitHub 步骤比较多，可以用如下Hugo建议的脚本来自动推送生成的静态网站文件到Github。
-#!/bin/sh  # If a command fails then the deploy stops set -e # Updating all submodules with remote git submodule foreach &amp;#39;git pull origin master&amp;#39; printf &amp;#34;\033[0;32mDeploying updates to GitHub...\033[0m\n&amp;#34; # Build the project. hugo -t next # if using a theme, replace with `hugo -t &amp;lt;YOURTHEME&amp;gt;` # Go To Public folder cd public # Add changes to git. git add . # Commit changes. msg=&amp;#34;rebuilding site $(date)&amp;#34; if [ -n &amp;#34;$*&amp;#34; ]; then msg=&amp;#34;$*&amp;#34; fi git commit -m &amp;#34;$msg&amp;#34; # Push source and build repos. git push origin master </content>
+#!/bin/sh  # If a command fails then the deploy stops set -e # Updating all submodules with remote git submodule foreach &amp;#39;git pull origin master&amp;#39; printf &amp;#34;\033[0;32mDeploying updates to GitHub...\033[0m\n&amp;#34; # Build the project. hugo -t next # if using a theme, replace with `hugo -t &amp;lt;YOURTHEME&amp;gt;` # Go To Public folder cd public # Add changes to git. git add . # Commit changes. msg=&amp;#34;rebuilding site $(date)&amp;#34; if [ -n &amp;#34;$*&amp;#34; ]; then msg=&amp;#34;$*&amp;#34; fi git commit -m &amp;#34;$msg&amp;#34; # Push static web pages to GitHub git push origin master # Push Hugo markdowns and folder public to GitHub cd .. git add . git commit -m &amp;#34;added new posts $(date)&amp;#34; git push origin master </content>
     </entry>
     
      <entry>

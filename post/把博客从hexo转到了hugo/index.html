@@ -148,12 +148,12 @@
     <i class="fa fa-eye"></i>
 </span>
 <span class="post-meta-item-text">阅读：</span>
-<span class="leancloud-visitors-count">1154 字 ~3分钟</span>
+<span class="leancloud-visitors-count">1182 字 ~3分钟</span>
 </span>
       </div>
     </header>
     <div class="post-body" itemprop="articleBody">
-    <p>从前天开始了把博客从Hexo转到Hugo的旅程。统共分四步：</p>
+    <p>从前天开始了个人博客从Hexo迁移到Hugo的旅程。统共分四步：</p>
 <ol>
 <li>建新的GitHub Repo来host博客的源文件</li>
 <li>把Hexo的博客源文件转成Hugo能认识的文件</li>
@@ -244,7 +244,13 @@ git add .
 <span style="color:#007020;font-weight:bold">fi</span>
 git commit -m <span style="color:#4070a0">&#34;</span><span style="color:#bb60d5">$msg</span><span style="color:#4070a0">&#34;</span>
 
-<span style="color:#60a0b0;font-style:italic"># Push source and build repos.</span>
+<span style="color:#60a0b0;font-style:italic"># Push static web pages to GitHub</span>
+git push origin master
+
+<span style="color:#60a0b0;font-style:italic"># Push Hugo markdowns and folder public to GitHub</span>
+<span style="color:#007020">cd</span> ..
+git add .
+git commit -m <span style="color:#4070a0">&#34;added new posts </span><span style="color:#007020;font-weight:bold">$(</span>date<span style="color:#007020;font-weight:bold">)</span><span style="color:#4070a0">&#34;</span>
 git push origin master
 </code></pre></div>
     </div>
