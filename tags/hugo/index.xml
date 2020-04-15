@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>hugo on 钟柱的博客</title>
+    <link>https://zhongzhu.github.io/tags/hugo/</link>
+    <description>Recent content in hugo on 钟柱的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 14 Apr 2020 13:01:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://zhongzhu.github.io/tags/hugo/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>把博客从Hexo转到了Hugo</title>
+      <link>https://zhongzhu.github.io/post/%E6%8A%8A%E5%8D%9A%E5%AE%A2%E4%BB%8Ehexo%E8%BD%AC%E5%88%B0%E4%BA%86hugo/</link>
+      <pubDate>Tue, 14 Apr 2020 13:01:31 +0800</pubDate>
+      
+      <guid>https://zhongzhu.github.io/post/%E6%8A%8A%E5%8D%9A%E5%AE%A2%E4%BB%8Ehexo%E8%BD%AC%E5%88%B0%E4%BA%86hugo/</guid>
+      <description>从前天开始了把博客从Hexo转到Hugo的旅程。统共分四步： 建新的GitHub Repo来host博客的源文件 把Hexo的博客源文件转成Hug</description>
+    </item>
+    
+  </channel>
+</rss>

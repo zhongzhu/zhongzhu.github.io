@@ -172,80 +172,80 @@
 <p>cytoscape是一个网络图的可视化工具，大量的生物分子/基因领域的公司用它来做可视化分析。由于它的通用性，慢慢的也被其他领域的人用来做网络的可视化和分析。cytoscape分为两种，一种叫做<a href="http://cytoscape.org/">cytoscape desktop</a>，是一个桌面软件，可以把数据导入然后生成可视化的网络图进行分析；另一种叫做<a href="http://js.cytoscape.org/">cytoscape.js</a>，是一个javascript库，主要给开发人员使用，来在网页上生成可视化的网络图。我们要用的是后者。</p>
 <p>neo4j有三个概念：图(Graph)，节点(Node)和关系(Relationship)。cytoscape.js也有三个对应的概念：图（用方法cytoscape()来生成），节点(Node)和边(Edge)。</p>
 <p>下面是用cytoscape.js画图的典型方法。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">cy</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">cytoscape</span>({
-  <span style="color:#a6e22e">container</span><span style="color:#f92672">:</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;cy&#39;</span>), 
-  <span style="color:#a6e22e">elements</span><span style="color:#f92672">:</span> {
-    <span style="color:#a6e22e">nodes</span><span style="color:#f92672">:</span> [<span style="color:#75715e">/* ... */</span> ],
-    <span style="color:#a6e22e">edges</span><span style="color:#f92672">:</span> [<span style="color:#75715e">/* ... */</span> ]
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#007020;font-weight:bold">var</span> cy <span style="color:#666">=</span> cytoscape({
+  container<span style="color:#666">:</span> <span style="color:#007020">document</span>.getElementById(<span style="color:#4070a0">&#39;cy&#39;</span>), 
+  elements<span style="color:#666">:</span> {
+    nodes<span style="color:#666">:</span> [<span style="color:#60a0b0;font-style:italic">/* ... */</span> ],
+    edges<span style="color:#666">:</span> [<span style="color:#60a0b0;font-style:italic">/* ... */</span> ]
   },
-  <span style="color:#a6e22e">style</span><span style="color:#f92672">:</span> [ <span style="color:#75715e">/* ... */</span> ],
-  <span style="color:#a6e22e">layout</span><span style="color:#f92672">:</span> { <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;cose&#39;</span> }
+  style<span style="color:#666">:</span> [ <span style="color:#60a0b0;font-style:italic">/* ... */</span> ],
+  layout<span style="color:#666">:</span> { name<span style="color:#666">:</span> <span style="color:#4070a0">&#39;cose&#39;</span> }
 });
 </code></pre></div><p>主要是用cytoscape()函数生成cy，并填充其各种属性（如：container, elements, style, layout等等）。让我们来写个简单的网页来生成下面的图。所有的代码都在一个html文件中，你可以把它存成index.html，然后用浏览器直接打开看效果。</p>
 <p><img src="https://zhongzhu.github.io/images/cytoscape/3/1.png" alt="这里写图片描述"></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
-&lt;<span style="color:#f92672">html</span>&gt;
-&lt;<span style="color:#f92672">head</span>&gt;
-    &lt;<span style="color:#f92672">title</span>&gt;Learning Cytoscape.js&lt;/<span style="color:#f92672">title</span>&gt;
-    &lt;<span style="color:#f92672">style</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text/css&#34;</span>&gt;
-        <span style="color:#75715e">/* cytoscape graph */</span>
-        #cy {
-            <span style="color:#66d9ef">height</span>: <span style="color:#ae81ff">300</span><span style="color:#66d9ef">px</span>;
-            <span style="color:#66d9ef">width</span>: <span style="color:#ae81ff">400</span><span style="color:#66d9ef">px</span>;
-            <span style="color:#66d9ef">background-color</span>: <span style="color:#ae81ff">#f9f9f9</span>;
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#007020">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#062873;font-weight:bold">html</span>&gt;
+&lt;<span style="color:#062873;font-weight:bold">head</span>&gt;
+    &lt;<span style="color:#062873;font-weight:bold">title</span>&gt;Learning Cytoscape.js&lt;/<span style="color:#062873;font-weight:bold">title</span>&gt;
+    &lt;<span style="color:#062873;font-weight:bold">style</span> <span style="color:#4070a0">type</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;text/css&#34;</span>&gt;
+        <span style="color:#60a0b0;font-style:italic">/* cytoscape graph */</span>
+        #<span style="color:#0e84b5;font-weight:bold">cy</span> {
+            <span style="color:#007020;font-weight:bold">height</span>: <span style="color:#40a070">300</span><span style="color:#902000">px</span>;
+            <span style="color:#007020;font-weight:bold">width</span>: <span style="color:#40a070">400</span><span style="color:#902000">px</span>;
+            <span style="color:#007020;font-weight:bold">background-color</span>: <span style="color:#40a070">#f9f9f9</span>;
         }
-    &lt;/<span style="color:#f92672">style</span>&gt;
-    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
-    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://cdn.bootcss.com/cytoscape/2.3.16/cytoscape.min.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
-    &lt;<span style="color:#f92672">script</span>&gt;
-        <span style="color:#a6e22e">$</span>(<span style="color:#66d9ef">function</span>(){
-            <span style="color:#a6e22e">cytoscape</span>({
-              <span style="color:#a6e22e">container</span><span style="color:#f92672">:</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;cy&#39;</span>),
-              <span style="color:#a6e22e">style</span><span style="color:#f92672">:</span> [
-                { <span style="color:#a6e22e">selector</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;node[label = &#34;Person&#34;]&#39;</span>, 
-                  <span style="color:#a6e22e">css</span><span style="color:#f92672">:</span> {<span style="color:#e6db74">&#39;background-color&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;#6FB1FC&#39;</span>, <span style="color:#e6db74">&#39;content&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;data(name)&#39;</span>}
+    &lt;/<span style="color:#062873;font-weight:bold">style</span>&gt;
+    &lt;<span style="color:#062873;font-weight:bold">script</span> <span style="color:#4070a0">src</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js&#34;</span>&gt;&lt;/<span style="color:#062873;font-weight:bold">script</span>&gt;
+    &lt;<span style="color:#062873;font-weight:bold">script</span> <span style="color:#4070a0">src</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;http://cdn.bootcss.com/cytoscape/2.3.16/cytoscape.min.js&#34;</span>&gt;&lt;/<span style="color:#062873;font-weight:bold">script</span>&gt;
+    &lt;<span style="color:#062873;font-weight:bold">script</span>&gt;
+        $(<span style="color:#007020;font-weight:bold">function</span>(){
+            cytoscape({
+              container<span style="color:#666">:</span> <span style="color:#007020">document</span>.getElementById(<span style="color:#4070a0">&#39;cy&#39;</span>),
+              style<span style="color:#666">:</span> [
+                { selector<span style="color:#666">:</span> <span style="color:#4070a0">&#39;node[label = &#34;Person&#34;]&#39;</span>, 
+                  css<span style="color:#666">:</span> {<span style="color:#4070a0">&#39;background-color&#39;</span><span style="color:#666">:</span> <span style="color:#4070a0">&#39;#6FB1FC&#39;</span>, <span style="color:#4070a0">&#39;content&#39;</span><span style="color:#666">:</span> <span style="color:#4070a0">&#39;data(name)&#39;</span>}
                 },
-                { <span style="color:#a6e22e">selector</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;node[label = &#34;Movie&#34;]&#39;</span>, 
-                  <span style="color:#a6e22e">css</span><span style="color:#f92672">:</span> {<span style="color:#e6db74">&#39;background-color&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;#F5A45D&#39;</span>, <span style="color:#e6db74">&#39;content&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;data(title)&#39;</span>}
+                { selector<span style="color:#666">:</span> <span style="color:#4070a0">&#39;node[label = &#34;Movie&#34;]&#39;</span>, 
+                  css<span style="color:#666">:</span> {<span style="color:#4070a0">&#39;background-color&#39;</span><span style="color:#666">:</span> <span style="color:#4070a0">&#39;#F5A45D&#39;</span>, <span style="color:#4070a0">&#39;content&#39;</span><span style="color:#666">:</span> <span style="color:#4070a0">&#39;data(title)&#39;</span>}
                 },
-                { <span style="color:#a6e22e">selector</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;edge&#39;</span>, 
-                  <span style="color:#a6e22e">css</span><span style="color:#f92672">:</span> {<span style="color:#e6db74">&#39;content&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;data(relationship)&#39;</span>, <span style="color:#e6db74">&#39;target-arrow-shape&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;triangle&#39;</span>}
+                { selector<span style="color:#666">:</span> <span style="color:#4070a0">&#39;edge&#39;</span>, 
+                  css<span style="color:#666">:</span> {<span style="color:#4070a0">&#39;content&#39;</span><span style="color:#666">:</span> <span style="color:#4070a0">&#39;data(relationship)&#39;</span>, <span style="color:#4070a0">&#39;target-arrow-shape&#39;</span><span style="color:#666">:</span> <span style="color:#4070a0">&#39;triangle&#39;</span>}
                 }        
               ],
-              <span style="color:#a6e22e">elements</span><span style="color:#f92672">:</span> {
-                <span style="color:#a6e22e">nodes</span><span style="color:#f92672">:</span> [
-                  {<span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {<span style="color:#a6e22e">id</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;172&#39;</span>, <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Tom Cruise&#39;</span>, <span style="color:#a6e22e">label</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Person&#39;</span>}},
-                  {<span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {<span style="color:#a6e22e">id</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;183&#39;</span>, <span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Top Gun&#39;</span>, <span style="color:#a6e22e">label</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Movie&#39;</span>}}
+              elements<span style="color:#666">:</span> {
+                nodes<span style="color:#666">:</span> [
+                  {data<span style="color:#666">:</span> {id<span style="color:#666">:</span> <span style="color:#4070a0">&#39;172&#39;</span>, name<span style="color:#666">:</span> <span style="color:#4070a0">&#39;Tom Cruise&#39;</span>, label<span style="color:#666">:</span> <span style="color:#4070a0">&#39;Person&#39;</span>}},
+                  {data<span style="color:#666">:</span> {id<span style="color:#666">:</span> <span style="color:#4070a0">&#39;183&#39;</span>, title<span style="color:#666">:</span> <span style="color:#4070a0">&#39;Top Gun&#39;</span>, label<span style="color:#666">:</span> <span style="color:#4070a0">&#39;Movie&#39;</span>}}
                 ],
-                <span style="color:#a6e22e">edges</span><span style="color:#f92672">:</span> [{<span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {<span style="color:#a6e22e">source</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;172&#39;</span>, <span style="color:#a6e22e">target</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;183&#39;</span>, <span style="color:#a6e22e">relationship</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Acted_In&#39;</span>}}]
+                edges<span style="color:#666">:</span> [{data<span style="color:#666">:</span> {source<span style="color:#666">:</span> <span style="color:#4070a0">&#39;172&#39;</span>, target<span style="color:#666">:</span> <span style="color:#4070a0">&#39;183&#39;</span>, relationship<span style="color:#666">:</span> <span style="color:#4070a0">&#39;Acted_In&#39;</span>}}]
               },
-              <span style="color:#a6e22e">layout</span><span style="color:#f92672">:</span> { <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;grid&#39;</span>} 
+              layout<span style="color:#666">:</span> { name<span style="color:#666">:</span> <span style="color:#4070a0">&#39;grid&#39;</span>} 
             });
         });
-    &lt;/<span style="color:#f92672">script</span>&gt;
-&lt;/<span style="color:#f92672">head</span>&gt;
-&lt;<span style="color:#f92672">body</span>&gt;
-    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;cy&#34;</span>&gt;&lt;/<span style="color:#f92672">div</span>&gt;
-&lt;/<span style="color:#f92672">body</span>&gt;
-&lt;/<span style="color:#f92672">html</span>&gt;
+    &lt;/<span style="color:#062873;font-weight:bold">script</span>&gt;
+&lt;/<span style="color:#062873;font-weight:bold">head</span>&gt;
+&lt;<span style="color:#062873;font-weight:bold">body</span>&gt;
+    &lt;<span style="color:#062873;font-weight:bold">div</span> <span style="color:#4070a0">id</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;cy&#34;</span>&gt;&lt;/<span style="color:#062873;font-weight:bold">div</span>&gt;
+&lt;/<span style="color:#062873;font-weight:bold">body</span>&gt;
+&lt;/<span style="color:#062873;font-weight:bold">html</span>&gt;
 </code></pre></div><p>代码5-12行设置图的属性，这是一个长400px宽300px底色灰色的图。代码15-40行我们调用cytoscape()函数并初始化它来完成关系图的绘制。</p>
 <p>代码18行，<code>container</code>属性被设置为用<code>&lt;div id=&quot;cy&quot;&gt;&lt;/div&gt;</code>这个div来绘制图。</p>
 <p>代码30-36行，<code>elements</code>属性包含的是图里的节点和边。</p>
 <p>节点包括多个属性值，如：<code>{data: {id: '172', name: 'Tom Cruise', label: 'Person'}}</code>。其中只有id是保留属性必须填，其它如name还有label都是我们自定义的属性，你可以自定义任意多的属性。</p>
 <p>边和节点的属性值很类似，如：<code>{data: {source: '172', target: '183', relationship: 'Acted_In'}}</code>。边也有id是保留属性但不是必须的，source/target都是保留属性，source表示开始节点（start node）的id值，target是结束节点（end node）的id值，relationship是我们自定义的属性。</p>
 <p>有了节点和边的数据，那它们显示出来是什么样子的则是由代码19-29行的<code>style</code>属性决定的。style由多个如下的（selector + css）样式组成。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">{ selector: &#39;node[label = &#34;Person&#34;]&#39;, 
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">{ selector: &#39;node[label = &#34;Person&#34;]&#39;, 
   css: {&#39;background-color&#39;: &#39;#6FB1FC&#39;,&#39;content&#39;: &#39;data(name)}
 }
 </code></pre></div><p><code>selector</code>属性选择要修改样式的元素，上面我们选择了<code>label = &quot;Person&quot;</code>的节点。<code>css</code>设置样式。这里我们设置Person节点的背景颜色为&rsquo;#6FB1FC&rsquo;。content属性决定节点上显示的文字是什么，我们用了一个<code>data()</code>函数来从节点数据里取出自定义节点（<code>{data: {id: '172', name: 'Tom Cruise', label: 'Person'}}</code>）里name值，也就是&rsquo;Tom Cruise&rsquo;。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">{ selector: &#39;edge&#39;, 
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">{ selector: &#39;edge&#39;, 
   css: {&#39;content&#39;: &#39;data(relationship)&#39;, &#39;target-arrow-shape&#39;: &#39;triangle&#39;}
 }  
 </code></pre></div><p>边（edge）的style和节点有点不一样。我们选择显示的文字是relationship的值。而且我们需要把边的三角形箭头显示出来（<code>'target-arrow-shape': 'triangle'</code>）。</p>
 <p>代码37行，<code>layout</code>属性。layout布局网络图里的节点显示的位置。你可以选择不同类型的layout把整个网络显示成树形，圆形，网格，力导向图等等。我们随便选了一个&rsquo;grid'网格布局。</p>
 <h2 id="开始写代码-">开始写代码</h2>
 <p>我们再回过头来看看<a href="2016/03/10/%E7%94%A8cytoscape-js%E5%B1%95%E7%A4%BAneo4j%E7%BD%91%E7%BB%9C%E5%85%B3%E7%B3%BB%E5%9B%BE-1-Flask/">前面</a>我们建好的Flask网站的目录结构。下面所有的源代码都可以从我的github项目<a href="https://github.com/zhongzhu/cytoscape_neo4j.git">cytoscape_neo4j</a> clone。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">C:\cytoscape_neo4j
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">C:\cytoscape_neo4j
 |   app.py
 |
 +---static
@@ -262,33 +262,33 @@
 </code></pre></div><p>我们需要修改<code>app.py</code>和<code>code.js</code>。先看看code.js，它从app.py获取JSON数据，然后调用cytoscape()函数显示网络图。</p>
 <h2 id="用cytoscapejs来显示movie网络关系图-">用cytoscape.js来显示Movie网络关系图</h2>
 <p>下面是code.js的代码。（源代码：<a href="https://github.com/zhongzhu/cytoscape_neo4j/blob/master/static/js/code.js">cytoscape_neo4j/static/js/code.js</a>）</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">$</span>(<span style="color:#66d9ef">function</span>(){
-  <span style="color:#a6e22e">$</span>.<span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#39;/graph&#39;</span>, <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">result</span>) {
-    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">style</span> <span style="color:#f92672">=</span> [
-      { <span style="color:#a6e22e">selector</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;node[label = &#34;Person&#34;]&#39;</span>, <span style="color:#a6e22e">css</span><span style="color:#f92672">:</span> {<span style="color:#e6db74">&#39;background-color&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;#6FB1FC&#39;</span>}},
-      { <span style="color:#a6e22e">selector</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;node[label = &#34;Movie&#34;]&#39;</span>, <span style="color:#a6e22e">css</span><span style="color:#f92672">:</span> {<span style="color:#e6db74">&#39;background-color&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;#F5A45D&#39;</span>}}
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">$(<span style="color:#007020;font-weight:bold">function</span>(){
+  $.get(<span style="color:#4070a0">&#39;/graph&#39;</span>, <span style="color:#007020;font-weight:bold">function</span>(result) {
+    <span style="color:#007020;font-weight:bold">var</span> style <span style="color:#666">=</span> [
+      { selector<span style="color:#666">:</span> <span style="color:#4070a0">&#39;node[label = &#34;Person&#34;]&#39;</span>, css<span style="color:#666">:</span> {<span style="color:#4070a0">&#39;background-color&#39;</span><span style="color:#666">:</span> <span style="color:#4070a0">&#39;#6FB1FC&#39;</span>}},
+      { selector<span style="color:#666">:</span> <span style="color:#4070a0">&#39;node[label = &#34;Movie&#34;]&#39;</span>, css<span style="color:#666">:</span> {<span style="color:#4070a0">&#39;background-color&#39;</span><span style="color:#666">:</span> <span style="color:#4070a0">&#39;#F5A45D&#39;</span>}}
     ];
 
-    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">cy</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">cytoscape</span>({
-      <span style="color:#a6e22e">container</span><span style="color:#f92672">:</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;cy&#39;</span>),
-      <span style="color:#a6e22e">style</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">style</span>,
-      <span style="color:#a6e22e">layout</span><span style="color:#f92672">:</span> { <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;cose&#39;</span>, <span style="color:#a6e22e">fit</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">false</span> },      
-      <span style="color:#a6e22e">elements</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">result</span>.<span style="color:#a6e22e">elements</span>
+    <span style="color:#007020;font-weight:bold">var</span> cy <span style="color:#666">=</span> cytoscape({
+      container<span style="color:#666">:</span> <span style="color:#007020">document</span>.getElementById(<span style="color:#4070a0">&#39;cy&#39;</span>),
+      style<span style="color:#666">:</span> style,
+      layout<span style="color:#666">:</span> { name<span style="color:#666">:</span> <span style="color:#4070a0">&#39;cose&#39;</span>, fit<span style="color:#666">:</span> <span style="color:#007020;font-weight:bold">false</span> },      
+      elements<span style="color:#666">:</span> result.elements
     });
-  }, <span style="color:#e6db74">&#39;json&#39;</span>);  
+  }, <span style="color:#4070a0">&#39;json&#39;</span>);  
 });
 </code></pre></div><p>和前面讲的代码大同小异。代码第2行，用jQuery的<code>$.get('/graph', function(result) {}, 'json')</code>方法从网站后端的&rsquo;/graph'路径获得JSON数据存在result中。JSON数据的内容如下：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
-  <span style="color:#f92672">&#34;elements&#34;</span>: {
-    <span style="color:#f92672">&#34;edges&#34;</span>: [
-      {<span style="color:#f92672">&#34;data&#34;</span>: {<span style="color:#f92672">&#34;relationship&#34;</span>: <span style="color:#e6db74">&#34;ACTED_IN&#34;</span>, <span style="color:#f92672">&#34;source&#34;</span>: <span style="color:#e6db74">&#34;174&#34;</span>, <span style="color:#f92672">&#34;target&#34;</span>: <span style="color:#e6db74">&#34;327&#34;</span>}},
-      {<span style="color:#f92672">&#34;data&#34;</span>: {<span style="color:#f92672">&#34;relationship&#34;</span>: <span style="color:#e6db74">&#34;ACTED_IN&#34;</span>, <span style="color:#f92672">&#34;source&#34;</span>: <span style="color:#e6db74">&#34;174&#34;</span>, <span style="color:#f92672">&#34;target&#34;</span>: <span style="color:#e6db74">&#34;273&#34;</span>}},
-      <span style="color:#960050;background-color:#1e0010">/*</span> <span style="color:#960050;background-color:#1e0010">...</span> <span style="color:#960050;background-color:#1e0010">*/</span>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#062873;font-weight:bold">&#34;elements&#34;</span>: {
+    <span style="color:#062873;font-weight:bold">&#34;edges&#34;</span>: [
+      {<span style="color:#062873;font-weight:bold">&#34;data&#34;</span>: {<span style="color:#062873;font-weight:bold">&#34;relationship&#34;</span>: <span style="color:#4070a0">&#34;ACTED_IN&#34;</span>, <span style="color:#062873;font-weight:bold">&#34;source&#34;</span>: <span style="color:#4070a0">&#34;174&#34;</span>, <span style="color:#062873;font-weight:bold">&#34;target&#34;</span>: <span style="color:#4070a0">&#34;327&#34;</span>}},
+      {<span style="color:#062873;font-weight:bold">&#34;data&#34;</span>: {<span style="color:#062873;font-weight:bold">&#34;relationship&#34;</span>: <span style="color:#4070a0">&#34;ACTED_IN&#34;</span>, <span style="color:#062873;font-weight:bold">&#34;source&#34;</span>: <span style="color:#4070a0">&#34;174&#34;</span>, <span style="color:#062873;font-weight:bold">&#34;target&#34;</span>: <span style="color:#4070a0">&#34;273&#34;</span>}},
+      <span style="">/*</span> <span style="">...</span> <span style="">*/</span>
     ],
-    <span style="color:#f92672">&#34;nodes&#34;</span>: [
-      {<span style="color:#f92672">&#34;data&#34;</span>: {<span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#e6db74">&#34;173&#34;</span>, <span style="color:#f92672">&#34;label&#34;</span>: <span style="color:#e6db74">&#34;Movie&#34;</span>, <span style="color:#f92672">&#34;released&#34;</span>: <span style="color:#ae81ff">1999</span>, <span style="color:#f92672">&#34;tagline&#34;</span>: <span style="color:#e6db74">&#34;Welcome to the Real World&#34;</span>, <span style="color:#f92672">&#34;title&#34;</span>: <span style="color:#e6db74">&#34;The Matrix&#34;</span>}},
-      {<span style="color:#f92672">&#34;data&#34;</span>: {<span style="color:#f92672">&#34;born&#34;</span>: <span style="color:#ae81ff">1962</span>, <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#e6db74">&#34;189&#34;</span>, <span style="color:#f92672">&#34;label&#34;</span>: <span style="color:#e6db74">&#34;Person&#34;</span>, <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Tom Cruise&#34;</span>}},
-      <span style="color:#960050;background-color:#1e0010">/*</span> <span style="color:#960050;background-color:#1e0010">..</span> <span style="color:#960050;background-color:#1e0010">*/</span>
+    <span style="color:#062873;font-weight:bold">&#34;nodes&#34;</span>: [
+      {<span style="color:#062873;font-weight:bold">&#34;data&#34;</span>: {<span style="color:#062873;font-weight:bold">&#34;id&#34;</span>: <span style="color:#4070a0">&#34;173&#34;</span>, <span style="color:#062873;font-weight:bold">&#34;label&#34;</span>: <span style="color:#4070a0">&#34;Movie&#34;</span>, <span style="color:#062873;font-weight:bold">&#34;released&#34;</span>: <span style="color:#40a070">1999</span>, <span style="color:#062873;font-weight:bold">&#34;tagline&#34;</span>: <span style="color:#4070a0">&#34;Welcome to the Real World&#34;</span>, <span style="color:#062873;font-weight:bold">&#34;title&#34;</span>: <span style="color:#4070a0">&#34;The Matrix&#34;</span>}},
+      {<span style="color:#062873;font-weight:bold">&#34;data&#34;</span>: {<span style="color:#062873;font-weight:bold">&#34;born&#34;</span>: <span style="color:#40a070">1962</span>, <span style="color:#062873;font-weight:bold">&#34;id&#34;</span>: <span style="color:#4070a0">&#34;189&#34;</span>, <span style="color:#062873;font-weight:bold">&#34;label&#34;</span>: <span style="color:#4070a0">&#34;Person&#34;</span>, <span style="color:#062873;font-weight:bold">&#34;name&#34;</span>: <span style="color:#4070a0">&#34;Tom Cruise&#34;</span>}},
+      <span style="">/*</span> <span style="">..</span> <span style="">*/</span>
     ]
   }
 }  
@@ -297,39 +297,39 @@
 <p>下面我们看看app.py是如何把neo4j的数据转成符合cytoscape要求的JSON的。</p>
 <h2 id="把neo4j的数据转成cytoscape需要的json数据-">把neo4j的数据转成cytoscape需要的JSON数据</h2>
 <p>下面是app.py的代码。（源代码：<a href="https://github.com/zhongzhu/cytoscape_neo4j/blob/master/app.py">cytoscape_neo4j/app.py</a>)</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># coding=utf-8</span>
-<span style="color:#f92672">from</span> flask <span style="color:#f92672">import</span> Flask, jsonify, render_template
-<span style="color:#f92672">from</span> py2neo <span style="color:#f92672">import</span> Graph
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#60a0b0;font-style:italic"># coding=utf-8</span>
+<span style="color:#007020;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">flask</span> <span style="color:#007020;font-weight:bold">import</span> Flask, jsonify, render_template
+<span style="color:#007020;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">py2neo</span> <span style="color:#007020;font-weight:bold">import</span> Graph
 
-app <span style="color:#f92672">=</span> Flask(__name__)
-graph <span style="color:#f92672">=</span> Graph()
+app <span style="color:#666">=</span> Flask(__name__)
+graph <span style="color:#666">=</span> Graph()
 
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">buildNodes</span>(nodeRecord):
-    data <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;id&#34;</span>: str(nodeRecord<span style="color:#f92672">.</span>n<span style="color:#f92672">.</span>_id), <span style="color:#e6db74">&#34;label&#34;</span>: next(iter(nodeRecord<span style="color:#f92672">.</span>n<span style="color:#f92672">.</span>labels))}
-    data<span style="color:#f92672">.</span>update(nodeRecord<span style="color:#f92672">.</span>n<span style="color:#f92672">.</span>properties)
+<span style="color:#007020;font-weight:bold">def</span> <span style="color:#06287e">buildNodes</span>(nodeRecord):
+    data <span style="color:#666">=</span> {<span style="color:#4070a0">&#34;id&#34;</span>: <span style="color:#007020">str</span>(nodeRecord<span style="color:#666">.</span>n<span style="color:#666">.</span>_id), <span style="color:#4070a0">&#34;label&#34;</span>: <span style="color:#007020">next</span>(<span style="color:#007020">iter</span>(nodeRecord<span style="color:#666">.</span>n<span style="color:#666">.</span>labels))}
+    data<span style="color:#666">.</span>update(nodeRecord<span style="color:#666">.</span>n<span style="color:#666">.</span>properties)
 
-    <span style="color:#66d9ef">return</span> {<span style="color:#e6db74">&#34;data&#34;</span>: data}
+    <span style="color:#007020;font-weight:bold">return</span> {<span style="color:#4070a0">&#34;data&#34;</span>: data}
 
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">buildEdges</span>(relationRecord):
-    data <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;source&#34;</span>: str(relationRecord<span style="color:#f92672">.</span>r<span style="color:#f92672">.</span>start_node<span style="color:#f92672">.</span>_id), 
-            <span style="color:#e6db74">&#34;target&#34;</span>: str(relationRecord<span style="color:#f92672">.</span>r<span style="color:#f92672">.</span>end_node<span style="color:#f92672">.</span>_id),
-            <span style="color:#e6db74">&#34;relationship&#34;</span>: relationRecord<span style="color:#f92672">.</span>r<span style="color:#f92672">.</span>rel<span style="color:#f92672">.</span>type}
+<span style="color:#007020;font-weight:bold">def</span> <span style="color:#06287e">buildEdges</span>(relationRecord):
+    data <span style="color:#666">=</span> {<span style="color:#4070a0">&#34;source&#34;</span>: <span style="color:#007020">str</span>(relationRecord<span style="color:#666">.</span>r<span style="color:#666">.</span>start_node<span style="color:#666">.</span>_id), 
+            <span style="color:#4070a0">&#34;target&#34;</span>: <span style="color:#007020">str</span>(relationRecord<span style="color:#666">.</span>r<span style="color:#666">.</span>end_node<span style="color:#666">.</span>_id),
+            <span style="color:#4070a0">&#34;relationship&#34;</span>: relationRecord<span style="color:#666">.</span>r<span style="color:#666">.</span>rel<span style="color:#666">.</span>type}
 
-    <span style="color:#66d9ef">return</span> {<span style="color:#e6db74">&#34;data&#34;</span>: data}
+    <span style="color:#007020;font-weight:bold">return</span> {<span style="color:#4070a0">&#34;data&#34;</span>: data}
 
-<span style="color:#a6e22e">@app.route</span>(<span style="color:#e6db74">&#39;/&#39;</span>)
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">index</span>():
-    <span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74">&#39;index.html&#39;</span>)
+<span style="color:#555;font-weight:bold">@app.route</span>(<span style="color:#4070a0">&#39;/&#39;</span>)
+<span style="color:#007020;font-weight:bold">def</span> <span style="color:#06287e">index</span>():
+    <span style="color:#007020;font-weight:bold">return</span> render_template(<span style="color:#4070a0">&#39;index.html&#39;</span>)
 
-<span style="color:#a6e22e">@app.route</span>(<span style="color:#e6db74">&#39;/graph&#39;</span>)
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_graph</span>():
-    nodes <span style="color:#f92672">=</span> map(buildNodes, graph<span style="color:#f92672">.</span>cypher<span style="color:#f92672">.</span>execute(<span style="color:#e6db74">&#39;MATCH (n) RETURN n&#39;</span>))
-    edges <span style="color:#f92672">=</span> map(buildEdges, graph<span style="color:#f92672">.</span>cypher<span style="color:#f92672">.</span>execute(<span style="color:#e6db74">&#39;MATCH ()-[r]-&gt;() RETURN r&#39;</span>))  
+<span style="color:#555;font-weight:bold">@app.route</span>(<span style="color:#4070a0">&#39;/graph&#39;</span>)
+<span style="color:#007020;font-weight:bold">def</span> <span style="color:#06287e">get_graph</span>():
+    nodes <span style="color:#666">=</span> <span style="color:#007020">map</span>(buildNodes, graph<span style="color:#666">.</span>cypher<span style="color:#666">.</span>execute(<span style="color:#4070a0">&#39;MATCH (n) RETURN n&#39;</span>))
+    edges <span style="color:#666">=</span> <span style="color:#007020">map</span>(buildEdges, graph<span style="color:#666">.</span>cypher<span style="color:#666">.</span>execute(<span style="color:#4070a0">&#39;MATCH ()-[r]-&gt;() RETURN r&#39;</span>))  
 
-    <span style="color:#66d9ef">return</span> jsonify(elements <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;nodes&#34;</span>: nodes, <span style="color:#e6db74">&#34;edges&#34;</span>: edges})    
+    <span style="color:#007020;font-weight:bold">return</span> jsonify(elements <span style="color:#666">=</span> {<span style="color:#4070a0">&#34;nodes&#34;</span>: nodes, <span style="color:#4070a0">&#34;edges&#34;</span>: edges})    
 
-<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
-    app<span style="color:#f92672">.</span>run(debug <span style="color:#f92672">=</span> True)    
+<span style="color:#007020;font-weight:bold">if</span> __name__ <span style="color:#666">==</span> <span style="color:#4070a0">&#39;__main__&#39;</span>:
+    app<span style="color:#666">.</span>run(debug <span style="color:#666">=</span> True)    
 </code></pre></div><p>这段代码用到了很多py2neo的函数，如果不熟悉的可以回到<a href="2016/03/11/%E7%94%A8cytoscape-js%E5%B1%95%E7%A4%BAneo4j%E7%BD%91%E7%BB%9C%E5%85%B3%E7%B3%BB%E5%9B%BE-2-py2neo/">前一个博客</a>看看它们的用法。</p>
 <p>code.js中的<code>$.get('/graph', function(result) {}, 'json')</code>会调用到代码中的25-30行。</p>
 <p>代码27行，<code>nodes = map(buildNodes, graph.cypher.execute('MATCH (n) RETURN n'))</code>。
@@ -384,9 +384,13 @@ graph <span style="color:#f92672">=</span> Graph()
      
      
      
-
-
-
+<script src="https://utteranc.es/client.js"
+        repo="zhongzhu/my_blog_comments"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
 
     </footer>
   </article>
@@ -433,7 +437,7 @@ graph <span style="color:#f92672">=</span> Graph()
     <div class="site-state-item site-state-tags">
         <a href="https://zhongzhu.github.io/tags/">
          
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         
         <span class="site-state-item-name">标签</span>
         </a>
@@ -475,8 +479,8 @@ graph <span style="color:#f92672">=</span> Graph()
       <div class="footer-inner">
         <div class="copyright" >
   <span itemprop="copyrightYear">  &copy; 
-  2009 - 2020</span>
-  <span class="with-love"><i class="fa fa-heart"></i></span>
+  2016 - 2020</span>
+  
   <span class="author" itemprop="copyrightHolder">钟柱的博客</span>
 </div>
 <div class="powered-by">

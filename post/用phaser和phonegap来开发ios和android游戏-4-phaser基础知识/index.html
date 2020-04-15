@@ -186,55 +186,55 @@
 </ul>
 <h2 id="phaser工程的代码结构-">Phaser工程的代码结构</h2>
 <p>现在打开文件<code>learn_to_build_a_game_with_phaser/part1.html</code>，我们来看看代码，这是一个很常见的HTML5网页:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-HTML" data-lang="HTML"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
-&lt;<span style="color:#f92672">html</span> <span style="color:#a6e22e">lang</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en&#34;</span>&gt;
-&lt;<span style="color:#f92672">head</span>&gt;
-  &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;utf-8&#34;</span> /&gt;
-  &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;viewport&#34;</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height&#34;</span> /&gt;
-  &lt;<span style="color:#f92672">title</span>&gt;跑完一百米！&lt;/<span style="color:#f92672">title</span>&gt;
-  &lt;<span style="color:#f92672">style</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text/css&#34;</span>&gt; <span style="color:#f92672">body</span> { <span style="color:#66d9ef">margin</span>: <span style="color:#ae81ff">0</span>; }&lt;/<span style="color:#f92672">style</span>&gt;
-  &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;js/phaser.min.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
-&lt;/<span style="color:#f92672">head</span>&gt;
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-HTML" data-lang="HTML"><span style="color:#007020">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#062873;font-weight:bold">html</span> <span style="color:#4070a0">lang</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;en&#34;</span>&gt;
+&lt;<span style="color:#062873;font-weight:bold">head</span>&gt;
+  &lt;<span style="color:#062873;font-weight:bold">meta</span> <span style="color:#4070a0">charset</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;utf-8&#34;</span> /&gt;
+  &lt;<span style="color:#062873;font-weight:bold">meta</span> <span style="color:#4070a0">name</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;viewport&#34;</span> <span style="color:#4070a0">content</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height&#34;</span> /&gt;
+  &lt;<span style="color:#062873;font-weight:bold">title</span>&gt;跑完一百米！&lt;/<span style="color:#062873;font-weight:bold">title</span>&gt;
+  &lt;<span style="color:#062873;font-weight:bold">style</span> <span style="color:#4070a0">type</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;text/css&#34;</span>&gt; <span style="color:#062873;font-weight:bold">body</span> { <span style="color:#007020;font-weight:bold">margin</span>: <span style="color:#40a070">0</span>; }&lt;/<span style="color:#062873;font-weight:bold">style</span>&gt;
+  &lt;<span style="color:#062873;font-weight:bold">script</span> <span style="color:#4070a0">src</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;js/phaser.min.js&#34;</span>&gt;&lt;/<span style="color:#062873;font-weight:bold">script</span>&gt;
+&lt;/<span style="color:#062873;font-weight:bold">head</span>&gt;
 
-&lt;<span style="color:#f92672">body</span>&gt;
-  <span style="color:#75715e">&lt;!-- the game logic 游戏逻辑--&gt;</span>
-  &lt;<span style="color:#f92672">script</span>&gt;
-    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">Play</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> () {};
+&lt;<span style="color:#062873;font-weight:bold">body</span>&gt;
+  <span style="color:#60a0b0;font-style:italic">&lt;!-- the game logic 游戏逻辑--&gt;</span>
+  &lt;<span style="color:#062873;font-weight:bold">script</span>&gt;
+    <span style="color:#007020;font-weight:bold">var</span> Play <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">function</span> () {};
 
-    <span style="color:#a6e22e">Play</span>.<span style="color:#a6e22e">prototype</span> <span style="color:#f92672">=</span> {
-      <span style="color:#a6e22e">preload</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span> () {},
-      <span style="color:#a6e22e">create</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>() {},
-      <span style="color:#a6e22e">update</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>() {}
+    Play.prototype <span style="color:#666">=</span> {
+      preload<span style="color:#666">:</span> <span style="color:#007020;font-weight:bold">function</span> () {},
+      create<span style="color:#666">:</span> <span style="color:#007020;font-weight:bold">function</span>() {},
+      update<span style="color:#666">:</span> <span style="color:#007020;font-weight:bold">function</span>() {}
     };
-  &lt;/<span style="color:#f92672">script</span>&gt;
+  &lt;/<span style="color:#062873;font-weight:bold">script</span>&gt;
 
-  <span style="color:#75715e">&lt;!-- the main app 主程序--&gt;</span>
-  &lt;<span style="color:#f92672">script</span>&gt;
-    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">targetWidth</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">840</span>;
-    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">targetHeight</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">560</span>;
-    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">newWidth</span> <span style="color:#f92672">=</span> (window.<span style="color:#a6e22e">innerWidth</span><span style="color:#f92672">/</span>window.<span style="color:#a6e22e">innerHeight</span>) <span style="color:#f92672">*</span> <span style="color:#a6e22e">targetHeight</span>;
+  <span style="color:#60a0b0;font-style:italic">&lt;!-- the main app 主程序--&gt;</span>
+  &lt;<span style="color:#062873;font-weight:bold">script</span>&gt;
+    <span style="color:#007020;font-weight:bold">var</span> targetWidth <span style="color:#666">=</span> <span style="color:#40a070">840</span>;
+    <span style="color:#007020;font-weight:bold">var</span> targetHeight <span style="color:#666">=</span> <span style="color:#40a070">560</span>;
+    <span style="color:#007020;font-weight:bold">var</span> newWidth <span style="color:#666">=</span> (<span style="color:#007020">window</span>.innerWidth<span style="color:#666">/</span><span style="color:#007020">window</span>.innerHeight) <span style="color:#666">*</span> targetHeight;
 
-    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">game</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Phaser</span>.<span style="color:#a6e22e">Game</span>(<span style="color:#a6e22e">newWidth</span>, <span style="color:#a6e22e">targetHeight</span>, <span style="color:#a6e22e">Phaser</span>.<span style="color:#a6e22e">AUTO</span>);
-    <span style="color:#a6e22e">game</span>.<span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">add</span>(<span style="color:#e6db74">&#39;Play&#39;</span>, <span style="color:#a6e22e">Play</span>);
-    <span style="color:#a6e22e">game</span>.<span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">start</span>(<span style="color:#e6db74">&#39;Play&#39;</span>);
-  &lt;/<span style="color:#f92672">script</span>&gt;
-&lt;/<span style="color:#f92672">body</span>&gt;
-&lt;/<span style="color:#f92672">html</span>&gt;
+    <span style="color:#007020;font-weight:bold">var</span> game <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">new</span> Phaser.Game(newWidth, targetHeight, Phaser.AUTO);
+    game.state.add(<span style="color:#4070a0">&#39;Play&#39;</span>, Play);
+    game.state.start(<span style="color:#4070a0">&#39;Play&#39;</span>);
+  &lt;/<span style="color:#062873;font-weight:bold">script</span>&gt;
+&lt;/<span style="color:#062873;font-weight:bold">body</span>&gt;
+&lt;/<span style="color:#062873;font-weight:bold">html</span>&gt;
 </code></pre></div><p>第8行引入了Phaser的库文件，就一个文件<code>phaser.min.js</code>，那就是Phaser所有的东西啦，够简单吧？</p>
 <p>和Phaser相关的全部代码都放在<code>&lt;body&gt;&lt;/body&gt;</code>之间。我用两个<code>&lt;script&gt;&lt;/script&gt;</code>来放两段不同功能的JavaScript代码。这样有点啰嗦，不过好处是看起来清晰，而且最后重构的时候代码很容易分模块。</p>
 <h2 id="初始化phaser的game对象-">初始化Phaser的Game对象</h2>
 <p>先来看23行-32行。这几行是程序的入口，类似C语言的main函数。</p>
 <p>第29行初始化了Phaser的<code>Game对象</code>。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">game</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Phaser</span>.<span style="color:#a6e22e">Game</span>(<span style="color:#a6e22e">newWidth</span>, <span style="color:#a6e22e">targetHeight</span>, <span style="color:#a6e22e">Phaser</span>.<span style="color:#a6e22e">AUTO</span>);
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="color:#007020;font-weight:bold">var</span> game <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">new</span> Phaser.Game(newWidth, targetHeight, Phaser.AUTO);
 </code></pre></div><p>Game()函数的第三个参数指定Phaser用什么Web技术来画游戏的界面。Phaser支持HTML <a href="http://www.w3schools.com/html/html5_canvas.asp">Canvas</a>或者<a href="https://en.wikipedia.org/wiki/WebGL">WebGL</a>两种方式。Canvas几乎所有的手机浏览器都支持；WebGL动画性能更好，不过有些浏览器不支持。AUTO模式让Phaser自己决定用前面两种方式中的一种。</p>
 <p>Game()函数的前两个参数指定游戏界面的宽和高。我们的游戏界面为<code>840X560</code>，由于各种手机的屏幕宽高比不一样，第27行根据手机浏览器实际宽<code>window.innerWidth</code>高<code>window.innerHeight</code>比算出了游戏界面的新的宽<code>newWidth</code>，游戏的高<code>targetHeight</code>保持560px不变。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">targetWidth</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">840</span>;
-<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">targetHeight</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">560</span>;
-<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">newWidth</span> <span style="color:#f92672">=</span> (window.<span style="color:#a6e22e">innerWidth</span><span style="color:#f92672">/</span>window.<span style="color:#a6e22e">innerHeight</span>) <span style="color:#f92672">*</span> <span style="color:#a6e22e">targetHeight</span>;
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="color:#007020;font-weight:bold">var</span> targetWidth <span style="color:#666">=</span> <span style="color:#40a070">840</span>;
+<span style="color:#007020;font-weight:bold">var</span> targetHeight <span style="color:#666">=</span> <span style="color:#40a070">560</span>;
+<span style="color:#007020;font-weight:bold">var</span> newWidth <span style="color:#666">=</span> (<span style="color:#007020">window</span>.innerWidth<span style="color:#666">/</span><span style="color:#007020">window</span>.innerHeight) <span style="color:#666">*</span> targetHeight;
 </code></pre></div><p>根据手机实际宽高比重新计算游戏的宽高非常重要，如果不这样做，你的游戏在不同的手机屏幕上显示就会失真（图形拉伸，或者被压缩变形）。</p>
 <p>第30行，用game.state加载了一个叫做<code>Play</code>的<code>State</code>。加载只是把State放入内存中，第31行start()才真正让这个State运行起来。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="color:#a6e22e">game</span>.<span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">add</span>(<span style="color:#e6db74">&#39;Play&#39;</span>, <span style="color:#a6e22e">Play</span>);
-<span style="color:#a6e22e">game</span>.<span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">start</span>(<span style="color:#e6db74">&#39;Play&#39;</span>);
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript">game.state.add(<span style="color:#4070a0">&#39;Play&#39;</span>, Play);
+game.state.start(<span style="color:#4070a0">&#39;Play&#39;</span>);
 </code></pre></div><p>那什么是State呢？下面我们详细讲讲State这个很有用的概念。</p>
 <h2 id="phaser的state对象-">Phaser的State对象</h2>
 <p>Phaser的<code>State</code>可以被翻译成状态机里的<code>状态</code>。State是个很有用的概念。</p>
@@ -245,12 +245,12 @@
 <li>直接在状态对象里用<code>this.xxx</code>的方式访问Phaser的核心对象：<code>game</code>, <code>input</code>, <code>camera</code>, <code>sound</code>, <code>physics</code>, 等等</li>
 </ul>
 <p>如何才能生成一个State对象呢？代码第14-20行定义了一个叫做<code>Play</code>的State对象，及其它的原型框架。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">Play</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> () {};
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="color:#007020;font-weight:bold">var</span> Play <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">function</span> () {};
 
-<span style="color:#a6e22e">Play</span>.<span style="color:#a6e22e">prototype</span> <span style="color:#f92672">=</span> {
-  <span style="color:#a6e22e">preload</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span> () {},
-  <span style="color:#a6e22e">create</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>() {},
-  <span style="color:#a6e22e">update</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>() {}
+Play.prototype <span style="color:#666">=</span> {
+  preload<span style="color:#666">:</span> <span style="color:#007020;font-weight:bold">function</span> () {},
+  create<span style="color:#666">:</span> <span style="color:#007020;font-weight:bold">function</span>() {},
+  update<span style="color:#666">:</span> <span style="color:#007020;font-weight:bold">function</span>() {}
 };
 </code></pre></div><p>很简单，State就是一个函数对象，它有几个约定的方法可以在State的原型(prototype)里实现:</p>
 <ul>
@@ -262,20 +262,20 @@
 <p>为了简化，我们就一个Play state。</p>
 <h2 id="playpreload方法-">Play.preload方法</h2>
 <p>现在打开文件<code>learn_to_build_a_game_with_phaser/part2.html</code>，我们来看看preload()方法里面写了些什么。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Javascript" data-lang="Javascript"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">Play</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> () {};
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Javascript" data-lang="Javascript"><span style="color:#007020;font-weight:bold">var</span> Play <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">function</span> () {};
 
-<span style="color:#a6e22e">Play</span>.<span style="color:#a6e22e">prototype</span> <span style="color:#f92672">=</span> {
-  <span style="color:#a6e22e">preload</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span> () {
-    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">scale</span>.<span style="color:#a6e22e">scaleMode</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Phaser</span>.<span style="color:#a6e22e">ScaleManager</span>.<span style="color:#a6e22e">SHOW_ALL</span>;
-    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">scale</span>.<span style="color:#a6e22e">pageAlignHorizontally</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>;
-    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">scale</span>.<span style="color:#a6e22e">pageAlignVertically</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>;
+Play.prototype <span style="color:#666">=</span> {
+  preload<span style="color:#666">:</span> <span style="color:#007020;font-weight:bold">function</span> () {
+    <span style="color:#007020;font-weight:bold">this</span>.scale.scaleMode <span style="color:#666">=</span> Phaser.ScaleManager.SHOW_ALL;
+    <span style="color:#007020;font-weight:bold">this</span>.scale.pageAlignHorizontally <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">true</span>;
+    <span style="color:#007020;font-weight:bold">this</span>.scale.pageAlignVertically <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">true</span>;
 
-    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">load</span>.<span style="color:#a6e22e">tilemap</span>(<span style="color:#e6db74">&#39;tilemap&#39;</span>, <span style="color:#e6db74">&#39;assets/level.json&#39;</span>, <span style="color:#66d9ef">null</span>, <span style="color:#a6e22e">Phaser</span>.<span style="color:#a6e22e">Tilemap</span>.<span style="color:#a6e22e">TILED_JSON</span>);
-    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">load</span>.<span style="color:#a6e22e">image</span>(<span style="color:#e6db74">&#39;tiles&#39;</span>, <span style="color:#e6db74">&#39;assets/tiles.png&#39;</span>);
-    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">load</span>.<span style="color:#a6e22e">atlas</span>(<span style="color:#e6db74">&#39;texture-atlas&#39;</span>, <span style="color:#e6db74">&#39;assets/texture-atlas.png&#39;</span>, <span style="color:#e6db74">&#39;assets/texture-atlas.json&#39;</span>);
+    <span style="color:#007020;font-weight:bold">this</span>.load.tilemap(<span style="color:#4070a0">&#39;tilemap&#39;</span>, <span style="color:#4070a0">&#39;assets/level.json&#39;</span>, <span style="color:#007020;font-weight:bold">null</span>, Phaser.Tilemap.TILED_JSON);
+    <span style="color:#007020;font-weight:bold">this</span>.load.image(<span style="color:#4070a0">&#39;tiles&#39;</span>, <span style="color:#4070a0">&#39;assets/tiles.png&#39;</span>);
+    <span style="color:#007020;font-weight:bold">this</span>.load.atlas(<span style="color:#4070a0">&#39;texture-atlas&#39;</span>, <span style="color:#4070a0">&#39;assets/texture-atlas.png&#39;</span>, <span style="color:#4070a0">&#39;assets/texture-atlas.json&#39;</span>);
   },
-  <span style="color:#a6e22e">create</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>() {},
-  <span style="color:#a6e22e">update</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>() {}
+  create<span style="color:#666">:</span> <span style="color:#007020;font-weight:bold">function</span>() {},
+  update<span style="color:#666">:</span> <span style="color:#007020;font-weight:bold">function</span>() {}
 };
 </code></pre></div><p>第1行，声明了Play state函数对象。</p>
 <p>第5行，设置了本游戏界面的缩放模式<code>scaleMode</code>为<code>Phaser.ScaleManager.SHOW_ALL</code>。</p>
@@ -306,8 +306,8 @@
 <p>Tile map的概念在<a href="http://zhongzhu.github.io/2016/03/25/%E7%94%A8Phaser%E5%92%8CPhoneGap%E6%9D%A5%E5%BC%80%E5%8F%91iOS%E5%92%8CAndroid%E6%B8%B8%E6%88%8F-3-%E7%94%A8Tiled-Map-Editor%E6%9D%A5%E7%94%9F%E6%88%90%E6%B8%B8%E6%88%8F%E5%9C%BA%E6%99%AF/">上一个博客</a>已经讲过了。</p>
 <p>Tile map包括两部分：一个是包含所有小tile图片的大图片tile.png，另一个是描述哪种小tile图片应该放在哪个小格子的描述文件level.json。我们需要用下面的<code>this.load.tilemap()</code>和<code>this.load.image()</code>方法把这两个资源加载到内存。</p>
 <p>这两个函数很类似，第一个参数是给被加载的资源取个名字。以后再访问这个资源用这个名字就好了。第二个参数是资源的文件名。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Javascript" data-lang="Javascript"><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">load</span>.<span style="color:#a6e22e">tilemap</span>(<span style="color:#e6db74">&#39;tilemap&#39;</span>, <span style="color:#e6db74">&#39;assets/level.json&#39;</span>, <span style="color:#66d9ef">null</span>, <span style="color:#a6e22e">Phaser</span>.<span style="color:#a6e22e">Tilemap</span>.<span style="color:#a6e22e">TILED_JSON</span>); 
-<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">load</span>.<span style="color:#a6e22e">image</span>(<span style="color:#e6db74">&#39;tiles&#39;</span>, <span style="color:#e6db74">&#39;assets/tiles.png&#39;</span>);  
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Javascript" data-lang="Javascript"><span style="color:#007020;font-weight:bold">this</span>.load.tilemap(<span style="color:#4070a0">&#39;tilemap&#39;</span>, <span style="color:#4070a0">&#39;assets/level.json&#39;</span>, <span style="color:#007020;font-weight:bold">null</span>, Phaser.Tilemap.TILED_JSON); 
+<span style="color:#007020;font-weight:bold">this</span>.load.image(<span style="color:#4070a0">&#39;tiles&#39;</span>, <span style="color:#4070a0">&#39;assets/tiles.png&#39;</span>);  
 </code></pre></div><h2 id="texture-atlas-">Texture Atlas</h2>
 <p>Tile Map用的tile.png图片是<code>sprite sheet</code>，它把大小一样的小tile图片全部放入了一个大图片文件tile.png中了。</p>
 <p>能不能把大小不一样的图片也像<code>sprite sheet</code>那样放到一个大图片文件里来提高性能？可以，就是用<code>Texture Atlas</code>方式。</p>
@@ -317,7 +317,7 @@
 <p>下图是texture-atlas.json的内容，每个<code>filename</code>后面跟着的就是小图片的名字。</p>
 <p><img src="https://zhongzhu.github.io/images/phaser/4/5.png" alt="texture-atlas.json"></p>
 <p>用如下代码就可以把Texture Atlas加载到内存：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Javascript" data-lang="Javascript"><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">load</span>.<span style="color:#a6e22e">atlas</span>(<span style="color:#e6db74">&#39;texture-atlas&#39;</span>, <span style="color:#e6db74">&#39;assets/texture-atlas.png&#39;</span>, <span style="color:#e6db74">&#39;assets/texture-atlas.json&#39;</span>)
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Javascript" data-lang="Javascript"><span style="color:#007020;font-weight:bold">this</span>.load.atlas(<span style="color:#4070a0">&#39;texture-atlas&#39;</span>, <span style="color:#4070a0">&#39;assets/texture-atlas.png&#39;</span>, <span style="color:#4070a0">&#39;assets/texture-atlas.json&#39;</span>)
 </code></pre></div><p>第一个参数是给Texture Atlas资源取的一个名字。第二个参数是大图片文件名。第三个参数是json文件名。</p>
 <h2 id="休息一下-">休息一下</h2>
 <p>这篇博客我们讲了Phaser工程的大概样子，并详细讲了Play.preload()方法及其屏幕适配等，下一个博客我们接着讲Play.create()。</p>
@@ -363,9 +363,13 @@
      
      
      
-
-
-
+<script src="https://utteranc.es/client.js"
+        repo="zhongzhu/my_blog_comments"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
 
     </footer>
   </article>
@@ -412,7 +416,7 @@
     <div class="site-state-item site-state-tags">
         <a href="https://zhongzhu.github.io/tags/">
          
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         
         <span class="site-state-item-name">标签</span>
         </a>
@@ -454,8 +458,8 @@
       <div class="footer-inner">
         <div class="copyright" >
   <span itemprop="copyrightYear">  &copy; 
-  2009 - 2020</span>
-  <span class="with-love"><i class="fa fa-heart"></i></span>
+  2016 - 2020</span>
+  
   <span class="author" itemprop="copyrightHolder">钟柱的博客</span>
 </div>
 <div class="powered-by">

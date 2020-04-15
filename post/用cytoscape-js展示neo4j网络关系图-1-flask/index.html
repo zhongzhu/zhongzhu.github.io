@@ -211,7 +211,7 @@
 <p>首先确认你已经安装了Python 2.7.x。然后还需安装Flask和py2neo。这两个Python包的安装可以用<a href="https://github.com/zhongzhu/cytoscape_neo4j/blob/master/requirements.txt">requirements.txt</a>文件的方式安装。你可以写一个如下的文件</p>
 <p><img src="https://zhongzhu.github.io/images/cytoscape/1/7.png" alt="这里写图片描述"></p>
 <p>然后用pip命令来安装requirements.txt里面列出的python包。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">C:\&gt;pip install -r requirements.txt
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">C:\&gt;pip install -r requirements.txt
 </code></pre></div><h3 id="前端的cytoscapejs和jqueryjs-">前端的cytoscape.js和jQuery.js</h3>
 <p>它们只是些javascript文件，后面会讲到如何下载及把它们放到什么地方。</p>
 <h2 id="要完成的功能-">要完成的功能</h2>
@@ -225,32 +225,32 @@
 <p>以上我们完成了开发环境安装及其功能设计，可以开始最开心的coding阶段啦。大家可以在<a href="https://github.com/zhongzhu/cytoscape_neo4j.git">我的Github</a>上找到下面讲到的所有源代码。</p>
 <h2 id="搭建基于flask的简单网站-">搭建基于Flask的简单网站</h2>
 <p>让我们来搭建一个基于Flask的简单网站。首先创建如下目录：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">C:\&gt;mkdir cytoscape_neo4j
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">C:\&gt;mkdir cytoscape_neo4j
 C:\&gt;mkdir cytoscape_neo4j\templates
 C:\&gt;mkdir cytoscape_neo4j\static
 C:\&gt;mkdir cytoscape_neo4j\static\js
 C:\&gt;mkdir cytoscape_neo4j\static\css
 </code></pre></div><p>完成后的目录结构如下</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">C:\cytoscape_neo4j
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">C:\cytoscape_neo4j
 +---static
 |   +---css
 |   \---js
 \---templates
 </code></pre></div><p><code>cytoscape_neo4j</code>目录用来放后台Python代码（整个项目就一个python文件，app.py）。<code>static</code>目录用来放网站的静态文件，如javascript/css文件。<code>templates</code>目录用来存放网页（整个项目只有一个网页，index.html）。</p>
 <p>现在来写Flask应用程序<code>app.py</code>(源代码： <a href="https://github.com/zhongzhu/cytoscape_neo4j/blob/master/app.py">cytoscape_neo4j/app.py</a>).</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># coding=utf-8</span>
-<span style="color:#f92672">from</span> flask <span style="color:#f92672">import</span> Flask
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#60a0b0;font-style:italic"># coding=utf-8</span>
+<span style="color:#007020;font-weight:bold">from</span> <span style="color:#0e84b5;font-weight:bold">flask</span> <span style="color:#007020;font-weight:bold">import</span> Flask
 
-app <span style="color:#f92672">=</span> Flask(__name__)
+app <span style="color:#666">=</span> Flask(__name__)
 
-<span style="color:#a6e22e">@app.route</span>(<span style="color:#e6db74">&#39;/&#39;</span>)
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">index</span>():
-    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#39;Hello, World!&#39;</span>
+<span style="color:#555;font-weight:bold">@app.route</span>(<span style="color:#4070a0">&#39;/&#39;</span>)
+<span style="color:#007020;font-weight:bold">def</span> <span style="color:#06287e">index</span>():
+    <span style="color:#007020;font-weight:bold">return</span> <span style="color:#4070a0">&#39;Hello, World!&#39;</span>
 
-<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
-    app<span style="color:#f92672">.</span>run(debug <span style="color:#f92672">=</span> True)    
+<span style="color:#007020;font-weight:bold">if</span> __name__ <span style="color:#666">==</span> <span style="color:#4070a0">&#39;__main__&#39;</span>:
+    app<span style="color:#666">.</span>run(debug <span style="color:#666">=</span> True)    
 </code></pre></div><p>6到8行代码的意思是：如果用浏览器访问根目录&rdquo;/&quot;，app.py就会发送&quot;Hello, World!&ldquo;到浏览器。让我们来启动我们的Flask应用。在Windows命令行下输入如下命令。如果看到<code>Running on http://127.0.0.1:5000/</code>的提示就表示Flask网站运行起来了。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">C:\&gt;cd cytoscape_neo4j
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">C:\&gt;cd cytoscape_neo4j
 
 C:\cytoscape_neo4j&gt;python app.py
  * Running on http://127.0.0.1:5000/
@@ -258,7 +258,7 @@ C:\cytoscape_neo4j&gt;python app.py
 </code></pre></div><p>可以在浏览器里访问<code>http://localhost:5000</code>，就能看到&quot;Hello, World!&ldquo;正常显示出来了。</p>
 <p><img src="https://zhongzhu.github.io/images/cytoscape/1/8.png" alt="这里写图片描述"></p>
 <p>Hello World正常运转后，我们来把它完善一下，做成一个真正满足我们功能要求的网站（也就是添加需要的html/Javascript/css文件了）。网站最后的目录结构是这样的。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">C:\cytoscape_neo4j
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">C:\cytoscape_neo4j
 |   app.py
 |
 +---static
@@ -276,24 +276,24 @@ C:\cytoscape_neo4j&gt;python app.py
 <p>你可以在<a href="http://jquery.com/download/">JQuery的官网下载</a>下载jquery-1.11.2.min.js。</p>
 <p><a href="http://js.cytoscape.org/">cytoscape的官网</a>可以下载cytoscape.js-2.4.0.zip，解压后我们只需要cytoscape.min.js就好。</p>
 <p>现在我们来看看<code>index.html</code> (源代码： <a href="https://github.com/zhongzhu/cytoscape_neo4j/blob/master/templates/index.html">cytoscape_neo4j/templates/index.html</a>)</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
-&lt;<span style="color:#f92672">html</span>&gt;
-&lt;<span style="color:#f92672">head</span>&gt;
-    &lt;<span style="color:#f92672">title</span>&gt;学习Cytoscape.js和neo4j&lt;/<span style="color:#f92672">title</span>&gt;
-    &lt;<span style="color:#f92672">link</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/static/css/style.css&#34;</span> <span style="color:#a6e22e">rel</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;stylesheet&#34;</span> /&gt;
-    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/static/js/jquery-1.11.2.min.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
-    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/static/js/cytoscape.min.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
-    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/static/js/code.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
-&lt;/<span style="color:#f92672">head</span>&gt;
-&lt;<span style="color:#f92672">body</span>&gt;
-  &lt;<span style="color:#f92672">h1</span>&gt;Movie网络图&lt;/<span style="color:#f92672">h1</span>&gt;
-  &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;cy&#34;</span>&gt;&lt;/<span style="color:#f92672">div</span>&gt; 
-&lt;/<span style="color:#f92672">body</span>&gt;
-&lt;/<span style="color:#f92672">html</span>&gt;
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#007020">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#062873;font-weight:bold">html</span>&gt;
+&lt;<span style="color:#062873;font-weight:bold">head</span>&gt;
+    &lt;<span style="color:#062873;font-weight:bold">title</span>&gt;学习Cytoscape.js和neo4j&lt;/<span style="color:#062873;font-weight:bold">title</span>&gt;
+    &lt;<span style="color:#062873;font-weight:bold">link</span> <span style="color:#4070a0">href</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;/static/css/style.css&#34;</span> <span style="color:#4070a0">rel</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;stylesheet&#34;</span> /&gt;
+    &lt;<span style="color:#062873;font-weight:bold">script</span> <span style="color:#4070a0">src</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;/static/js/jquery-1.11.2.min.js&#34;</span>&gt;&lt;/<span style="color:#062873;font-weight:bold">script</span>&gt;
+    &lt;<span style="color:#062873;font-weight:bold">script</span> <span style="color:#4070a0">src</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;/static/js/cytoscape.min.js&#34;</span>&gt;&lt;/<span style="color:#062873;font-weight:bold">script</span>&gt;
+    &lt;<span style="color:#062873;font-weight:bold">script</span> <span style="color:#4070a0">src</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;/static/js/code.js&#34;</span>&gt;&lt;/<span style="color:#062873;font-weight:bold">script</span>&gt;
+&lt;/<span style="color:#062873;font-weight:bold">head</span>&gt;
+&lt;<span style="color:#062873;font-weight:bold">body</span>&gt;
+  &lt;<span style="color:#062873;font-weight:bold">h1</span>&gt;Movie网络图&lt;/<span style="color:#062873;font-weight:bold">h1</span>&gt;
+  &lt;<span style="color:#062873;font-weight:bold">div</span> <span style="color:#4070a0">id</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;cy&#34;</span>&gt;&lt;/<span style="color:#062873;font-weight:bold">div</span>&gt; 
+&lt;/<span style="color:#062873;font-weight:bold">body</span>&gt;
+&lt;/<span style="color:#062873;font-weight:bold">html</span>&gt;
 </code></pre></div><p>代码第5行引入了我们自定义的style.css样式表。第6，7行引入了刚下载的jquery和cytoscape库。第8行引入我们的前台程序code.js.</p>
 <p>在11行我们准备在页面上显示“Movie网络图”。比较特殊的是第12行，这个<code>id=&quot;cy&quot;</code>的div将会被cytoscape用做画布来绘制网络关系图。</p>
 <p><code>app.py</code>也需要做一些修改。（源代码： <a href="https://github.com/zhongzhu/cytoscape_neo4j/blob/master/app.py">cytoscape_neo4j/app.py</a>）</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback"># coding=utf-8
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback"># coding=utf-8
 from flask import Flask, jsonify, render_template
 
 app = Flask(__name__)
@@ -306,16 +306,16 @@ if __name__ == &#39;__main__&#39;:
     app.run(debug = True)
 </code></pre></div><p>代码6-8行的意思是，如果访问网站的根目录&rdquo;/&quot;，Flask会返网页cytoscape_neo4j/templates/index.html。</p>
 <p><code>style.css</code>我们将定义画布的大小和背景色。（源代码：<a href="https://github.com/zhongzhu/cytoscape_neo4j/blob/master/static/css/style.css">cytoscape_neo4j/static/css/style.css</a>）</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-css" data-lang="css"><span style="color:#75715e">/* cytoscape graph */</span>
-#cy {
-    <span style="color:#66d9ef">height</span>: <span style="color:#ae81ff">400</span><span style="color:#66d9ef">px</span>;
-    <span style="color:#66d9ef">width</span>: <span style="color:#ae81ff">500</span><span style="color:#66d9ef">px</span>;
-    <span style="color:#66d9ef">background-color</span>: <span style="color:#ae81ff">#f9f9f9</span>;
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-css" data-lang="css"><span style="color:#60a0b0;font-style:italic">/* cytoscape graph */</span>
+#<span style="color:#0e84b5;font-weight:bold">cy</span> {
+    <span style="color:#007020;font-weight:bold">height</span>: <span style="color:#40a070">400</span><span style="color:#902000">px</span>;
+    <span style="color:#007020;font-weight:bold">width</span>: <span style="color:#40a070">500</span><span style="color:#902000">px</span>;
+    <span style="color:#007020;font-weight:bold">background-color</span>: <span style="color:#40a070">#f9f9f9</span>;
 }
 </code></pre></div><p><code>index.html</code>里面定了<code>&lt;div id=&quot;cy&quot;&gt;&lt;/div&gt; </code>，所以css里用<code>#cy</code>来做选择器。<code>style.css</code>里我们定义画布的宽度500px，高度400px，颜色是灰色。</p>
 <p><code>code.js</code>目前用不上，建一个空文件就行。</p>
 <p>现在可以看看我们修改的效果了。按如下步骤启动<code>app.py</code>。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">C:\&gt;cd cytoscape_neo4j
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">C:\&gt;cd cytoscape_neo4j
 
 C:\cytoscape_neo4j&gt;python app.py
  * Running on http://127.0.0.1:5000/
@@ -357,9 +357,13 @@ C:\cytoscape_neo4j&gt;python app.py
      
      
      
-
-
-
+<script src="https://utteranc.es/client.js"
+        repo="zhongzhu/my_blog_comments"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
 
     </footer>
   </article>
@@ -406,7 +410,7 @@ C:\cytoscape_neo4j&gt;python app.py
     <div class="site-state-item site-state-tags">
         <a href="https://zhongzhu.github.io/tags/">
          
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         
         <span class="site-state-item-name">标签</span>
         </a>
@@ -448,8 +452,8 @@ C:\cytoscape_neo4j&gt;python app.py
       <div class="footer-inner">
         <div class="copyright" >
   <span itemprop="copyrightYear">  &copy; 
-  2009 - 2020</span>
-  <span class="with-love"><i class="fa fa-heart"></i></span>
+  2016 - 2020</span>
+  
   <span class="author" itemprop="copyrightHolder">钟柱的博客</span>
 </div>
 <div class="powered-by">

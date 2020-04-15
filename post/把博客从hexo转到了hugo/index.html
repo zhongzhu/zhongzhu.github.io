@@ -124,28 +124,140 @@
 </time>
 </span> 
       
+
+  <span class="post-category" >
+  &nbsp; | &nbsp;
+  <span class="post-meta-item-icon">
+    <i class="fa fa-folder-o"></i>
+  </span>
+  <span class="post-meta-item-text">分类：</span>
+  
+    <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+      <a href="https://zhongzhu.github.io/categories/%E6%8A%80%E6%9C%AF" itemprop="url" rel="index">
+        <span itemprop="name">技术</span>
+      </a>
+      &nbsp; 
+    </span>
+  
+</span>
+
+
        <span>
 &nbsp; | &nbsp;
 <span class="post-meta-item-icon">
     <i class="fa fa-eye"></i>
 </span>
 <span class="post-meta-item-text">阅读：</span>
-<span class="leancloud-visitors-count">117 字 ~1分钟</span>
+<span class="leancloud-visitors-count">1154 字 ~3分钟</span>
 </span>
       </div>
     </header>
     <div class="post-body" itemprop="articleBody">
     <p>从前天开始了把博客从Hexo转到Hugo的旅程。统共分四步：</p>
 <ol>
-<li>GitHub上建一个新的Repo来host博客的源文件</li>
+<li>建新的GitHub Repo来host博客的源文件</li>
 <li>把Hexo的博客源文件转成Hugo能认识的文件</li>
 <li>配置Hugo的theme</li>
-<li>把Hugo生成的静态网站推送到你的Github Pages Repo</li>
+<li>推送静态网站到Github</li>
 </ol>
+<h1 id="建新的github-repo来host博客的源文件">建新的GitHub Repo来host博客的源文件</h1>
+<p>这一步没有任何难度，就不多说了。唯一的惊喜是发现GitHub free账号现在可以建无限量的private Repo，感谢Microsoft! 果断建了一个private Repo来host博客的源文件，毕竟你也不想别人随意来修改你的博客，对吧？</p>
+<h1 id="把hexo的博客源文件转成hugo能认识的文件">把Hexo的博客源文件转成Hugo能认识的文件</h1>
+<p>这么多年我就写了10篇博客，所以这一步对我来说比较简单：纯手工把所有的Markdown文件改改就可以了。要改3个地方</p>
+<ol>
+<li><strong>md文件名</strong></li>
+</ol>
+<p>Hexo的文件名</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">2016-03-10-用cytoscape-js展示neo4j网络关系图-1-Flask.md
+</code></pre></div><p>Hugo的文件名</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">用cytoscape-js展示neo4j网络关系图-1-Flask.md
+</code></pre></div><ol start="2">
+<li><strong>md文件头部内容里的时间戳格式</strong></li>
+</ol>
+<p>Hexo的时间戳是这样的：<code>2016-03-10 16:03:23</code></p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">---
+title: 用cytoscape.js展示neo4j网络关系图 - 1. Flask
+date: 2016-03-10 16:03:23
+tags:
+- neo4j
+categories:
+- 技术
+---
+</code></pre></div><p>Hugo的时间戳是这样的：<code>2016-03-10T16:03:23+08:00</code></p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">---
+title: 用cytoscape.js展示neo4j网络关系图 - 1. Flask
+date: 2016-03-10T16:03:23+08:00
+tags:
+- neo4j
+categories:
+- 技术
+draft: false
+---
+</code></pre></div><ol start="3">
+<li><strong>把图片都移到 &lt;my_hugo_blog&gt;/static/images目录下</strong></li>
+</ol>
+<p>这样在Markdown文件里访问图片的路径就是<code>/images/pic.png</code></p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown">![<span style="color:#062873;font-weight:bold">整体的架构</span>](<span style="color:#4070a0">/images/cytoscape/1/1.png</span>)
+</code></pre></div><h1 id="配置hugo的theme">配置Hugo的theme</h1>
+<p>在Hexo时代我一直用Next, 所以Hugo我也准备用Next作为Theme. 你需要</p>
+<ol>
+<li><strong>把Next的代码加入到博客源文件目录</strong></li>
+</ol>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Bash" data-lang="Bash">$ <span style="color:#007020">cd</span> &lt;my_hugo_blog&gt;
+$ git submodule add https://github.com/zhongzhu/hugo-theme-next.git themes/next
+</code></pre></div><ol start="2">
+<li><strong>配置&lt;my_hugo_blog&gt;/config.toml来定制Next的外观</strong></li>
+</ol>
+<p>基本就是照着&lt;my_hugo_blog&gt;/themes/next/config.toml里面的配置抄一遍就好了。</p>
+<ol start="3">
+<li><strong>在本地看看网站的显示效果</strong></li>
+</ol>
+<p>运行如下命令启动Hugo本地服务器，它会把你的Markdown源文件编译成静态网站，并且启动一个web服务器。</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">$ cd &lt;my_hugo_blog&gt;
+$ hugo server -D
+</code></pre></div><p>在浏览器里访问<code>http://localhost:1313/</code>就可以看到你的博客网站啦。</p>
+<h1 id="推送静态网站到github">推送静态网站到GitHub</h1>
+<p>步骤比较多，可以用如下Hugo建议的脚本来自动推送生成的静态网站文件到Github。</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Bash" data-lang="Bash"><span style="color:#007020">#!/bin/sh
+</span><span style="color:#007020"></span>
+<span style="color:#60a0b0;font-style:italic"># If a command fails then the deploy stops</span>
+<span style="color:#007020">set</span> -e
 
+<span style="color:#60a0b0;font-style:italic"># Updating all submodules with remote</span>
+git submodule foreach <span style="color:#4070a0">&#39;git pull origin master&#39;</span>
+
+<span style="color:#007020">printf</span> <span style="color:#4070a0">&#34;\033[0;32mDeploying updates to GitHub...\033[0m\n&#34;</span>
+
+<span style="color:#60a0b0;font-style:italic"># Build the project.</span>
+hugo -t next <span style="color:#60a0b0;font-style:italic"># if using a theme, replace with `hugo -t &lt;YOURTHEME&gt;`</span>
+
+<span style="color:#60a0b0;font-style:italic"># Go To Public folder</span>
+<span style="color:#007020">cd</span> public
+
+<span style="color:#60a0b0;font-style:italic"># Add changes to git.</span>
+git add .
+
+<span style="color:#60a0b0;font-style:italic"># Commit changes.</span>
+<span style="color:#bb60d5">msg</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;rebuilding site </span><span style="color:#007020;font-weight:bold">$(</span>date<span style="color:#007020;font-weight:bold">)</span><span style="color:#4070a0">&#34;</span>
+<span style="color:#007020;font-weight:bold">if</span> <span style="color:#666">[</span> -n <span style="color:#4070a0">&#34;</span><span style="color:#bb60d5">$*</span><span style="color:#4070a0">&#34;</span> <span style="color:#666">]</span>; <span style="color:#007020;font-weight:bold">then</span>
+	<span style="color:#bb60d5">msg</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;</span><span style="color:#bb60d5">$*</span><span style="color:#4070a0">&#34;</span>
+<span style="color:#007020;font-weight:bold">fi</span>
+git commit -m <span style="color:#4070a0">&#34;</span><span style="color:#bb60d5">$msg</span><span style="color:#4070a0">&#34;</span>
+
+<span style="color:#60a0b0;font-style:italic"># Push source and build repos.</span>
+git push origin master
+</code></pre></div>
     </div>
     <footer class="post-footer">
      
+ 
+<div class="post-tags">     
+     
+    <a href="https://zhongzhu.github.io/tags/hugo" rel="tag" title="hugo">#hugo#</a>
+    
+</div>
+
+
 
      <div class="post-nav">
     <div class="post-nav-next post-nav-item">
@@ -164,9 +276,13 @@
      
      
      
-
-
-
+<script src="https://utteranc.es/client.js"
+        repo="zhongzhu/my_blog_comments"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
 
     </footer>
   </article>
@@ -213,7 +329,7 @@
     <div class="site-state-item site-state-tags">
         <a href="https://zhongzhu.github.io/tags/">
          
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         
         <span class="site-state-item-name">标签</span>
         </a>
@@ -255,8 +371,8 @@
       <div class="footer-inner">
         <div class="copyright" >
   <span itemprop="copyrightYear">  &copy; 
-  2009 - 2020</span>
-  <span class="with-love"><i class="fa fa-heart"></i></span>
+  2016 - 2020</span>
+  
   <span class="author" itemprop="copyrightHolder">钟柱的博客</span>
 </div>
 <div class="powered-by">

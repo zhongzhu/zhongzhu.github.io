@@ -178,11 +178,11 @@
 <h2 id="cypher-">Cypher</h2>
 <p>Cypher是noe4j数据库的查询语言。你可以用它来增删改查noe4j的节点和关系。目前我们只需要用它来查询。</p>
 <p>Cypher语言非常形象。比如要查询上面的两个节点，语句是这样的：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">match (p:Person {name: &#39;Tom Cruise&#39;})-[:ACTED_IN]-&gt;(m:Movie {title: &#39;Top Gun&#39;})
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">match (p:Person {name: &#39;Tom Cruise&#39;})-[:ACTED_IN]-&gt;(m:Movie {title: &#39;Top Gun&#39;})
 return p,m
 </code></pre></div><p><code>match</code>和<code>return</code>是关键字，<code>p</code>和<code>m</code>可以看作变量，<code>p:</code>后面是p节点的<code>Label</code>（Person）及其<code>properties</code>（name: &lsquo;Tom Cruise&rsquo;）。</p>
 <p>如果要查询Tom Cruise参演的所有影片节点，语句是这样的：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">match (:Person {name: &#39;Tom Cruise&#39;})-[:ACTED_IN]-&gt;(m)
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">match (:Person {name: &#39;Tom Cruise&#39;})-[:ACTED_IN]-&gt;(m)
 return m
 </code></pre></div><p>我们的目的是显示Movie数据库所有节点和关系，所以会用到下面的查询语句。</p>
 <ul>
@@ -231,9 +231,13 @@ return m
      
      
      
-
-
-
+<script src="https://utteranc.es/client.js"
+        repo="zhongzhu/my_blog_comments"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
 
     </footer>
   </article>
@@ -280,7 +284,7 @@ return m
     <div class="site-state-item site-state-tags">
         <a href="https://zhongzhu.github.io/tags/">
          
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         
         <span class="site-state-item-name">标签</span>
         </a>
@@ -322,8 +326,8 @@ return m
       <div class="footer-inner">
         <div class="copyright" >
   <span itemprop="copyrightYear">  &copy; 
-  2009 - 2020</span>
-  <span class="with-love"><i class="fa fa-heart"></i></span>
+  2016 - 2020</span>
+  
   <span class="author" itemprop="copyrightHolder">钟柱的博客</span>
 </div>
 <div class="powered-by">
