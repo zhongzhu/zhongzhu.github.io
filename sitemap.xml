@@ -17,7 +17,7 @@
 用cytoscape-js展示neo4j网络关系图-1-Flask.md md文件头部内容里的时间戳格式  Hexo的时间戳是这样的：2016-03-10 16:03:23
 --- title: 用cytoscape.js展示neo4j网络关系图 - 1. Flask date: 2016-03-10 16:03:23 tags: - neo4j categories: - 技术 --- Hugo的时间戳是这样的：2016-03-10T16:03:23&#43;08:00
 --- title: 用cytoscape.js展示neo4j网络关系图 - 1. Flask date: 2016-03-10T16:03:23&#43;08:00 tags: - neo4j categories: - 技术 draft: false --- 把图片都移到 &amp;lt;my_hugo_blog&amp;gt;/static/images目录下  这样在Markdown文件里访问图片的路径就是/images/pic.png
-![整体的架构](/images/cytoscape/1/1.png) 配置Hugo的theme 在Hexo时代博客主题我一直用Next, 所以Hugo我也准备用Next作为Theme. 你需要
+![整体的架构](/images/cytoscape/1/1.png) 配置Hugo的theme Hexo时代一直用Next做博客主题, 所以Hugo我也准备用Next作为Theme. 你需要
  把Next的代码加入到博客源文件目录  $ cd &amp;lt;my_hugo_blog&amp;gt; $ git submodule add https://github.com/zhongzhu/hugo-theme-next.git themes/next 配置&amp;lt;my_hugo_blog&amp;gt;/config.toml来定制Next的外观  基本就是照着&amp;lt;my_hugo_blog&amp;gt;/themes/next/config.toml里面的配置抄一遍就好了。
 在本地看看网站的显示效果  运行如下命令启动Hugo本地服务器，它会把你的Markdown源文件编译成静态网站，并且启动一个web服务器。
 $ cd &amp;lt;my_hugo_blog&amp;gt; $ hugo server -D 在浏览器里访问http://localhost:1313/就可以看到你的博客网站啦。
