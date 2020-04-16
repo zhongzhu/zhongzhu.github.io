@@ -148,7 +148,7 @@
     <i class="fa fa-eye"></i>
 </span>
 <span class="post-meta-item-text">阅读：</span>
-<span class="leancloud-visitors-count">1185 字 ~3分钟</span>
+<span class="leancloud-visitors-count">1157 字 ~3分钟</span>
 </span>
       </div>
     </header>
@@ -223,8 +223,8 @@ $ hugo server -D
 <span style="color:#60a0b0;font-style:italic"># If a command fails then the deploy stops</span>
 <span style="color:#007020">set</span> -e
 
-<span style="color:#60a0b0;font-style:italic"># Updating all submodules with remote</span>
-git submodule foreach <span style="color:#4070a0">&#39;git pull origin master&#39;</span>
+<span style="color:#60a0b0;font-style:italic"># check out static web pages</span>
+git clone https://github.com/zhongzhu/zhongzhu.github.io.git public
 
 <span style="color:#007020">printf</span> <span style="color:#4070a0">&#34;\033[0;32mDeploying updates to GitHub...\033[0m\n&#34;</span>
 
@@ -245,12 +245,6 @@ git add .
 git commit -m <span style="color:#4070a0">&#34;</span><span style="color:#bb60d5">$msg</span><span style="color:#4070a0">&#34;</span>
 
 <span style="color:#60a0b0;font-style:italic"># Push static web pages to GitHub</span>
-git push origin master
-
-<span style="color:#60a0b0;font-style:italic"># Push Hugo markdowns and folder public to GitHub</span>
-<span style="color:#007020">cd</span> ..
-git add .
-git commit -m <span style="color:#4070a0">&#34;added new posts </span><span style="color:#007020;font-weight:bold">$(</span>date<span style="color:#007020;font-weight:bold">)</span><span style="color:#4070a0">&#34;</span>
 git push origin master
 </code></pre></div>
     </div>

@@ -22,7 +22,7 @@
 在本地看看网站的显示效果  运行如下命令启动Hugo本地服务器，它会把你的Markdown源文件编译成静态网站，并且启动一个web服务器。
 $ cd &amp;lt;my_hugo_blog&amp;gt; $ hugo server -D 在浏览器里访问http://localhost:1313/就可以看到你的博客网站啦。
 推送静态网站到GitHub 步骤比较多，可以用如下Hugo建议的脚本来自动推送生成的静态网站文件到Github。
-#!/bin/sh  # If a command fails then the deploy stops set -e # Updating all submodules with remote git submodule foreach &amp;#39;git pull origin master&amp;#39; printf &amp;#34;\033[0;32mDeploying updates to GitHub...\033[0m\n&amp;#34; # Build the project. hugo -t next # if using a theme, replace with `hugo -t &amp;lt;YOURTHEME&amp;gt;` # Go To Public folder cd public # Add changes to git. git add . # Commit changes. msg=&amp;#34;rebuilding site $(date)&amp;#34; if [ -n &amp;#34;$*&amp;#34; ]; then msg=&amp;#34;$*&amp;#34; fi git commit -m &amp;#34;$msg&amp;#34; # Push static web pages to GitHub git push origin master # Push Hugo markdowns and folder public to GitHub cd .. git add . git commit -m &amp;#34;added new posts $(date)&amp;#34; git push origin master </content>
+#!/bin/sh  # If a command fails then the deploy stops set -e # check out static web pages git clone https://github.com/zhongzhu/zhongzhu.github.io.git public printf &amp;#34;\033[0;32mDeploying updates to GitHub...\033[0m\n&amp;#34; # Build the project. hugo -t next # if using a theme, replace with `hugo -t &amp;lt;YOURTHEME&amp;gt;` # Go To Public folder cd public # Add changes to git. git add . # Commit changes. msg=&amp;#34;rebuilding site $(date)&amp;#34; if [ -n &amp;#34;$*&amp;#34; ]; then msg=&amp;#34;$*&amp;#34; fi git commit -m &amp;#34;$msg&amp;#34; # Push static web pages to GitHub git push origin master </content>
     </entry>
     
      <entry>
