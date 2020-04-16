@@ -1,0 +1,476 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /> 
+    <title>用GitHub Actions来自动编译和推送Hugo网站 - 钟柱的博客</title>
+    <meta name="keywords" content="程序员,架构师,个人,思考,读书,笔记,技术,分享,自动化测试,看书,音乐,画画">
+    
+    <meta property="og:title" content="用GitHub Actions来自动编译和推送Hugo网站">
+    <meta property="og:site_name" content="钟柱的博客">
+    <meta property="og:image" content="/img/author.jpg"> 
+    <meta name="title" content="用GitHub Actions来自动编译和推送Hugo网站 - 钟柱的博客" />
+    <meta name="description" content="软件 | 架构 | 测试 | 看书 | 音乐 | 画画"> 
+    <link rel="shortcut icon" href="https://zhongzhu.github.io/img/favicon.ico" />
+    <link rel="apple-touch-icon" href="https://zhongzhu.github.io/img/apple-touch-icon.png" />
+    <link rel="apple-touch-icon-precomposed" href="https://zhongzhu.github.io/img/apple-touch-icon.png" />
+    <link href="https://zhongzhu.github.io/js/vendor/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+    <link href="https://zhongzhu.github.io/js/vendor/fancybox/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+    <link href="https://zhongzhu.github.io/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="https://zhongzhu.github.io/css/syntax.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+     fancybox: true, 
+    motion: true
+  };
+</script>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<div class="container one-collumn sidebar-position-left page-home  ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-meta  custom-logo ">
+
+  <div class="custom-logo-site-title">
+    <a href="https://zhongzhu.github.io/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">钟柱的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">坚持做一些自己觉得好玩的事儿</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+    <ul id="menu" class="menu">
+      
+      
+        <li class="menu-item ">
+          <a href="https://zhongzhu.github.io/" rel="section">
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页
+          </a>
+        </li>
+      
+        <li class="menu-item ">
+          <a href="https://zhongzhu.github.io/categories/%E6%8A%80%E6%9C%AF/" rel="section">
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br />技术
+          </a>
+        </li>
+      
+        <li class="menu-item ">
+          <a href="https://zhongzhu.github.io/categories/%E6%84%9F%E6%83%B3/" rel="section">
+              <i class="menu-item-icon fa fa-fw fa-thoughts"></i> <br />感想
+          </a>
+        </li>
+      
+        <li class="menu-item ">
+          <a href="https://zhongzhu.github.io/categories/%E9%97%B2%E6%9A%87/" rel="section">
+              <i class="menu-item-icon fa fa-fw fa-life"></i> <br />闲暇
+          </a>
+        </li>
+      
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger"> <i class="menu-item-icon fa fa-search fa-fw"></i> <br /> 搜索</a>
+      </li>
+    </ul>
+    <div class="site-search">
+      <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+    </div>
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+<section id="posts" class="posts-expand">
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link" href="https://zhongzhu.github.io/post/%E7%94%A8github-actions%E6%9D%A5%E8%87%AA%E5%8A%A8%E7%BC%96%E8%AF%91%E5%92%8C%E6%8E%A8%E9%80%81hugo%E7%BD%91%E7%AB%99/" itemprop="url">
+        用GitHub Actions来自动编译和推送Hugo网站
+        </a>
+      </h1>
+      <div class="post-meta">
+      <span class="post-time">
+<span class="post-meta-item-icon">
+    <i class="fa fa-calendar-o"></i>
+</span>
+<span class="post-meta-item-text">时间：</span>
+<time itemprop="dateCreated" datetime="2016-03-22T13:04:35+08:00" content="2020-04-16">
+    2020-04-16
+</time>
+</span> 
+      
+
+  <span class="post-category" >
+  &nbsp; | &nbsp;
+  <span class="post-meta-item-icon">
+    <i class="fa fa-folder-o"></i>
+  </span>
+  <span class="post-meta-item-text">分类：</span>
+  
+    <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+      <a href="https://zhongzhu.github.io/categories/%E6%8A%80%E6%9C%AF" itemprop="url" rel="index">
+        <span itemprop="name">技术</span>
+      </a>
+      &nbsp; 
+    </span>
+  
+</span>
+
+
+       <span>
+&nbsp; | &nbsp;
+<span class="post-meta-item-icon">
+    <i class="fa fa-eye"></i>
+</span>
+<span class="post-meta-item-text">阅读：</span>
+<span class="leancloud-visitors-count">1356 字 ~3分钟</span>
+</span>
+      </div>
+    </header>
+    <div class="post-body" itemprop="articleBody">
+    <p>前几天在朋友圈里说要继续写博客并要转向Hugo，有两位朋友推荐用如下方式简化Hugo网站的推送。</p>
+<ol>
+<li>Hugo + GitHub Actions, 或者</li>
+<li>Hugo + Netlify</li>
+</ol>
+<p>觉得都挺有意思，准备都试试。先从GitHub Actions开始，过两天再看看Netlify.</p>
+<p>毕竟博客的源文件都在GitHub上，很自然的就觉得GitHub Actions会容易些。结果花了好几个小时才搞定了GitHub Actions。</p>
+<p>为什么呢？</p>
+<p>因为我没有用常用的方式去存放博客网站及源文件。</p>
+<p>目前有两种方式来在GitHub上部署你的博客网站：</p>
+<ol>
+<li>博客源文件和网站在同一个GitHub Repo里
+<ul>
+<li>申请一个<strong>共有的</strong><code>&lt;USERNAME&gt;.github.io</code> Repo</li>
+<li><code>master</code> branch存放博客网站，<code>gh-pages</code> branch存放博客源文件</li>
+</ul>
+</li>
+<li>博客源文件和网站在不同的GitHub Repos里
+<ul>
+<li>申请一个<strong>共有的</strong><code>&lt;USERNAME&gt;.github.io</code> Repo, <code>master</code> branch存放博客网站</li>
+<li>申请一个<strong>私有的</strong><code>my_blog</code> Repo, <code>master</code> branch存放博客源文件</li>
+</ul>
+</li>
+</ol>
+<p>我选择了第二种方式，原因很简单，第一种方式的源文件Repo是公有的，感觉安全比较低。选好后就开始去<a href="https://github.com/marketplace?type=actions">GitHub Action Marketplace</a>去选能用的Actions。</p>
+<p>对了，什么是Action？</p>
+<p>要是你用Jenkins做过loadbuild或者CI(Continouse Integration), 那GitHub Actions的功能就很容易理解了。它就是&quot;Jenkins&rdquo;, 能帮你做很多loadbuild还有automation任务。Action就相当于Jenkins里面的插件，或者把它当作API也行，调用Action就能做好多定制好的任务。所以，找到对应的Action绝对能让你事半功倍。</p>
+<p>于是我在<a href="https://github.com/marketplace?type=actions">GitHub Action Marketplace</a>上找到了这个Star最多的Action：</p>
+<p><img src="https://zhongzhu.github.io/images/hugo_github_action/1.png" alt="Hugo setup"></p>
+<p>按照它的说明调用四个Actions就可以完成你的博客编译并部署。workflow代码如下：</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#007020;font-weight:bold">name</span>:<span style="color:#bbb"> </span>github<span style="color:#bbb"> </span>pages<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#007020;font-weight:bold">on</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#007020;font-weight:bold">push</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#007020;font-weight:bold">branches</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- master<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#007020;font-weight:bold">jobs</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#007020;font-weight:bold">deploy</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#007020;font-weight:bold">runs-on</span>:<span style="color:#bbb"> </span>ubuntu<span style="color:#40a070">-18.04</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#007020;font-weight:bold">steps</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#007020;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v2<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#007020;font-weight:bold">with</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#007020;font-weight:bold">submodules</span>:<span style="color:#bbb"> </span><span style="color:#007020;font-weight:bold">true</span><span style="color:#bbb">  </span><span style="color:#60a0b0;font-style:italic"># Fetch Hugo themes</span><span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#007020;font-weight:bold">fetch-depth</span>:<span style="color:#bbb"> </span><span style="color:#40a070">0</span><span style="color:#bbb">    </span><span style="color:#60a0b0;font-style:italic"># Fetch all history for .GitInfo and .Lastmod</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#007020;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Setup<span style="color:#bbb"> </span>Hugo<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#007020;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>peaceiris/actions-hugo@v2<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#007020;font-weight:bold">with</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#007020;font-weight:bold">hugo-version</span>:<span style="color:#bbb"> </span><span style="color:#4070a0">&#39;0.68.3&#39;</span><span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#60a0b0;font-style:italic"># extended: true</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#007020;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Build<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#007020;font-weight:bold">run</span>:<span style="color:#bbb"> </span>hugo<span style="color:#bbb"> </span>--minify<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#007020;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Deploy<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#007020;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>peaceiris/actions-gh-pages@v3<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#007020;font-weight:bold">with</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#007020;font-weight:bold">github_token</span>:<span style="color:#bbb"> </span>${{<span style="color:#bbb"> </span>secrets.GITHUB_TOKEN<span style="color:#bbb"> </span>}}<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#007020;font-weight:bold">publish_dir</span>:<span style="color:#bbb"> </span>./public<span style="color:#bbb">
+</span></code></pre></div><p>可惜，它是为第一种方式准备的。我无法使用。</p>
+<p>那怎么办呢？</p>
+<p>对程序员来说，好办：要是不好使，就自己写一份呗。于是花了些时间写，也进了两个坑：</p>
+<ul>
+<li>坑一：在Macbook上运行成功的git语句在GitHub Actions里面运行错误。
+<ul>
+<li>
+<p>Solution：采用personal access token的方式来运行git push</p>
+<p><code>git push -f https://${{ secrets.your_personal_access }}@github.com/${REMOTE} master </code></p>
+</li>
+</ul>
+</li>
+<li>坑二：开始一直用Git Submodule的方式来推送public目录下的博客网站，一直不成功。
+<ul>
+<li>
+<p>Solution: 弃用submodule, 直接把博客网站clone到public目录</p>
+<p><code>git clone https://github.com/&lt;USERNAME&gt;/&lt;USERNAME&gt;.github.io.git public</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<p>最后完成的workflow代码如下。有了这个workflow文件，每次push博客源代码到GitHub，GitHub就会自动触发下面的代码，完成</p>
+<ol>
+<li>准备一个Ubuntu的环境</li>
+<li>迁出博客源代码</li>
+<li>迁出博客网站到public目录</li>
+<li>安装Hugo</li>
+<li>编译博客源代码成博客网站到public目录</li>
+<li>进入public目录，把新生成的博客网站push到<code>&lt;USERNAME&gt;.github.io</code> Repo</li>
+</ol>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#007020;font-weight:bold">name</span>:<span style="color:#bbb"> </span>build<span style="color:#bbb"> </span>hugo<span style="color:#bbb"> </span>web<span style="color:#bbb"> </span>and<span style="color:#bbb"> </span>push<span style="color:#bbb"> </span>to<span style="color:#bbb"> </span>github<span style="color:#bbb"> </span>pages<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#007020;font-weight:bold">on</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#007020;font-weight:bold">push</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#007020;font-weight:bold">branches</span>:<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span>master<span style="color:#bbb"> </span>]<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#007020;font-weight:bold">pull_request</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#007020;font-weight:bold">branches</span>:<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span>master<span style="color:#bbb"> </span>]<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#007020;font-weight:bold">env</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#007020;font-weight:bold">REMOTE</span>:<span style="color:#bbb"> </span><span style="color:#4070a0">&#34;username/username.github.io.git&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#007020;font-weight:bold">jobs</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#007020;font-weight:bold">build</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#007020;font-weight:bold">runs-on</span>:<span style="color:#bbb"> </span>ubuntu-latest<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#007020;font-weight:bold">steps</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- <span style="color:#007020;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v2<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#007020;font-weight:bold">with</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#007020;font-weight:bold">submodules</span>:<span style="color:#bbb"> </span><span style="color:#007020;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#007020;font-weight:bold">persist-credentials</span>:<span style="color:#bbb"> </span><span style="color:#007020;font-weight:bold">false</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- <span style="color:#007020;font-weight:bold">name</span>:<span style="color:#bbb"> </span>check<span style="color:#bbb"> </span>out<span style="color:#bbb"> </span>static<span style="color:#bbb"> </span>web<span style="color:#bbb"> </span>site<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#007020;font-weight:bold">run</span>:<span style="color:#bbb"> </span>git<span style="color:#bbb"> </span>clone<span style="color:#bbb"> </span>https://github.com/${REMOTE}<span style="color:#bbb"> </span>public<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- <span style="color:#007020;font-weight:bold">name</span>:<span style="color:#bbb"> </span>install<span style="color:#bbb"> </span>Hugo<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#007020;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>peaceiris/actions-hugo@v2<span style="color:#40a070">.4.9</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#007020;font-weight:bold">with</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#007020;font-weight:bold">hugo-version</span>:<span style="color:#bbb"> </span><span style="color:#4070a0">&#39;0.69.0&#39;</span><span style="color:#bbb"> 
+</span><span style="color:#bbb">    
+</span><span style="color:#bbb">    </span>- <span style="color:#007020;font-weight:bold">name</span>:<span style="color:#bbb"> </span>compile<span style="color:#bbb"> </span>blog<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#007020;font-weight:bold">run</span>:<span style="color:#bbb"> </span>hugo<span style="color:#bbb"> </span>-t<span style="color:#bbb"> </span>next<span style="color:#bbb">
+</span><span style="color:#bbb">      
+</span><span style="color:#bbb">    </span>- <span style="color:#007020;font-weight:bold">name</span>:<span style="color:#bbb"> </span>add,<span style="color:#bbb"> </span>commit<span style="color:#bbb"> </span>and<span style="color:#bbb"> </span>push<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#007020;font-weight:bold">run</span>:<span style="color:#bbb"> </span><span style="color:#4070a0;font-style:italic">|
+</span><span style="color:#4070a0;font-style:italic">        cd public</span><span style="color:#bbb">
+</span><span style="color:#bbb">        </span>git<span style="color:#bbb"> </span>config<span style="color:#bbb"> </span>--local<span style="color:#bbb"> </span>user.email<span style="color:#bbb"> </span><span style="color:#4070a0">&#34;&lt;your email&gt;&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">        </span>git<span style="color:#bbb"> </span>config<span style="color:#bbb"> </span>--local<span style="color:#bbb"> </span>user.name<span style="color:#bbb"> </span><span style="color:#4070a0">&#34;&lt;your github user name&gt;&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">        </span>git<span style="color:#bbb"> </span>add<span style="color:#bbb"> </span>.<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>msg=<span style="color:#4070a0">&#34;rebuilding site `date`&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">        </span>git<span style="color:#bbb"> </span>commit<span style="color:#bbb"> </span>-m<span style="color:#bbb"> </span><span style="color:#4070a0">&#34;$msg&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">        </span>git<span style="color:#bbb"> </span>push<span style="color:#bbb"> </span>-f<span style="color:#bbb"> </span>https://${{<span style="color:#bbb"> </span>secrets.your_personal_access<span style="color:#bbb"> </span>}}@github.com/${REMOTE}<span style="color:#bbb"> </span>master<span style="color:#bbb">        
+</span></code></pre></div>
+    </div>
+    <footer class="post-footer">
+     
+ 
+<div class="post-tags">     
+     
+    <a href="https://zhongzhu.github.io/tags/hugo" rel="tag" title="hugo">#hugo#</a>
+    
+    <a href="https://zhongzhu.github.io/tags/github-action" rel="tag" title="github-action">#github-action#</a>
+    
+</div>
+
+
+
+     <div class="post-nav">
+    <div class="post-nav-next post-nav-item">
+    
+    </div>
+
+    <div class="post-nav-prev post-nav-item">
+    
+        <a href="https://zhongzhu.github.io/post/%E6%8A%8A%E5%8D%9A%E5%AE%A2%E4%BB%8Ehexo%E8%BD%AC%E5%88%B0%E4%BA%86hugo/" rel="prev" title="把博客从Hexo转到了Hugo">
+        把博客从Hexo转到了Hugo <i class="fa fa-chevron-right"></i>
+        </a>
+    
+    </div>
+</div>
+      
+     
+     
+     
+<script src="https://utteranc.es/client.js"
+        repo="zhongzhu/my_blog_comments"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+    </footer>
+  </article>
+</section>
+
+          </div>
+        </div>
+        <div class="sidebar-toggle">
+  <div class="sidebar-toggle-line-wrap">
+    <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+  </div>
+</div>
+<aside id="sidebar" class="sidebar">
+  <div class="sidebar-inner">
+
+    <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+        src="https://zhongzhu.github.io/images/author.jpg"
+        alt="钟柱" />
+    <p class="site-author-name" itemprop="name">钟柱</p>
+    <p class="site-description motion-element" itemprop="description"> 
+        架构, 写代码, 自动化测试, 看书, 音乐, 画画</p>
+</div>
+      <nav class="site-state motion-element">
+    <div class="site-state-item site-state-posts">
+      <a href="https://zhongzhu.github.io/post/">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">日志</span>
+      </a>
+    </div>
+    <div class="site-state-item site-state-categories">    
+        <a href="https://zhongzhu.github.io/categories/">      
+         
+        <span class="site-state-item-count">2</span>
+        
+        <span class="site-state-item-name">分类</span>
+        
+        </a>
+    </div>
+
+    <div class="site-state-item site-state-tags">
+        <a href="https://zhongzhu.github.io/tags/">
+         
+        <span class="site-state-item-count">14</span>
+        
+        <span class="site-state-item-name">标签</span>
+        </a>
+    </div>
+</nav>
+      
+      
+<div class="links-of-author motion-element">
+    
+        <span class="links-of-author-item">
+        <a href="https://github.com/zhongzhu" target="_blank" title="GitHub">
+            <i class="fa fa-fw fa-github"></i>
+            GitHub
+        </a>
+        </span>
+    
+        <span class="links-of-author-item">
+        <a href="https://weibo.com/zhuzhong" target="_blank" title="微博">
+            <i class="fa fa-fw fa-weibo"></i>
+            微博
+        </a>
+        </span>
+    
+</div>
+
+
+      
+
+      
+    </section>
+    
+  </div>
+</aside>
+
+      </div>
+    </main>
+   
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  <span itemprop="copyrightYear">  &copy; 
+  2016 - 2020</span>
+  
+  <span class="author" itemprop="copyrightHolder">钟柱的博客</span>
+</div>
+<div class="powered-by">
+  Powered by - <a class="theme-link" href="http://gohugo.io" target="_blank" title="hugo" >Hugo v0.69.0</a>
+</div>
+<div class="theme-info">
+  Theme by - <a class="theme-link" href="https://github.com/xtfly/hugo-theme-next" target="_blank"> NexT
+  </a>
+</div>
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      <span id="scrollpercent"><span>0</span>%</span>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+<script type="text/javascript" src="https://zhongzhu.github.io/js/vendor/jquery/index.js?v=2.1.3"></script>
+<script type="text/javascript" src="https://zhongzhu.github.io/js/vendor/fastclick/lib/fastclick.min.js?v=1.0.6"></script> 
+<script type="text/javascript" src="https://zhongzhu.github.io/js/vendor/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+<script type="text/javascript" src="https://zhongzhu.github.io/js/vendor/velocity/velocity.min.js?v=1.2.1"></script>
+<script type="text/javascript" src="https://zhongzhu.github.io/js/vendor/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="https://zhongzhu.github.io/js/vendor/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+
+<script src="https://zhongzhu.github.io/js/vendor/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+<script type="text/javascript" src="https://zhongzhu.github.io/js/utils.js"></script>
+<script type="text/javascript" src="https://zhongzhu.github.io/js/motion.js"></script>
+<script type="text/javascript" src="https://zhongzhu.github.io/js/affix.js"></script>
+<script type="text/javascript" src="https://zhongzhu.github.io/js/schemes/pisces.js"></script>
+
+<script type="text/javascript" src="https://zhongzhu.github.io/js/scrollspy.js"></script>
+<script type="text/javascript" src="https://zhongzhu.github.io/js/post-details.js"></script>
+<script type="text/javascript" src="https://zhongzhu.github.io/js/toc.js"></script>
+
+<script type="text/javascript" src="https://zhongzhu.github.io/js/bootstrap.js"></script>
+
+<script type="text/javascript" src="https://zhongzhu.github.io/js/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'] ],
+      displayMath: [ ['$$','$$'] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { fonts: ["TeX"] }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML' async></script>
+</body>
+</html>
