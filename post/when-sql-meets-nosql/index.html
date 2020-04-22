@@ -4,13 +4,13 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /> 
-    <title>用Phaser和PhoneGap来开发iOS和Android游戏 - 1. 为什么写这篇博客 - 钟柱的博客</title>
+    <title>When SQL Meets NoSQL - 钟柱的博客</title>
     <meta name="keywords" content="程序员,架构师,个人,思考,读书,笔记,技术,分享,自动化测试,看书,音乐,画画">
     
-    <meta property="og:title" content="用Phaser和PhoneGap来开发iOS和Android游戏 - 1. 为什么写这篇博客">
+    <meta property="og:title" content="When SQL Meets NoSQL">
     <meta property="og:site_name" content="钟柱的博客">
     <meta property="og:image" content="/img/author.jpg"> 
-    <meta name="title" content="用Phaser和PhoneGap来开发iOS和Android游戏 - 1. 为什么写这篇博客 - 钟柱的博客" />
+    <meta name="title" content="When SQL Meets NoSQL - 钟柱的博客" />
     <meta name="description" content="软件 | 架构 | 测试 | 看书 | 音乐 | 画画"> 
     <link rel="shortcut icon" href="https://zhongzhu.github.io/img/favicon.ico" />
     <link rel="apple-touch-icon" href="https://zhongzhu.github.io/img/apple-touch-icon.png" />
@@ -109,8 +109,8 @@
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <header class="post-header">
       <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link" href="https://zhongzhu.github.io/post/%E7%94%A8phaser%E5%92%8Cphonegap%E6%9D%A5%E5%BC%80%E5%8F%91ios%E5%92%8Candroid%E6%B8%B8%E6%88%8F-1-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%86%99%E8%BF%99%E7%AF%87%E5%8D%9A%E5%AE%A2/" itemprop="url">
-        用Phaser和PhoneGap来开发iOS和Android游戏 - 1. 为什么写这篇博客
+        <a class="post-title-link" href="https://zhongzhu.github.io/post/when-sql-meets-nosql/" itemprop="url">
+        When SQL Meets NoSQL
         </a>
       </h1>
       <div class="post-meta">
@@ -119,8 +119,8 @@
     <i class="fa fa-calendar-o"></i>
 </span>
 <span class="post-meta-item-text">时间：</span>
-<time itemprop="dateCreated" datetime="2016-03-22T13:04:35+08:00" content="2016-03-11">
-    2016-03-11
+<time itemprop="dateCreated" datetime="2016-03-22T13:04:35+08:00" content="2020-04-22">
+    2020-04-22
 </time>
 </span> 
       
@@ -148,46 +148,106 @@
     <i class="fa fa-eye"></i>
 </span>
 <span class="post-meta-item-text">阅读：</span>
-<span class="leancloud-visitors-count">1345 字 ~3分钟</span>
+<span class="leancloud-visitors-count">434 字 ~1分钟</span>
 </span>
       </div>
     </header>
     <div class="post-body" itemprop="articleBody">
-    <p>两个月前看到<a href="http://phaser.io">Phaser</a>这个很简洁漂亮的HTML5 Javascript游戏框架后便有了在业余时间做一个手游玩玩的念头。一个月前也开始陆陆续续的照着<a href="http://phaser.io/tutorials/making-your-first-phaser-game">Phaser官网的教程</a>学习Phaser。</p>
-<p>为什么要写这篇博客呢？主要是为了治愈目前的拖延，督促自己完成目标。而且：从头到尾设计一个游戏，进行编码并最终在AppStore上线是一件很好玩的事情。不是嚒？“从AppStore下载自己写的游戏来玩”，想想就觉得很酷 :-)</p>
-<p>当然，如果你能从中受益，开发出属于你自己的游戏，那就更好了！</p>
-<h2 id="目标-">目标</h2>
+    <p>When you&rsquo;ve got a project running for a long time, you&rsquo;re likely running MariaDB as your database engine. Reasons are simple:  You cannot use MySQL due to its GPL license and MariaDB is the true free version of MySQL.</p>
+<p>Sooner or later you&rsquo;ll probably think of something called &ldquo;NoSQL&rdquo;. It&rsquo;s a useful technology and it&rsquo;s often used in the design lately. For example, your e-commerce website needs to store many products to be sold. Each product may have common attributes, e.g. Name, Price, Quantity. But they have specific attributes, too. A computer has special attributes like RAM, Processor, Storage, while a book has different special attributes like Publisher, ISBN, Language, etc.</p>
+<p>How should we store these specific attributes in our relational database then?</p>
+<p>Of course, there&rsquo;re solutions in the relational database world. We can use table 1 to host all common attributes. We can then use table 2 to store specific attributes. This way we can combine the two tables by SKU the key.</p>
+<p><strong>Table 1</strong></p>
+<table>
+<thead>
+<tr>
+<th>SKU</th>
+<th>Name</th>
+<th>Price</th>
+<th>Qty</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Laptop</td>
+<td>$1100</td>
+<td>235</td>
+</tr>
+<tr>
+<td>2</td>
+<td>The Little Prince</td>
+<td>$10</td>
+<td>600</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 2</strong></p>
+<table>
+<thead>
+<tr>
+<th>SKU</th>
+<th>Attr</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>RAM</td>
+<td>8GB DDR3</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Processor</td>
+<td>Intel i5-8265U</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Storage</td>
+<td>512GB</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Publisher</td>
+<td>Rupa Publications</td>
+</tr>
+<tr>
+<td>2</td>
+<td>ISBN</td>
+<td>9353044405</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Language</td>
+<td>English</td>
+</tr>
+</tbody>
+</table>
+<p>This design is feasible but not efficient:</p>
 <ol>
-<li>用Phaser开发一个网页游戏</li>
-<li>用PhoneGap把游戏打包成Android APP</li>
-<li>Android APP在Google Play上线</li>
-<li>用PhoneGap把游戏打包成iOS APP</li>
-<li>iOS APP在AppStore上线</li>
+<li>One more table to worry about</li>
+<li>We&rsquo;ll end up with maybe too many records in Table 2</li>
+<li>SQL query to flatten the table is complex</li>
 </ol>
-<!-- raw HTML omitted -->
-<h2 id="phaser和phonegap简介-">Phaser和PhoneGap简介</h2>
-<p>先讲讲我们要用到的两个重要工具：Phaser和PhoneGap。</p>
-<p><code>Phaser</code>是一个游戏框架，可以用来开发桌面或者手机HTML5网页游戏，开发语言支持JavaScript/TypeScript。这里我们用JavaScript，这个Internet时代最流行的语言（我不会TypeScript）。</p>
-<p>用Phaser开发出来的其实是一个HTML5网页游戏或者叫做Web APP，要在AppStore或者Google Play上线必须用原生APP的方式。如果要用Objective-C/Swift来写一个iOS APP，然后再用Java写一个Android APP才能上线我们的游戏，那成本太高了，维护两套不同的代码也是很头痛的。于是，我们需要PhoneGap。</p>
-<p><code>PhoneGap</code>其实就是一个打包软件，它可以把你用HTML/CSS/JavaScript写的网页应用（Web APP）直接打包成iPhone/Android/WindowsPhone原生APP。一套代码，直接生成多种平台的原生APP，相当的厉害！</p>
-<h2 id="准备工作-">准备工作</h2>
-<p>APP开发当然用MacBook最好，因为iOS游戏APP必须在苹果电脑上打包，此外MacBook也可以打包Android APP。如果没有MacBook也无所谓，准备一台能上网的Windows PC就可以了。用Windows PC我们至少可以做到开发Android APP并上线（目标的第3步）。</p>
-<p>你需要准备</p>
-<ul>
-<li>Windows PC</li>
-<li>在Windows PC上安装<a href="https://www.python.org/downloads/">Python 2.7.x for Windows</a> （用来做HTTP server）</li>
-</ul>
-<h2 id="要把游戏开发出来统共分几步-">要把游戏开发出来，统共分几步？</h2>
-<p>其实我也不知道总共分几步。</p>
-<p>我可以说是个游戏开发门外汉，多年一直开发测试工具，对游戏这行还真是不了解。门外汉也有门外汉的优势：有自知之明，所以肯定会做一个简单得不能再简单的游戏。“简单”有一个致命的优势：也许你真的能把它做出来！</p>
-<p>好吧，回到原来的话题：统共分几步？我觉得分三步：</p>
+<p>At this point, you may wonder why not to use NoSQL. Why not migrate to MongoDB directly?</p>
+<p>No, you can&rsquo;t because the migration is time-consuming and risky as too many places to change and too many features waiting for you to implement. That&rsquo;s quite disappointing, right? You know you can use NoSQL to solve your problem but just can&rsquo;t do it now. Do we have a way out of this?</p>
+<p>Yes, there is always a solution to a problem. The solution is your MariaDB. You know what, MariaDB supports NoSQL (JSON documents) since 10.2.x. Sometimes you may wonder: I should have read MariaDB&rsquo;s release notes years ago :-)</p>
+<p><img src="https://zhongzhu.github.io/images/sql_nosql/1.png" alt="Store JSON documents in mariaDB"></p>
+<p>MariaDB has several advantages than the traditional NoSQL databases:</p>
 <ol>
-<li><strong>策划</strong>：这是个什么类型的游戏？游戏的故事是什么？</li>
-<li><strong>图片，音效</strong>：没有图形和声音就不是游戏了</li>
-<li><strong>写代码</strong></li>
+<li>You got the goodies of both SQL and NoSQL in one database</li>
+<li>Query JSON documents using standard SQL statements</li>
+<li>You can use transactions to modify multiple JSON documents</li>
 </ol>
-<p>到这里可能有人会说了：“少了一步吧？没有测试！”。作为系统测试部门专门开发测试工具的资深员工怎么会忘记测试？测试包括在“3. 写代码”里面了，写了代码要测试是对程序员的基本要求，DoD(Definition of Done)，不是嚒？:-)</p>
-<p>这三步，我觉得最难的是策划。估计策划要花掉30%到50%的开发时间。好了，今天就写到这里，下一篇博客写游戏的策划。</p>
+<p>Let&rsquo;s get a taste of how this works.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-SQL" data-lang="SQL"><span style="color:#007020;font-weight:bold">SELECT</span> Name,
+   JSON_VALUE(Attr, <span style="color:#4070a0">&#34;$.RAM&#34;</span>) <span style="color:#007020;font-weight:bold">AS</span> RAM,
+   JSON_VALUE(Attr, <span style="color:#4070a0">&#34;$.Processor&#34;</span>) <span style="color:#007020;font-weight:bold">AS</span> Processor,
+   JSON_VALUE(Attr, <span style="color:#4070a0">&#34;$.Storage&#34;</span>) <span style="color:#007020;font-weight:bold">AS</span> <span style="color:#007020;font-weight:bold">Storage</span>
+<span style="color:#007020;font-weight:bold">FROM</span> table2
+<span style="color:#007020;font-weight:bold">WHERE</span>  SKU <span style="color:#666">=</span> <span style="color:#4070a0">&#34;1&#34;</span>
+</code></pre></div><p>I&rsquo;ll write another blog post to detail how to do the CRUD (Create, Read, Update, Delete) with JSON documents in MariaDB. Stay tuned!</p>
 
     </div>
     <footer class="post-footer">
@@ -195,15 +255,9 @@
  
 <div class="post-tags">     
      
-    <a href="https://zhongzhu.github.io/tags/phaser" rel="tag" title="Phaser">#Phaser#</a>
+    <a href="https://zhongzhu.github.io/tags/mariadb" rel="tag" title="MariaDB">#MariaDB#</a>
     
-    <a href="https://zhongzhu.github.io/tags/phonegap" rel="tag" title="PhoneGap">#PhoneGap#</a>
-    
-    <a href="https://zhongzhu.github.io/tags/cordova" rel="tag" title="Cordova">#Cordova#</a>
-    
-    <a href="https://zhongzhu.github.io/tags/ios" rel="tag" title="iOS">#iOS#</a>
-    
-    <a href="https://zhongzhu.github.io/tags/android" rel="tag" title="android">#android#</a>
+    <a href="https://zhongzhu.github.io/tags/nosql" rel="tag" title="NoSQL">#NoSQL#</a>
     
 </div>
 
@@ -212,16 +266,12 @@
      <div class="post-nav">
     <div class="post-nav-next post-nav-item">
     
-        <a href="https://zhongzhu.github.io/post/%E7%94%A8phaser%E5%92%8Cphonegap%E6%9D%A5%E5%BC%80%E5%8F%91ios%E5%92%8Candroid%E6%B8%B8%E6%88%8F-2-%E6%B8%B8%E6%88%8F%E7%AD%96%E5%88%92/" rel="next" title="用Phaser和PhoneGap来开发iOS和Android游戏 - 2. 游戏策划">
-        <i class="fa fa-chevron-left"></i> 用Phaser和PhoneGap来开发iOS和Android游戏 - 2. 游戏策划
-        </a>
-    
     </div>
 
     <div class="post-nav-prev post-nav-item">
     
-        <a href="https://zhongzhu.github.io/post/%E7%94%A8cytoscape-js%E5%B1%95%E7%A4%BAneo4j%E7%BD%91%E7%BB%9C%E5%85%B3%E7%B3%BB%E5%9B%BE-3-cytoscape-js/" rel="prev" title="用cytoscape.js展示neo4j网络关系图 - 3. cytoscape.js">
-        用cytoscape.js展示neo4j网络关系图 - 3. cytoscape.js <i class="fa fa-chevron-right"></i>
+        <a href="https://zhongzhu.github.io/post/%E7%94%A8github-actions%E6%9D%A5%E8%87%AA%E5%8A%A8%E7%BC%96%E8%AF%91%E5%92%8C%E6%8E%A8%E9%80%81hugo%E7%BD%91%E7%AB%99/" rel="prev" title="用GitHub Actions来自动编译和推送Hugo网站">
+        用GitHub Actions来自动编译和推送Hugo网站 <i class="fa fa-chevron-right"></i>
         </a>
     
     </div>

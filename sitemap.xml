@@ -1,6 +1,31 @@
 <search>
     
      <entry>
+        <title>When SQL Meets NoSQL</title>
+        <url>https://zhongzhu.github.io/post/when-sql-meets-nosql/</url>
+        <categories>
+          <category>技术</category>
+        </categories>
+        <tags>
+          <tag>MariaDB</tag><tag>NoSQL</tag>
+        </tags>
+        <content type="html"> When you&amp;rsquo;ve got a project running for a long time, you&amp;rsquo;re likely running MariaDB as your database engine. Reasons are simple: You cannot use MySQL due to its GPL license and MariaDB is the true free version of MySQL.
+Sooner or later you&amp;rsquo;ll probably think of something called &amp;ldquo;NoSQL&amp;rdquo;. It&amp;rsquo;s a useful technology and it&amp;rsquo;s often used in the design lately. For example, your e-commerce website needs to store many products to be sold. Each product may have common attributes, e.g. Name, Price, Quantity. But they have specific attributes, too. A computer has special attributes like RAM, Processor, Storage, while a book has different special attributes like Publisher, ISBN, Language, etc.
+How should we store these specific attributes in our relational database then?
+Of course, there&amp;rsquo;re solutions in the relational database world. We can use table 1 to host all common attributes. We can then use table 2 to store specific attributes. This way we can combine the two tables by SKU the key.
+Table 1
+   SKU Name Price Qty     1 Laptop $1100 235   2 The Little Prince $10 600    Table 2
+   SKU Attr Value     1 RAM 8GB DDR3   1 Processor Intel i5-8265U   1 Storage 512GB   2 Publisher Rupa Publications   2 ISBN 9353044405   2 Language English    This design is feasible but not efficient:
+ One more table to worry about We&amp;rsquo;ll end up with maybe too many records in Table 2 SQL query to flatten the table is complex  At this point, you may wonder why not to use NoSQL. Why not migrate to MongoDB directly?
+No, you can&amp;rsquo;t because the migration is time-consuming and risky as too many places to change and too many features waiting for you to implement. That&amp;rsquo;s quite disappointing, right? You know you can use NoSQL to solve your problem but just can&amp;rsquo;t do it now. Do we have a way out of this?
+Yes, there is always a solution to a problem. The solution is your MariaDB. You know what, MariaDB supports NoSQL (JSON documents) since 10.2.x. Sometimes you may wonder: I should have read MariaDB&amp;rsquo;s release notes years ago :-)
+MariaDB has several advantages than the traditional NoSQL databases:
+ You got the goodies of both SQL and NoSQL in one database Query JSON documents using standard SQL statements You can use transactions to modify multiple JSON documents  Let&amp;rsquo;s get a taste of how this works.
+SELECT Name, JSON_VALUE(Attr, &amp;#34;$.RAM&amp;#34;) AS RAM, JSON_VALUE(Attr, &amp;#34;$.Processor&amp;#34;) AS Processor, JSON_VALUE(Attr, &amp;#34;$.Storage&amp;#34;) AS Storage FROM table2 WHERE SKU = &amp;#34;1&amp;#34; I&amp;rsquo;ll write another blog post to detail how to do the CRUD (Create, Read, Update, Delete) with JSON documents in MariaDB. Stay tuned!
+</content>
+    </entry>
+    
+     <entry>
         <title>用GitHub Actions来自动编译和推送Hugo网站</title>
         <url>https://zhongzhu.github.io/post/%E7%94%A8github-actions%E6%9D%A5%E8%87%AA%E5%8A%A8%E7%BC%96%E8%AF%91%E5%92%8C%E6%8E%A8%E9%80%81hugo%E7%BD%91%E7%AB%99/</url>
         <categories>

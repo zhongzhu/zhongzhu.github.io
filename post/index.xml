@@ -6,10 +6,19 @@
     <description>Recent content in Posts on 钟柱的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Thu, 16 Apr 2020 20:10:04 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 22 Apr 2020 20:51:58 +0800</lastBuildDate>
     
 	<atom:link href="https://zhongzhu.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>When SQL Meets NoSQL</title>
+      <link>https://zhongzhu.github.io/post/when-sql-meets-nosql/</link>
+      <pubDate>Wed, 22 Apr 2020 20:51:58 +0800</pubDate>
+      
+      <guid>https://zhongzhu.github.io/post/when-sql-meets-nosql/</guid>
+      <description>When you&amp;rsquo;ve got a project running for a long time, you&amp;rsquo;re likely running MariaDB as your database engine. Reasons are simple: You cannot use MySQL due to its GPL license and MariaDB is the true free version of MySQL. Sooner or later you&amp;rsquo;ll probably think of something called &amp;ldquo;NoSQL&amp;rdquo;. It&amp;rsquo;s a useful technology and it&amp;rsquo;s often used in the design lately. For example, your e-commerce website needs to store many</description>
+    </item>
     
     <item>
       <title>用GitHub Actions来自动编译和推送Hugo网站</title>
