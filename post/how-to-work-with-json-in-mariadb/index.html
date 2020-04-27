@@ -1,0 +1,510 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /> 
+    <title>How to Work With JSON in MariaDB - 钟柱的博客</title>
+    <meta name="keywords" content="程序员,架构师,个人,思考,读书,笔记,技术,分享,自动化测试,看书,音乐,画画">
+    
+    <meta property="og:title" content="How to Work With JSON in MariaDB">
+    <meta property="og:site_name" content="钟柱的博客">
+    <meta property="og:image" content="/img/author.jpg"> 
+    <meta name="title" content="How to Work With JSON in MariaDB - 钟柱的博客" />
+    <meta name="description" content="软件 | 架构 | 测试 | 看书 | 音乐 | 画画"> 
+    <link rel="shortcut icon" href="https://zhongzhu.github.io/img/favicon.ico" />
+    <link rel="apple-touch-icon" href="https://zhongzhu.github.io/img/apple-touch-icon.png" />
+    <link rel="apple-touch-icon-precomposed" href="https://zhongzhu.github.io/img/apple-touch-icon.png" />
+    <link href="https://zhongzhu.github.io/js/vendor/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+    <link href="https://zhongzhu.github.io/js/vendor/fancybox/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+    <link href="https://zhongzhu.github.io/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="https://zhongzhu.github.io/css/syntax.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+     fancybox: true, 
+    motion: true
+  };
+</script>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<div class="container one-collumn sidebar-position-left page-home  ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-meta  custom-logo ">
+
+  <div class="custom-logo-site-title">
+    <a href="https://zhongzhu.github.io/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">钟柱的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">坚持做一些自己觉得好玩的事儿</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+    <ul id="menu" class="menu">
+      
+      
+        <li class="menu-item ">
+          <a href="https://zhongzhu.github.io/" rel="section">
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页
+          </a>
+        </li>
+      
+        <li class="menu-item ">
+          <a href="https://zhongzhu.github.io/categories/%E6%8A%80%E6%9C%AF/" rel="section">
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br />技术
+          </a>
+        </li>
+      
+        <li class="menu-item ">
+          <a href="https://zhongzhu.github.io/categories/%E6%84%9F%E6%83%B3/" rel="section">
+              <i class="menu-item-icon fa fa-fw fa-thoughts"></i> <br />感想
+          </a>
+        </li>
+      
+        <li class="menu-item ">
+          <a href="https://zhongzhu.github.io/categories/%E9%97%B2%E6%9A%87/" rel="section">
+              <i class="menu-item-icon fa fa-fw fa-life"></i> <br />闲暇
+          </a>
+        </li>
+      
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger"> <i class="menu-item-icon fa fa-search fa-fw"></i> <br /> 搜索</a>
+      </li>
+    </ul>
+    <div class="site-search">
+      <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+    </div>
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+<section id="posts" class="posts-expand">
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link" href="https://zhongzhu.github.io/post/how-to-work-with-json-in-mariadb/" itemprop="url">
+        How to Work With JSON in MariaDB
+        </a>
+      </h1>
+      <div class="post-meta">
+      <span class="post-time">
+<span class="post-meta-item-icon">
+    <i class="fa fa-calendar-o"></i>
+</span>
+<span class="post-meta-item-text">时间：</span>
+<time itemprop="dateCreated" datetime="2016-03-22T13:04:35+08:00" content="2020-04-27">
+    2020-04-27
+</time>
+</span> 
+      
+
+  <span class="post-category" >
+  &nbsp; | &nbsp;
+  <span class="post-meta-item-icon">
+    <i class="fa fa-folder-o"></i>
+  </span>
+  <span class="post-meta-item-text">分类：</span>
+  
+    <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+      <a href="https://zhongzhu.github.io/categories/%E6%8A%80%E6%9C%AF" itemprop="url" rel="index">
+        <span itemprop="name">技术</span>
+      </a>
+      &nbsp; 
+    </span>
+  
+</span>
+
+
+       <span>
+&nbsp; | &nbsp;
+<span class="post-meta-item-icon">
+    <i class="fa fa-eye"></i>
+</span>
+<span class="post-meta-item-text">阅读：</span>
+<span class="leancloud-visitors-count">1092 字 ~3分钟</span>
+</span>
+      </div>
+    </header>
+    <div class="post-body" itemprop="articleBody">
+    <p>In my last post <a href="when-SQL-meets-NoSQL">When SQL Meets NoSQl</a>, we talked about MariaDB can combine both SQL and NoSQL in the same database engine. Today, let&rsquo;s find out how.</p>
+<p>We&rsquo;re going to use Docker image to start a MariaDB container, then try out CRUD (Create/ Read/ Update/ Delete) on JSON documents stored in the same relational database table.</p>
+<h1 id="start-mariadb-in-a-docker-container">Start MariaDB in a Docker container</h1>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">% docker run --name mariadb -e <span style="color:#bb60d5">MYSQL_ROOT_PASSWORD</span><span style="color:#666">=</span>example -d mariadb:10.4.12
+</code></pre></div><p>check if it&rsquo;s started.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">% docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
+6f0dc37d8811        mariadb:10.4.12     <span style="color:#4070a0">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#40a070">4</span> minutes ago       Up <span style="color:#40a070">4</span> minutes        3306/tcp            mariadb
+</code></pre></div><h1 id="open-the-mariadb-cli-in-the-container">Open the MariaDB CLI in the container</h1>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">% docker <span style="color:#007020">exec</span> -it mariadb bash
+root@6f0dc37d8811:/# mysql -uroot -pexample
+Welcome to the MariaDB monitor.  Commands end with ; or <span style="color:#4070a0;font-weight:bold">\g</span>.
+Your MariaDB connection id is <span style="color:#40a070">8</span>
+Server version: 10.4.12-MariaDB-1:10.4.12+maria~bionic mariadb.org binary distribution
+
+Copyright <span style="color:#666">(</span>c<span style="color:#666">)</span> 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type <span style="color:#4070a0">&#39;help;&#39;</span> or <span style="color:#4070a0">&#39;\h&#39;</span> <span style="color:#007020;font-weight:bold">for</span> help. Type <span style="color:#4070a0">&#39;\c&#39;</span> to clear the current input statement.
+
+MariaDB <span style="color:#666">[(</span>none<span style="color:#666">)]</span>&gt;
+</code></pre></div><h1 id="prepare-a-table-to-host-json-documents">Prepare a table to host JSON documents</h1>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-SQL" data-lang="SQL">MariaDB [(<span style="color:#007020;font-weight:bold">none</span>)]<span style="color:#666">&gt;</span> <span style="color:#007020;font-weight:bold">create</span> <span style="color:#007020;font-weight:bold">database</span> mydb;
+MariaDB [(<span style="color:#007020;font-weight:bold">none</span>)]<span style="color:#666">&gt;</span> use mydb;
+<span style="color:#007020;font-weight:bold">Database</span> changed
+MariaDB [mydb]<span style="color:#666">&gt;</span> <span style="color:#007020;font-weight:bold">create</span> <span style="color:#007020;font-weight:bold">table</span> <span style="color:#007020;font-weight:bold">if</span> <span style="color:#007020;font-weight:bold">not</span> <span style="color:#007020;font-weight:bold">exists</span> products (
+    <span style="color:#666">-&gt;</span> sku <span style="color:#007020">int</span> <span style="color:#007020;font-weight:bold">not</span> <span style="color:#007020;font-weight:bold">null</span> <span style="color:#007020;font-weight:bold">primary</span> <span style="color:#007020;font-weight:bold">key</span>,
+    <span style="color:#666">-&gt;</span> name <span style="color:#007020">varchar</span>(<span style="color:#40a070">40</span>) <span style="color:#007020;font-weight:bold">not</span> <span style="color:#007020;font-weight:bold">null</span>,
+    <span style="color:#666">-&gt;</span> price <span style="color:#007020">varchar</span>(<span style="color:#40a070">40</span>) <span style="color:#007020;font-weight:bold">not</span> <span style="color:#007020;font-weight:bold">null</span>,
+    <span style="color:#666">-&gt;</span> qty <span style="color:#007020">int</span> <span style="color:#007020;font-weight:bold">not</span> <span style="color:#007020;font-weight:bold">null</span>,
+    <span style="color:#666">-&gt;</span> attr json <span style="color:#007020;font-weight:bold">not</span> <span style="color:#007020;font-weight:bold">null</span>
+    <span style="color:#666">-&gt;</span> );
+</code></pre></div><p>If you look at field <code>attr</code>, its data type is <code>json</code>. json is a new data type used to store JSON documents. Ok, we already have an empty table ready to store some data. Let&rsquo;s put some JSON documents into it.</p>
+<h1 id="create">Create</h1>
+<p>We&rsquo;ll insert below two records into table products.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-SQL" data-lang="SQL">MariaDB [mydb]<span style="color:#666">&gt;</span> <span style="color:#007020;font-weight:bold">insert</span> <span style="color:#007020;font-weight:bold">into</span> products <span style="color:#007020;font-weight:bold">values</span>
+(<span style="color:#40a070">1</span>, <span style="color:#4070a0">&#34;Laptop&#34;</span>, <span style="color:#4070a0">&#34;$1100&#34;</span>, <span style="color:#40a070">235</span>,
+ <span style="color:#4070a0">&#39;{&#34;RAM&#34;:&#34;8GB DDR3&#34;, &#34;audio&#34;:[&#34;DTS&#34;,&#34;Dolby&#34;], &#34;video&#34;:{&#34;resolution&#34;:&#34;1080P&#34;, &#34;aspectRatio&#34;:&#34;16:9&#34;}}&#39;</span>);
+
+MariaDB [mydb]<span style="color:#666">&gt;</span> <span style="color:#007020;font-weight:bold">insert</span> <span style="color:#007020;font-weight:bold">into</span> products <span style="color:#007020;font-weight:bold">values</span>
+(<span style="color:#40a070">2</span>, <span style="color:#4070a0">&#34;The Little Prince&#34;</span>, <span style="color:#4070a0">&#34;$10&#34;</span>, <span style="color:#40a070">600</span>, 
+ <span style="color:#4070a0">&#39;{&#34;Publisher&#34;:&#34;Rupa Publications&#34;, &#34;ISBN&#34;:&#34;9353044405&#34;, &#34;Language&#34;:&#34;English&#34;}&#39;</span>);
+</code></pre></div><p>Now, let&rsquo;s find out how the JSON documents look like in the database.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-SQL" data-lang="SQL">MariaDB [mydb]<span style="color:#666">&gt;</span> <span style="color:#007020;font-weight:bold">select</span> <span style="color:#666">*</span> <span style="color:#007020;font-weight:bold">from</span> products;
+<span style="color:#666">+</span><span style="color:#60a0b0;font-style:italic">-----+-------------------+-------+-----+---------------------------------------------------------------------------------------------------+
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#666">|</span> sku <span style="color:#666">|</span> name              <span style="color:#666">|</span> price <span style="color:#666">|</span> qty <span style="color:#666">|</span> attr                                                                                              <span style="color:#666">|</span>
+<span style="color:#666">+</span><span style="color:#60a0b0;font-style:italic">-----+-------------------+-------+-----+---------------------------------------------------------------------------------------------------+
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#666">|</span>   <span style="color:#40a070">1</span> <span style="color:#666">|</span> Laptop            <span style="color:#666">|</span> <span style="">$</span><span style="color:#40a070">1100</span> <span style="color:#666">|</span> <span style="color:#40a070">235</span> <span style="color:#666">|</span> <span style="">{</span><span style="color:#4070a0">&#34;RAM&#34;</span>:<span style="color:#4070a0">&#34;8GB DDR3&#34;</span>, <span style="color:#4070a0">&#34;audio&#34;</span>:[<span style="color:#4070a0">&#34;DTS&#34;</span>,<span style="color:#4070a0">&#34;Dolby&#34;</span>], <span style="color:#4070a0">&#34;video&#34;</span>:<span style="">{</span><span style="color:#4070a0">&#34;resolution&#34;</span>:<span style="color:#4070a0">&#34;1080P&#34;</span>, <span style="color:#4070a0">&#34;aspectRatio&#34;</span>:<span style="color:#4070a0">&#34;16:9&#34;</span><span style="">}}</span> <span style="color:#666">|</span>
+<span style="color:#666">|</span>   <span style="color:#40a070">2</span> <span style="color:#666">|</span> The Little Prince <span style="color:#666">|</span> <span style="">$</span><span style="color:#40a070">10</span>   <span style="color:#666">|</span> <span style="color:#40a070">600</span> <span style="color:#666">|</span> <span style="">{</span><span style="color:#4070a0">&#34;Publisher&#34;</span>:<span style="color:#4070a0">&#34;Rupa Publications&#34;</span>, <span style="color:#4070a0">&#34;ISBN&#34;</span>:<span style="color:#4070a0">&#34;9353044405&#34;</span>, <span style="color:#4070a0">&#34;Language&#34;</span>:<span style="color:#4070a0">&#34;English&#34;</span><span style="">}</span>                      <span style="color:#666">|</span>
+<span style="color:#666">+</span><span style="color:#60a0b0;font-style:italic">-----+-------------------+-------+-----+---------------------------------------------------------------------------------------------------+
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#40a070">2</span> <span style="color:#007020;font-weight:bold">rows</span> <span style="color:#007020;font-weight:bold">in</span> <span style="color:#007020;font-weight:bold">set</span> (<span style="color:#40a070">0</span>.<span style="color:#40a070">001</span> sec)
+</code></pre></div><h1 id="read">Read</h1>
+<h2 id="query-a-single-value-from-a-json-document">Query a single value from a JSON document</h2>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-SQL" data-lang="SQL">MariaDB [mydb]<span style="color:#666">&gt;</span>  <span style="color:#007020;font-weight:bold">select</span> sku, name, json_value(attr, <span style="color:#4070a0">&#39;$.RAM&#39;</span>) <span style="color:#007020;font-weight:bold">as</span> ram
+    <span style="color:#666">-&gt;</span>  <span style="color:#007020;font-weight:bold">from</span> products <span style="color:#007020;font-weight:bold">where</span> sku<span style="color:#666">=</span><span style="color:#40a070">1</span>;
+<span style="color:#666">+</span><span style="color:#60a0b0;font-style:italic">-----+--------+----------+
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#666">|</span> sku <span style="color:#666">|</span> name   <span style="color:#666">|</span> ram      <span style="color:#666">|</span>
+<span style="color:#666">+</span><span style="color:#60a0b0;font-style:italic">-----+--------+----------+
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#666">|</span>   <span style="color:#40a070">1</span> <span style="color:#666">|</span> Laptop <span style="color:#666">|</span> <span style="color:#40a070">8</span>GB DDR3 <span style="color:#666">|</span>
+<span style="color:#666">+</span><span style="color:#60a0b0;font-style:italic">-----+--------+----------+
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#40a070">1</span> <span style="color:#007020;font-weight:bold">row</span> <span style="color:#007020;font-weight:bold">in</span> <span style="color:#007020;font-weight:bold">set</span> (<span style="color:#40a070">0</span>.<span style="color:#40a070">001</span> sec)
+</code></pre></div><p><code>JSON_VALUE()</code> is used to read a single number or string. Parameter <code>$.RAM</code> is the path or you may call it key to the value you want to query. You can use a nested path like below.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-SQL" data-lang="SQL">MariaDB [mydb]<span style="color:#666">&gt;</span> <span style="color:#007020;font-weight:bold">select</span> json_value(attr, <span style="color:#4070a0">&#39;$.video.resolution&#39;</span>) <span style="color:#007020;font-weight:bold">as</span> video <span style="color:#007020;font-weight:bold">from</span> products <span style="color:#007020;font-weight:bold">where</span> sku<span style="color:#666">=</span><span style="color:#40a070">1</span>;
+<span style="color:#666">+</span><span style="color:#60a0b0;font-style:italic">-------+
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#666">|</span> video <span style="color:#666">|</span>
+<span style="color:#666">+</span><span style="color:#60a0b0;font-style:italic">-------+
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#666">|</span> <span style="color:#40a070">1080</span>P <span style="color:#666">|</span>
+<span style="color:#666">+</span><span style="color:#60a0b0;font-style:italic">-------+
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#40a070">1</span> <span style="color:#007020;font-weight:bold">row</span> <span style="color:#007020;font-weight:bold">in</span> <span style="color:#007020;font-weight:bold">set</span> (<span style="color:#40a070">0</span>.<span style="color:#40a070">002</span> sec)
+</code></pre></div><h2 id="query-an-array-from-a-json-document">Query an array from a JSON document</h2>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-SQL" data-lang="SQL">MariaDB [mydb]<span style="color:#666">&gt;</span> <span style="color:#007020;font-weight:bold">select</span> json_query(attr, <span style="color:#4070a0">&#39;$.audio&#39;</span>) <span style="color:#007020;font-weight:bold">as</span> audio <span style="color:#007020;font-weight:bold">from</span> products <span style="color:#007020;font-weight:bold">where</span> sku<span style="color:#666">=</span><span style="color:#40a070">1</span>;
+<span style="color:#666">+</span><span style="color:#60a0b0;font-style:italic">-----------------+
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#666">|</span> audio           <span style="color:#666">|</span>
+<span style="color:#666">+</span><span style="color:#60a0b0;font-style:italic">-----------------+
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#666">|</span> [<span style="color:#4070a0">&#34;DTS&#34;</span>,<span style="color:#4070a0">&#34;Dolby&#34;</span>] <span style="color:#666">|</span>
+<span style="color:#666">+</span><span style="color:#60a0b0;font-style:italic">-----------------+
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#40a070">1</span> <span style="color:#007020;font-weight:bold">row</span> <span style="color:#007020;font-weight:bold">in</span> <span style="color:#007020;font-weight:bold">set</span> (<span style="color:#40a070">0</span>.<span style="color:#40a070">001</span> sec)
+</code></pre></div><p>Function <code>JSON_QUERY()</code> is used to read an array. It has the same path parameter as JSON_VALUE(). Do you want to read the first element of the array? Follow below example:</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-SQL" data-lang="SQL">MariaDB [mydb]<span style="color:#666">&gt;</span> <span style="color:#007020;font-weight:bold">select</span> json_value(attr, <span style="color:#4070a0">&#39;$.audio[0]&#39;</span>) <span style="color:#007020;font-weight:bold">as</span> first_audio <span style="color:#007020;font-weight:bold">from</span> products <span style="color:#007020;font-weight:bold">where</span> sku<span style="color:#666">=</span><span style="color:#40a070">1</span>;
+<span style="color:#666">+</span><span style="color:#60a0b0;font-style:italic">-------------+
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#666">|</span> first_audio <span style="color:#666">|</span>
+<span style="color:#666">+</span><span style="color:#60a0b0;font-style:italic">-------------+
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#666">|</span> DTS         <span style="color:#666">|</span>
+<span style="color:#666">+</span><span style="color:#60a0b0;font-style:italic">-------------+
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#40a070">1</span> <span style="color:#007020;font-weight:bold">row</span> <span style="color:#007020;font-weight:bold">in</span> <span style="color:#007020;font-weight:bold">set</span> (<span style="color:#40a070">0</span>.<span style="color:#40a070">001</span> sec)
+</code></pre></div><p>You see, the first element is a single string, so you need to use <code>JSON_VALUE()</code> instead of <code>JSON_QUERY()</code>.</p>
+<h2 id="query-an-object-from-a-json-document">Query an object from a JSON document</h2>
+<p><code>JSON_QUERY()</code> is also used to query an object.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-SQL" data-lang="SQL">MariaDB [mydb]<span style="color:#666">&gt;</span> <span style="color:#007020;font-weight:bold">select</span> json_query(attr, <span style="color:#4070a0">&#39;$.video&#39;</span>) <span style="color:#007020;font-weight:bold">as</span> video <span style="color:#007020;font-weight:bold">from</span> products <span style="color:#007020;font-weight:bold">where</span> sku<span style="color:#666">=</span><span style="color:#40a070">1</span>;
+<span style="color:#666">+</span><span style="color:#60a0b0;font-style:italic">----------------------------------------------+
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#666">|</span> video                                        <span style="color:#666">|</span>
+<span style="color:#666">+</span><span style="color:#60a0b0;font-style:italic">----------------------------------------------+
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#666">|</span> <span style="">{</span><span style="color:#4070a0">&#34;resolution&#34;</span>:<span style="color:#4070a0">&#34;1080P&#34;</span>, <span style="color:#4070a0">&#34;aspectRatio&#34;</span>:<span style="color:#4070a0">&#34;16:9&#34;</span><span style="">}</span> <span style="color:#666">|</span>
+<span style="color:#666">+</span><span style="color:#60a0b0;font-style:italic">----------------------------------------------+
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#40a070">1</span> <span style="color:#007020;font-weight:bold">row</span> <span style="color:#007020;font-weight:bold">in</span> <span style="color:#007020;font-weight:bold">set</span> (<span style="color:#40a070">0</span>.<span style="color:#40a070">001</span> sec)
+</code></pre></div><h2 id="use-json-value-in-your-where-clause">Use JSON value in your where clause</h2>
+<p>you can query something based on one element of an array.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-SQL" data-lang="SQL">MariaDB [mydb]<span style="color:#666">&gt;</span>  <span style="color:#007020;font-weight:bold">select</span> sku,name,price
+    <span style="color:#666">-&gt;</span>    <span style="color:#007020;font-weight:bold">from</span> products
+    <span style="color:#666">-&gt;</span>  <span style="color:#007020;font-weight:bold">where</span>
+    <span style="color:#666">-&gt;</span>    sku<span style="color:#666">=</span><span style="color:#4070a0">&#34;1&#34;</span> <span style="color:#007020;font-weight:bold">and</span> json_contains(attr, <span style="color:#4070a0">&#39;\&#34;DTS\&#34;&#39;</span>, <span style="color:#4070a0">&#39;$.audio&#39;</span>)<span style="color:#666">=</span><span style="color:#40a070">1</span>;
+<span style="color:#666">+</span><span style="color:#60a0b0;font-style:italic">-----+--------+-------+
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#666">|</span> sku <span style="color:#666">|</span> name   <span style="color:#666">|</span> price <span style="color:#666">|</span>
+<span style="color:#666">+</span><span style="color:#60a0b0;font-style:italic">-----+--------+-------+
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#666">|</span>   <span style="color:#40a070">1</span> <span style="color:#666">|</span> Laptop <span style="color:#666">|</span> <span style="">$</span><span style="color:#40a070">1100</span> <span style="color:#666">|</span>
+<span style="color:#666">+</span><span style="color:#60a0b0;font-style:italic">-----+--------+-------+
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#40a070">1</span> <span style="color:#007020;font-weight:bold">row</span> <span style="color:#007020;font-weight:bold">in</span> <span style="color:#007020;font-weight:bold">set</span> (<span style="color:#40a070">0</span>.<span style="color:#40a070">012</span> sec)
+</code></pre></div><p><code>JSON_CONTAINS()</code> is used to check if a JSON array <code>$.audio</code> contains an element with value <code>\&quot;DTS\&quot;</code>. Pay attention to the <code>\&quot;</code> sign around <code>DTS</code>. It&rsquo;s weird to do that. Why not support <code>json_contains(attr, 'DTS', '$.audio')</code> directly? I don&rsquo;t know. Maybe someday MariaDB will allow us to do the latter.</p>
+<p>You can also query based on a single value of a JSON document.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-SQL" data-lang="SQL">MariaDB [mydb]<span style="color:#666">&gt;</span> <span style="color:#007020;font-weight:bold">select</span> sku,name,price
+    <span style="color:#666">-&gt;</span>    <span style="color:#007020;font-weight:bold">from</span> products
+    <span style="color:#666">-&gt;</span> <span style="color:#007020;font-weight:bold">where</span>
+    <span style="color:#666">-&gt;</span>    sku<span style="color:#666">=</span><span style="color:#40a070">1</span> <span style="color:#007020;font-weight:bold">and</span> json_value(attr, <span style="color:#4070a0">&#39;$.video.resolution&#39;</span>)<span style="color:#666">=</span><span style="color:#4070a0">&#39;1080P&#39;</span>;
+<span style="color:#666">+</span><span style="color:#60a0b0;font-style:italic">-----+--------+-------+
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#666">|</span> sku <span style="color:#666">|</span> name   <span style="color:#666">|</span> price <span style="color:#666">|</span>
+<span style="color:#666">+</span><span style="color:#60a0b0;font-style:italic">-----+--------+-------+
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#666">|</span>   <span style="color:#40a070">1</span> <span style="color:#666">|</span> Laptop <span style="color:#666">|</span> <span style="">$</span><span style="color:#40a070">1100</span> <span style="color:#666">|</span>
+<span style="color:#666">+</span><span style="color:#60a0b0;font-style:italic">-----+--------+-------+
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#40a070">1</span> <span style="color:#007020;font-weight:bold">row</span> <span style="color:#007020;font-weight:bold">in</span> <span style="color:#007020;font-weight:bold">set</span> (<span style="color:#40a070">0</span>.<span style="color:#40a070">003</span> sec)
+</code></pre></div><h1 id="update">Update</h1>
+<h2 id="add-a-new-field-to-a-json-document">Add a new field to a JSON document</h2>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-SQL" data-lang="SQL">MariaDB [mydb]<span style="color:#666">&gt;</span> <span style="color:#007020;font-weight:bold">update</span> products
+    <span style="color:#666">-&gt;</span>    <span style="color:#007020;font-weight:bold">set</span> attr<span style="color:#666">=</span>json_insert(attr, <span style="color:#4070a0">&#39;$.format&#39;</span>, <span style="color:#4070a0">&#39;Paperback&#39;</span>)
+    <span style="color:#666">-&gt;</span>  <span style="color:#007020;font-weight:bold">where</span> sku<span style="color:#666">=</span><span style="color:#40a070">2</span>;
+Query OK, <span style="color:#40a070">1</span> <span style="color:#007020;font-weight:bold">row</span> affected (<span style="color:#40a070">0</span>.<span style="color:#40a070">028</span> sec)
+<span style="color:#007020;font-weight:bold">Rows</span> matched: <span style="color:#40a070">1</span>  Changed: <span style="color:#40a070">1</span>  Warnings: <span style="color:#40a070">0</span>
+
+MariaDB [mydb]<span style="color:#666">&gt;</span> <span style="color:#007020;font-weight:bold">select</span> <span style="color:#666">*</span> <span style="color:#007020;font-weight:bold">from</span> products <span style="color:#007020;font-weight:bold">where</span> sku<span style="color:#666">=</span><span style="color:#40a070">2</span>;
+<span style="color:#666">+</span><span style="color:#60a0b0;font-style:italic">-----+-------------------+-------+-----+--------------------------------------------------------------------------------------------------------+
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#666">|</span> sku <span style="color:#666">|</span> name              <span style="color:#666">|</span> price <span style="color:#666">|</span> qty <span style="color:#666">|</span> attr                                                                                                   <span style="color:#666">|</span>
+<span style="color:#666">+</span><span style="color:#60a0b0;font-style:italic">-----+-------------------+-------+-----+--------------------------------------------------------------------------------------------------------+
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#666">|</span>   <span style="color:#40a070">2</span> <span style="color:#666">|</span> The Little Prince <span style="color:#666">|</span> <span style="">$</span><span style="color:#40a070">10</span>   <span style="color:#666">|</span> <span style="color:#40a070">600</span> <span style="color:#666">|</span> <span style="">{</span><span style="color:#4070a0">&#34;Publisher&#34;</span>: <span style="color:#4070a0">&#34;Rupa Publications&#34;</span>, <span style="color:#4070a0">&#34;ISBN&#34;</span>: <span style="color:#4070a0">&#34;9353044405&#34;</span>, <span style="color:#4070a0">&#34;Language&#34;</span>: <span style="color:#4070a0">&#34;English&#34;</span>, <span style="color:#4070a0">&#34;format&#34;</span>: <span style="color:#4070a0">&#34;Paperback&#34;</span><span style="">}</span> <span style="color:#666">|</span>
+<span style="color:#666">+</span><span style="color:#60a0b0;font-style:italic">-----+-------------------+-------+-----+--------------------------------------------------------------------------------------------------------+
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#40a070">1</span> <span style="color:#007020;font-weight:bold">row</span> <span style="color:#007020;font-weight:bold">in</span> <span style="color:#007020;font-weight:bold">set</span> (<span style="color:#40a070">0</span>.<span style="color:#40a070">001</span> sec)
+</code></pre></div><h2 id="update-existing-fields-value">Update existing field&rsquo;s value</h2>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-SQL" data-lang="SQL">MariaDB [mydb]<span style="color:#666">&gt;</span> <span style="color:#007020;font-weight:bold">update</span> products
+    <span style="color:#666">-&gt;</span>   <span style="color:#007020;font-weight:bold">set</span> attr<span style="color:#666">=</span>json_replace(attr, <span style="color:#4070a0">&#39;$.Language&#39;</span>, <span style="color:#4070a0">&#39;French&#39;</span>)
+    <span style="color:#666">-&gt;</span> <span style="color:#007020;font-weight:bold">where</span> sku<span style="color:#666">=</span><span style="color:#4070a0">&#39;2&#39;</span>;
+Query OK, <span style="color:#40a070">1</span> <span style="color:#007020;font-weight:bold">row</span> affected (<span style="color:#40a070">0</span>.<span style="color:#40a070">007</span> sec)
+<span style="color:#007020;font-weight:bold">Rows</span> matched: <span style="color:#40a070">1</span>  Changed: <span style="color:#40a070">1</span>  Warnings: <span style="color:#40a070">0</span>
+
+MariaDB [mydb]<span style="color:#666">&gt;</span> <span style="color:#007020;font-weight:bold">select</span> <span style="color:#666">*</span> <span style="color:#007020;font-weight:bold">from</span> products <span style="color:#007020;font-weight:bold">where</span> sku<span style="color:#666">=</span><span style="color:#40a070">2</span>;
+<span style="color:#666">+</span><span style="color:#60a0b0;font-style:italic">-----+-------------------+-------+-----+-------------------------------------------------------------------------------------------------------+
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#666">|</span> sku <span style="color:#666">|</span> name              <span style="color:#666">|</span> price <span style="color:#666">|</span> qty <span style="color:#666">|</span> attr                                                                                                  <span style="color:#666">|</span>
+<span style="color:#666">+</span><span style="color:#60a0b0;font-style:italic">-----+-------------------+-------+-----+-------------------------------------------------------------------------------------------------------+
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#666">|</span>   <span style="color:#40a070">2</span> <span style="color:#666">|</span> The Little Prince <span style="color:#666">|</span> <span style="">$</span><span style="color:#40a070">10</span>   <span style="color:#666">|</span> <span style="color:#40a070">600</span> <span style="color:#666">|</span> <span style="">{</span><span style="color:#4070a0">&#34;Publisher&#34;</span>: <span style="color:#4070a0">&#34;Rupa Publications&#34;</span>, <span style="color:#4070a0">&#34;ISBN&#34;</span>: <span style="color:#4070a0">&#34;9353044405&#34;</span>, <span style="color:#4070a0">&#34;Language&#34;</span>: <span style="color:#4070a0">&#34;French&#34;</span>, <span style="color:#4070a0">&#34;format&#34;</span>: <span style="color:#4070a0">&#34;Paperback&#34;</span><span style="">}</span> <span style="color:#666">|</span>
+<span style="color:#666">+</span><span style="color:#60a0b0;font-style:italic">-----+-------------------+-------+-----+-------------------------------------------------------------------------------------------------------+
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#40a070">1</span> <span style="color:#007020;font-weight:bold">row</span> <span style="color:#007020;font-weight:bold">in</span> <span style="color:#007020;font-weight:bold">set</span> (<span style="color:#40a070">0</span>.<span style="color:#40a070">001</span> sec)
+</code></pre></div><h1 id="delete">Delete</h1>
+<p>You can remove a field from a JSON document using <code>JSON_REMOVE()</code>.</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-SQL" data-lang="SQL">MariaDB [mydb]<span style="color:#666">&gt;</span> <span style="color:#007020;font-weight:bold">update</span> products
+    <span style="color:#666">-&gt;</span>   <span style="color:#007020;font-weight:bold">set</span> attr<span style="color:#666">=</span>json_remove(attr, <span style="color:#4070a0">&#39;$.format&#39;</span>)
+    <span style="color:#666">-&gt;</span> <span style="color:#007020;font-weight:bold">where</span> sku<span style="color:#666">=</span><span style="color:#40a070">2</span>;
+Query OK, <span style="color:#40a070">1</span> <span style="color:#007020;font-weight:bold">row</span> affected (<span style="color:#40a070">0</span>.<span style="color:#40a070">009</span> sec)
+<span style="color:#007020;font-weight:bold">Rows</span> matched: <span style="color:#40a070">1</span>  Changed: <span style="color:#40a070">1</span>  Warnings: <span style="color:#40a070">0</span>
+
+MariaDB [mydb]<span style="color:#666">&gt;</span> <span style="color:#007020;font-weight:bold">select</span> <span style="color:#666">*</span> <span style="color:#007020;font-weight:bold">from</span> products <span style="color:#007020;font-weight:bold">where</span> sku<span style="color:#666">=</span><span style="color:#40a070">2</span>;
+<span style="color:#666">+</span><span style="color:#60a0b0;font-style:italic">-----+-------------------+-------+-----+--------------------------------------------------------------------------------+
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#666">|</span> sku <span style="color:#666">|</span> name              <span style="color:#666">|</span> price <span style="color:#666">|</span> qty <span style="color:#666">|</span> attr                                                                           <span style="color:#666">|</span>
+<span style="color:#666">+</span><span style="color:#60a0b0;font-style:italic">-----+-------------------+-------+-----+--------------------------------------------------------------------------------+
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#666">|</span>   <span style="color:#40a070">2</span> <span style="color:#666">|</span> The Little Prince <span style="color:#666">|</span> <span style="">$</span><span style="color:#40a070">10</span>   <span style="color:#666">|</span> <span style="color:#40a070">600</span> <span style="color:#666">|</span> <span style="">{</span><span style="color:#4070a0">&#34;Publisher&#34;</span>: <span style="color:#4070a0">&#34;Rupa Publications&#34;</span>, <span style="color:#4070a0">&#34;ISBN&#34;</span>: <span style="color:#4070a0">&#34;9353044405&#34;</span>, <span style="color:#4070a0">&#34;Language&#34;</span>: <span style="color:#4070a0">&#34;French&#34;</span><span style="">}</span> <span style="color:#666">|</span>
+<span style="color:#666">+</span><span style="color:#60a0b0;font-style:italic">-----+-------------------+-------+-----+--------------------------------------------------------------------------------+
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#40a070">1</span> <span style="color:#007020;font-weight:bold">row</span> <span style="color:#007020;font-weight:bold">in</span> <span style="color:#007020;font-weight:bold">set</span> (<span style="color:#40a070">0</span>.<span style="color:#40a070">001</span> sec)
+</code></pre></div><p>Now we have gone through the whole CRDU of JSON documents in MariaDB. Isn&rsquo;t it so simple and intuitive? I hope you can use it in your project to simplify your design.</p>
+
+    </div>
+    <footer class="post-footer">
+     
+ 
+<div class="post-tags">     
+     
+    <a href="https://zhongzhu.github.io/tags/mariadb" rel="tag" title="MariaDB">#MariaDB#</a>
+    
+    <a href="https://zhongzhu.github.io/tags/nosql" rel="tag" title="NoSQL">#NoSQL#</a>
+    
+</div>
+
+
+
+     <div class="post-nav">
+    <div class="post-nav-next post-nav-item">
+    
+    </div>
+
+    <div class="post-nav-prev post-nav-item">
+    
+        <a href="https://zhongzhu.github.io/post/when-sql-meets-nosql/" rel="prev" title="When SQL Meets NoSQL">
+        When SQL Meets NoSQL <i class="fa fa-chevron-right"></i>
+        </a>
+    
+    </div>
+</div>
+      
+     
+     
+     
+<script src="https://utteranc.es/client.js"
+        repo="zhongzhu/my_blog_comments"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+    </footer>
+  </article>
+</section>
+
+          </div>
+        </div>
+        <div class="sidebar-toggle">
+  <div class="sidebar-toggle-line-wrap">
+    <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+  </div>
+</div>
+<aside id="sidebar" class="sidebar">
+  <div class="sidebar-inner">
+
+    <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+        src="https://zhongzhu.github.io/images/author.jpg"
+        alt="钟柱" />
+    <p class="site-author-name" itemprop="name">钟柱</p>
+    <p class="site-description motion-element" itemprop="description"> 
+        架构, 写代码, 自动化测试, 看书, 音乐, 画画</p>
+</div>
+      <nav class="site-state motion-element">
+    <div class="site-state-item site-state-posts">
+      <a href="https://zhongzhu.github.io/post/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">日志</span>
+      </a>
+    </div>
+    <div class="site-state-item site-state-categories">    
+        <a href="https://zhongzhu.github.io/categories/">      
+         
+        <span class="site-state-item-count">2</span>
+        
+        <span class="site-state-item-name">分类</span>
+        
+        </a>
+    </div>
+
+    <div class="site-state-item site-state-tags">
+        <a href="https://zhongzhu.github.io/tags/">
+         
+        <span class="site-state-item-count">16</span>
+        
+        <span class="site-state-item-name">标签</span>
+        </a>
+    </div>
+</nav>
+      
+      
+<div class="links-of-author motion-element">
+    
+        <span class="links-of-author-item">
+        <a href="https://github.com/zhongzhu" target="_blank" title="GitHub">
+            <i class="fa fa-fw fa-github"></i>
+            GitHub
+        </a>
+        </span>
+    
+        <span class="links-of-author-item">
+        <a href="https://weibo.com/zhuzhong" target="_blank" title="微博">
+            <i class="fa fa-fw fa-weibo"></i>
+            微博
+        </a>
+        </span>
+    
+</div>
+
+
+      
+
+      
+    </section>
+    
+  </div>
+</aside>
+
+      </div>
+    </main>
+   
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  <span itemprop="copyrightYear">  &copy; 
+  2016 - 2020</span>
+  
+  <span class="author" itemprop="copyrightHolder">钟柱的博客</span>
+</div>
+<div class="powered-by">
+  Powered by - <a class="theme-link" href="http://gohugo.io" target="_blank" title="hugo" >Hugo v0.69.0</a>
+</div>
+<div class="theme-info">
+  Theme by - <a class="theme-link" href="https://github.com/xtfly/hugo-theme-next" target="_blank"> NexT
+  </a>
+</div>
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      <span id="scrollpercent"><span>0</span>%</span>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+<script type="text/javascript" src="https://zhongzhu.github.io/js/vendor/jquery/index.js?v=2.1.3"></script>
+<script type="text/javascript" src="https://zhongzhu.github.io/js/vendor/fastclick/lib/fastclick.min.js?v=1.0.6"></script> 
+<script type="text/javascript" src="https://zhongzhu.github.io/js/vendor/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+<script type="text/javascript" src="https://zhongzhu.github.io/js/vendor/velocity/velocity.min.js?v=1.2.1"></script>
+<script type="text/javascript" src="https://zhongzhu.github.io/js/vendor/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="https://zhongzhu.github.io/js/vendor/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+
+<script src="https://zhongzhu.github.io/js/vendor/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+<script type="text/javascript" src="https://zhongzhu.github.io/js/utils.js"></script>
+<script type="text/javascript" src="https://zhongzhu.github.io/js/motion.js"></script>
+<script type="text/javascript" src="https://zhongzhu.github.io/js/affix.js"></script>
+<script type="text/javascript" src="https://zhongzhu.github.io/js/schemes/pisces.js"></script>
+
+<script type="text/javascript" src="https://zhongzhu.github.io/js/scrollspy.js"></script>
+<script type="text/javascript" src="https://zhongzhu.github.io/js/post-details.js"></script>
+<script type="text/javascript" src="https://zhongzhu.github.io/js/toc.js"></script>
+
+<script type="text/javascript" src="https://zhongzhu.github.io/js/bootstrap.js"></script>
+
+<script type="text/javascript" src="https://zhongzhu.github.io/js/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'] ],
+      displayMath: [ ['$$','$$'] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { fonts: ["TeX"] }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML' async></script>
+</body>
+</html>

@@ -6,10 +6,19 @@
     <description>Recent content in 技术 on 钟柱的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 22 Apr 2020 20:51:58 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 27 Apr 2020 21:05:53 +0800</lastBuildDate>
     
 	<atom:link href="https://zhongzhu.github.io/categories/%E6%8A%80%E6%9C%AF/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>How to Work With JSON in MariaDB</title>
+      <link>https://zhongzhu.github.io/post/how-to-work-with-json-in-mariadb/</link>
+      <pubDate>Mon, 27 Apr 2020 21:05:53 +0800</pubDate>
+      
+      <guid>https://zhongzhu.github.io/post/how-to-work-with-json-in-mariadb/</guid>
+      <description>In my last post When SQL Meets NoSQl, we talked about MariaDB can combine both SQL and NoSQL in the same database engine. Today, let&amp;rsquo;s find out how. We&amp;rsquo;re going to use Docker image to start a MariaDB container, then try out CRUD (Create/ Read/ Update/ Delete) on JSON documents stored in the same relational database table. Start MariaDB in a Docker container % docker run --name mariadb -e MYSQL_ROOT_PASSWORD=example</description>
+    </item>
     
     <item>
       <title>When SQL Meets NoSQL</title>
